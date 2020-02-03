@@ -1,0 +1,770 @@
+[
+  {
+    "_id": "5c71d884f58dfb125f0c1dfc",
+    "day": "2019-02-01",
+    "sections": [
+      {
+        "_id": "5c71d884f58dfb125f0c1df9",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d884f58dfb125f0c1dfa",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d884f58dfb125f0c1dfb",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d889f58dfb125f0c1e03",
+    "day": "2019-02-02",
+    "sections": [
+      {
+        "_id": "5c71d889f58dfb125f0c1e00",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d889f58dfb125f0c1e01",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d889f58dfb125f0c1e02",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d88cf58dfb125f0c1e0a",
+    "day": "2019-02-03",
+    "sections": [
+      {
+        "_id": "5c71d88cf58dfb125f0c1e07",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d88cf58dfb125f0c1e08",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d88cf58dfb125f0c1e09",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d890f58dfb125f0c1e11",
+    "day": "2019-02-04",
+    "sections": [
+      {
+        "_id": "5c71d890f58dfb125f0c1e0e",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d890f58dfb125f0c1e0f",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d890f58dfb125f0c1e10",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d893f58dfb125f0c1e18",
+    "day": "2019-02-05",
+    "sections": [
+      {
+        "_id": "5c71d893f58dfb125f0c1e15",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d893f58dfb125f0c1e16",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d893f58dfb125f0c1e17",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d896f58dfb125f0c1e1f",
+    "day": "2019-02-06",
+    "sections": [
+      {
+        "_id": "5c71d896f58dfb125f0c1e1c",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d896f58dfb125f0c1e1d",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d896f58dfb125f0c1e1e",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d95cf58dfb125f0c1e3b",
+    "day": "2019-02-07",
+    "sections": [
+      {
+        "_id": "5c71d95cf58dfb125f0c1e38",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d95cf58dfb125f0c1e39",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d95cf58dfb125f0c1e3a",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71d960f58dfb125f0c1e42",
+    "day": "2019-02-08",
+    "sections": [
+      {
+        "_id": "5c71d960f58dfb125f0c1e3f",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d960f58dfb125f0c1e40",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71d960f58dfb125f0c1e41",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c71dd73f58dfb125f0c1e57",
+    "day": "2019-02-23",
+    "sections": [
+      {
+        "_id": "5c71dd73f58dfb125f0c1e54",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c71dd73f58dfb125f0c1e55",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c71dd73f58dfb125f0c1e56",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c7272ec09ffe4066418866b",
+    "day": "2019-02-24",
+    "sections": [
+      {
+        "_id": "5c7272ec09ffe40664188668",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c7272ec09ffe40664188669",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c7272ec09ffe4066418866a",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c7418ac42b25c2c3f1238ab",
+    "day": "2019-02-25",
+    "sections": [
+      {
+        "_id": "5c7418ac42b25c2c3f1238a8",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c7418ac42b25c2c3f1238a9",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c7418ac42b25c2c3f1238aa",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5c9fc4785f70fa518fe5eaaf",
+    "day": "2019-03-30",
+    "sections": [
+      {
+        "_id": "5c9fc4785f70fa518fe5eaac",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5c9fc4785f70fa518fe5eaad",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5c9fc4785f70fa518fe5eaae",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5caa8739b2cb3526484041b5",
+    "day": "2019-04-07",
+    "sections": [
+      {
+        "_id": "5caa8739b2cb3526484041b2",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5caa8739b2cb3526484041b3",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5caa8739b2cb3526484041b4",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cab3efca62bf02ffcb96358",
+    "day": "2019-04-08",
+    "sections": [
+      {
+        "_id": "5cab3efca62bf02ffcb96355",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5cab3efca62bf02ffcb96356",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5cab3efca62bf02ffcb96357",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cafb35f6362d170b125792b",
+    "day": "2019-04-11",
+    "sections": [
+      {
+        "_id": "5cafb35f6362d170b1257928",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5cafb35f6362d170b1257929",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5cafb35f6362d170b125792a",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cb8441578b4f956bf77b16e",
+    "day": "2019-04-18",
+    "sections": [
+      {
+        "_id": "5cb8441578b4f956bf77b16b",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5cb8441578b4f956bf77b16c",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5cb8441578b4f956bf77b16d",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cbae8b5eff8fd29ff9800b0",
+    "day": "2019-04-20",
+    "sections": [
+      {
+        "_id": "5cbae8b5eff8fd29ff9800ad",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5cbae8b5eff8fd29ff9800ae",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5cbae8b5eff8fd29ff9800af",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cbdcec15182bf57adbe639d",
+    "day": "2019-04-22",
+    "sections": [
+      {
+        "_id": "5cbdcec15182bf57adbe639a",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "_id": "5cbdcec15182bf57adbe639b",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "_id": "5cbdcec15182bf57adbe639c",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5ccdaf8aff9aeb658224f179",
+    "day": "2019-05-04",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5ccdaf8aff9aeb658224f176",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5ccdaf8aff9aeb658224f177",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5ccdaf8aff9aeb658224f178",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5ccf75a53530176d704bc7c3",
+    "day": "2019-05-06",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5ccf75a53530176d704bc7c0",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5ccf75a53530176d704bc7c1",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5ccf75a53530176d704bc7c2",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd18170ff0ee1082bbcca9c",
+    "day": "2019-05-07",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd18170ff0ee1082bbcca99",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd18170ff0ee1082bbcca9a",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd18170ff0ee1082bbcca9b",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd34487ff0ee1082bbccaa8",
+    "day": "2019-05-08",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd34487ff0ee1082bbccaa5",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd34487ff0ee1082bbccaa6",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd34487ff0ee1082bbccaa7",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd3611aff0ee1082bbccab5",
+    "day": "2019-05-09",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd3611aff0ee1082bbccab2",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd3611aff0ee1082bbccab3",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd3611aff0ee1082bbccab4",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd5b9ea704f132dd77d9010",
+    "day": "2019-05-10",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd5b9ea704f132dd77d900d",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd5b9ea704f132dd77d900e",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd5b9ea704f132dd77d900f",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd60417704f132dd77d9017",
+    "day": "2019-05-11",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd60417704f132dd77d9014",
+        "title": "Plan",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd60417704f132dd77d9015",
+        "title": "In the morning",
+        "tasks": []
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd60417704f132dd77d9016",
+        "title": "In the afternoon",
+        "tasks": []
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  },
+  {
+    "_id": "5cd821fb704f132dd77d9037",
+    "day": "2019-05-12",
+    "sections": [
+      {
+        "isPlan": true,
+        "_id": "5cd821fb704f132dd77d901e",
+        "title": "Plan",
+        "tasks": [
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d786dcd1730cd8db464",
+            "title": "Amet Venenatis Risus Cras",
+            "notes": "{\"object\":\"value\",\"document\":{\"object\":\"document\",\"data\":{},\"nodes\":[{\"object\":\"block\",\"type\":\"heading-one\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"This is a note\",\"marks\":[]}]}]},{\"object\":\"block\",\"type\":\"paragraph\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"Perf problems\",\"marks\":[]}]}]},{\"object\":\"block\",\"type\":\"numbered-list\",\"data\":{},\"nodes\":[{\"object\":\"block\",\"type\":\"list-item\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"This is a list\",\"marks\":[]}]}]},{\"object\":\"block\",\"type\":\"list-item\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"This is another list item\",\"marks\":[]}]}]},{\"object\":\"block\",\"type\":\"list-item\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"And yet another item\",\"marks\":[]}]}]},{\"object\":\"block\",\"type\":\"list-item\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"One more item\",\"marks\":[]}]}]}]},{\"object\":\"block\",\"type\":\"heading-one\",\"data\":{},\"nodes\":[{\"object\":\"text\",\"leaves\":[{\"object\":\"leaf\",\"text\":\"\",\"marks\":[]}]}]}]}}",
+            "time": 3000
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d7e6dcd1730cd8db466",
+            "title": "Risus Ipsum Pharetra Ullamcorper",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d836dcd1730cd8db468",
+            "title": "Parturient Pharetra Mollis Porta",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d896dcd1730cd8db46a",
+            "title": "Nullam Amet Tortor Pharetra Venenatis",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d926dcd1730cd8db46c",
+            "title": "Quam Elit Pharetra Fringilla Purus Quam Elit Pharetra Fringilla Purus Quam Elit Pharetra Fringilla Purus",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83df76dcd1730cd8db48a",
+            "title": "Nibh Dapibus Adipiscing Inceptos",
+            "notes": "",
+            "time": 0
+          }
+        ]
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd821fb704f132dd77d901f",
+        "title": "In the morning",
+        "tasks": [
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83d9d6dcd1730cd8db46e",
+            "title": "Cursus Egestas",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83da46dcd1730cd8db470",
+            "title": "Ridiculus Aenean Ultricies Vehicula Pellentesque",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dab6dcd1730cd8db472",
+            "title": "Lorem Condimentum Porta Dapibus Cras Lorem Condimentum Porta Dapibus Cras",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83db66dcd1730cd8db474",
+            "title": "Lorem Condimentum Porta Dapibus Cras Lorem Condimentum Porta Dapibus Cras Lorem Condimentum Porta Dapibus Cras Lorem Condimentum Porta Dapibus Cras",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83ded6dcd1730cd8db486",
+            "title": "Bibendum Ridiculus Dolor Condimentum Vestibulum",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83df26dcd1730cd8db488",
+            "title": "Etiam Elit Aenean Cursus Venenatis",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dff6dcd1730cd8db48c",
+            "title": "Bibendum Venenatis Pharetra Sit",
+            "notes": "",
+            "time": 0
+          }
+        ]
+      },
+      {
+        "isPlan": false,
+        "_id": "5cd821fb704f132dd77d9020",
+        "title": "In the afternoon",
+        "tasks": [
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dbd6dcd1730cd8db476",
+            "title": "Commodo Ipsum Vulputate Egestas",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dc36dcd1730cd8db478",
+            "title": "Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dcf6dcd1730cd8db47a",
+            "title": "Adipiscing Ipsum Fusce Fermentum Ligula Adipiscing Ipsum Fusce Fermentum Ligula Adipiscing Ipsum Fusce Fermentum Ligula Adipiscing Ipsum Fusce Fermentum Ligula",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83dd66dcd1730cd8db47c",
+            "title": "Quam Consectetur Sollicitudin Ornare Mattis",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83ddc6dcd1730cd8db47e",
+            "title": "Bibendum Ridiculus Dolor Condimentum Vestibulum",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83de16dcd1730cd8db480",
+            "title": "Bibendum Ridiculus Dolor Condimentum Vestibulum",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83de66dcd1730cd8db482",
+            "title": "Bibendum Ridiculus Dolor Condimentum Vestibulum",
+            "notes": "",
+            "time": 0
+          },
+          {
+            "start": null,
+            "completed": false,
+            "_id": "5cd83de96dcd1730cd8db484",
+            "title": "Bibendum Ridiculus Dolor Condimentum Vestibulum",
+            "notes": "",
+            "time": 0
+          }
+        ]
+      }
+    ],
+    "belongsTo": "5c714df8d41ad215c90edfb5"
+  }
+]

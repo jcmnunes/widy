@@ -1,0 +1,11 @@
+export const STORE_DAYS = 'days/STORE_DAYS';
+export const STORE_SELECTED_DAY = 'days/STORE_SELECTED_DAY';
+export const GET_DAYS_REQUEST = 'days/GET_DAYS_REQUEST';
+export const GET_DAYS_SUCCESS = 'days/GET_DAYS_SUCCESS';
+export const GET_DAYS_FAILURE = 'days/GET_DAYS_FAILURE';
+export const GET_DAY_REQUEST = 'days/GET_DAY_REQUEST';
+export const GET_DAY_SUCCESS = 'days/GET_DAY_SUCCESS';
+export const GET_DAY_FAILURE = 'days/GET_DAY_FAILURE';
+export const CREATE_DAY_REQUEST = 'days/CREATE_DAY_REQUEST';
+export const CREATE_DAY_SUCCESS = 'days/CREATE_DAY_SUCCESS';
+export const CREATE_DAY_FAILURE = 'days/CREATE_DAY_FAILURE';

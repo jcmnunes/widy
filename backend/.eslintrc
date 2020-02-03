@@ -1,0 +1,20 @@
+{
+  "extends": ["node", "plugin:prettier/recommended"],
+  "env": {
+    "es6": true,
+    "node": true,
+    "mongo": true
+  },
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "no-unused-vars": ["warn"],
+    "no-var": ["off"],
+    "one-var": ["off"],
+    "import/no-commonjs": "off",
+    "import/no-nodejs-modules": "off",
+    "indent": ["warn", 2],
+    "quotes": ["error", "single"],
+    "max-len": ["error", { "code": 100 }],
+    "semi": ["error", "always"]
+  }
+}

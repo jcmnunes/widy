@@ -1,0 +1,15 @@
+{
+  "name": "widy",
+  "version": "0.8.0",
+  "description": "Widy - What I did yesterday",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcmnunes/widy.git"
+  },
+  "author": "Jose C. Nunes <jn@josenunes.xyz> (https://josenunes.xyz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jcmnunes/widy/issues"
+  },
+  "homepage": "https://github.com/jcmnunes/widy#readme"
+}
