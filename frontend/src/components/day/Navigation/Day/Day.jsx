@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Icon20 } from '@binarycapsule/ui-capsules';
+import Badge from '../../../common/Badge/Badge';
 
 const StyledDay = styled.div`
   height: 42px;
@@ -27,24 +28,34 @@ const StyledDay = styled.div`
   }
 `;
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 4px;
+`;
+
 class Day extends Component {
-  hanldeOnKeyPress = e => {
+  handleOnKeyPress = e => {
     if (e.key === 'Enter') {
       this.props.onClick();
     }
   };
 
   render() {
-    const { onClick, selected, isSmall, children } = this.props;
+    const { onClick, selected, isSmall, isToday, children } = this.props;
     return (
       <StyledDay
         tabIndex="0"
         selected={selected}
         onClick={onClick}
-        onKeyPress={this.hanldeOnKeyPress}
+        onKeyPress={this.handleOnKeyPress}
         isSmall={isSmall}
       >
-        <span>{children}</span>
+        <Content>
+          {isToday && <Badge>Today</Badge>}
+          <span>{children}</span>
+        </Content>
         {!isSmall && <Icon20 icon="CHEV_RIGHT" />}
       </StyledDay>
     );
@@ -55,6 +66,7 @@ Day.propTypes = {
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   isSmall: PropTypes.bool.isRequired,
+  isToday: PropTypes.bool.isRequired,
   children: PropTypes.string.isRequired,
 };
 

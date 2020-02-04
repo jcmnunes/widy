@@ -42,6 +42,7 @@ const Days = () => {
           onClick={() => history.push(`/report/${id}`)}
           selected={id === dayId}
           isSmall={false}
+          isToday={moment(day).isSame(moment().format('YYYY-MM-DD'), 'day')}
         >
           {moment(day).format('ddd DD MMM YYYY')}
         </Day>

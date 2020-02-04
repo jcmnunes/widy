@@ -17,7 +17,13 @@ const StyledDays = styled.div`
 const Days = ({ days, order, selected, isSmall, handleDayClick }) => (
   <StyledDays>
     {order.map(id => (
-      <Day key={id} onClick={() => handleDayClick(id)} selected={id === selected} isSmall={isSmall}>
+      <Day
+        key={id}
+        onClick={() => handleDayClick(id)}
+        selected={id === selected}
+        isSmall={isSmall}
+        isToday={moment(days[id].day).isSame(moment().format('YYYY-MM-DD'), 'day')}
+      >
         {isSmall
           ? moment(days[id].day).format('MMM DD')
           : moment(days[id].day).format('ddd DD MMM YYYY')}
