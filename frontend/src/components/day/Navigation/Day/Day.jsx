@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Icon20 } from '@binarycapsule/ui-capsules';
+import Badge from '../../../common/Badge/Badge';
 
-const StyledDay = styled.div`
+const StyledDay = styled.button`
   height: 42px;
   border-radius: 4px;
   border: ${props =>
@@ -27,34 +28,28 @@ const StyledDay = styled.div`
   }
 `;
 
-class Day extends Component {
-  hanldeOnKeyPress = e => {
-    if (e.key === 'Enter') {
-      this.props.onClick();
-    }
-  };
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 4px;
+`;
 
-  render() {
-    const { onClick, selected, isSmall, children } = this.props;
-    return (
-      <StyledDay
-        tabIndex="0"
-        selected={selected}
-        onClick={onClick}
-        onKeyPress={this.hanldeOnKeyPress}
-        isSmall={isSmall}
-      >
-        <span>{children}</span>
-        {!isSmall && <Icon20 icon="CHEV_RIGHT" />}
-      </StyledDay>
-    );
-  }
-}
+const Day = ({ onClick, selected, isSmall, isToday, children }) => (
+  <StyledDay selected={selected} onClick={onClick} isSmall={isSmall}>
+    <Content>
+      {isToday && <Badge>Today</Badge>}
+      <span>{children}</span>
+    </Content>
+    {!isSmall && <Icon20 icon="CHEV_RIGHT" />}
+  </StyledDay>
+);
 
 Day.propTypes = {
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   isSmall: PropTypes.bool.isRequired,
+  isToday: PropTypes.bool.isRequired,
   children: PropTypes.string.isRequired,
 };
 

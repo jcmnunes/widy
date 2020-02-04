@@ -8,6 +8,7 @@ import { getDays } from '../../Report.actions';
 import { daysLoadingSelector, daysSelector } from '../../Report.selectors';
 import Day from '../../../day/Navigation/Day';
 import LoadingNavigation from '../../../day/Navigation/LoadingNavigation';
+import { isToday } from '../../../../helpers/dates';
 
 export const StyledDays = styled.div`
   display: grid;
@@ -42,6 +43,7 @@ const Days = () => {
           onClick={() => history.push(`/report/${id}`)}
           selected={id === dayId}
           isSmall={false}
+          isToday={isToday(day)}
         >
           {moment(day).format('ddd DD MMM YYYY')}
         </Day>

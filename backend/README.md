@@ -3,20 +3,13 @@
 # Widy - What I did yesterday (Backend)
 
 <div>
+    <a href="https://codeship.com"><img src="https://img.shields.io/codeship/eb1cea60-28ba-0138-b527-1ec6b7df87c1?style=flat-square" alt="build-badge" /></a>
     <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" /></a>
-    <a href="https://github.com/styled-components/styled-components"><img src="https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e" /></a>
+    <a href="https://github.com/styled-components/styled-components"><img src="https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e&style=flat-square" /></a>
 </div>
 
-This is the backend repo of the Widy app
-([frontend repo](https://github.com/jcmnunes/widy-frontend))
-
-<img src="https://raw.githubusercontent.com/jcmnunes/widy-frontend/master/src/images/eod_screenshot.png" width="800px">
-
-Widy is a productivity app. It has three main features:
-
-1. It tracks your daily work.
-2. It helps you stay focused.
-3. It generates handy reports.
+This folder contains the backend code of the Widy app. It is a
+Node/Express/MongoDB app.
 
 Main techs used: Node | Express | MongoDB | Mongoose
 

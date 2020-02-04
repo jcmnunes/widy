@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import moment from 'moment';
 import Day from '../Day';
+import { isToday } from '../../../../helpers/dates';
 
 const StyledDays = styled.div`
   display: grid;
@@ -17,7 +18,13 @@ const StyledDays = styled.div`
 const Days = ({ days, order, selected, isSmall, handleDayClick }) => (
   <StyledDays>
     {order.map(id => (
-      <Day key={id} onClick={() => handleDayClick(id)} selected={id === selected} isSmall={isSmall}>
+      <Day
+        key={id}
+        onClick={() => handleDayClick(id)}
+        selected={id === selected}
+        isSmall={isSmall}
+        isToday={isToday(days[id].day)}
+      >
         {isSmall
           ? moment(days[id].day).format('MMM DD')
           : moment(days[id].day).format('ddd DD MMM YYYY')}
