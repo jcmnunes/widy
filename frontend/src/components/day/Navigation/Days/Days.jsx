@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import moment from 'moment';
 import Day from '../Day';
+import { isToday } from '../../../../helpers/dates';
 
 const StyledDays = styled.div`
   display: grid;
@@ -22,7 +23,7 @@ const Days = ({ days, order, selected, isSmall, handleDayClick }) => (
         onClick={() => handleDayClick(id)}
         selected={id === selected}
         isSmall={isSmall}
-        isToday={moment(days[id].day).isSame(moment().format('YYYY-MM-DD'), 'day')}
+        isToday={isToday(days[id].day)}
       >
         {isSmall
           ? moment(days[id].day).format('MMM DD')
