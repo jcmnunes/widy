@@ -23,7 +23,7 @@ const Badge = ({ color, background, children }) => (
 );
 
 Badge.defaultProps = {
-  color: '#fff',
+  color: theme.blue050,
   background: theme.blue600,
 };
 
