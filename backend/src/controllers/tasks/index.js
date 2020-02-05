@@ -6,3 +6,4 @@ exports.deleteTask = require('./deleteTask');
 exports.startTask = require('./startTask');
 exports.stopTask = require('./stopTask');
 exports.getActiveTask = require('./getActiveTask');
+exports.scheduleTask = require('./scheduleTask');
