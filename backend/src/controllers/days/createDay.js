@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { User } = require('../../models/User');
 const { Day } = require('../../models/Day');
 const { Section } = require('../../models/Section');
 
@@ -24,13 +25,16 @@ const createDay = async (req, res) => {
   if (existingDaysArray.length > 0) {
     return res.status(400).json({ message: 'Day exists' });
   }
+
+  const user = await User.findById(req.userId);
+
   const newDay = new Day({
     day,
     sections: [
       new Section({
         title: 'Plan',
         isPlan: true,
-        tasks: [],
+        tasks: user.schedule,
       }),
       new Section({
         title: 'In the morning',
@@ -46,6 +50,10 @@ const createDay = async (req, res) => {
     belongsTo: req.userId,
   });
   const { _id, day: savedDay } = await newDay.save();
+
+  user.schedule = [];
+  await user.save();
+
   res.json({ day: { id: _id, day: savedDay }, message: '🥑' });
 };
 
