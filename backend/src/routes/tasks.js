@@ -11,5 +11,6 @@ router.put('/:id', requireLogin, catchErrors(tasksController.updateTask));
 router.delete('/:id', requireLogin, catchErrors(tasksController.deleteTask));
 router.put('/start/:id', requireLogin, catchErrors(tasksController.startTask));
 router.put('/stop/:id', requireLogin, catchErrors(tasksController.stopTask));
+router.post('/schedule', requireLogin, catchErrors(tasksController.scheduleTask));
 
 module.exports = router;
