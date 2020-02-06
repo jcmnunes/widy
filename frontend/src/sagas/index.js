@@ -30,6 +30,7 @@ import {
   watchReportGetDaysSagaSaga as reportGetDays,
   watchGetReportSagaSaga as getReport,
 } from '../components/report/Report.actions';
+import { watchScheduleTaskSaga as scheduleTask } from '../actions/tasks/scheduleTask.actions';
 
 export default function* rootSaga() {
   yield all([
@@ -58,5 +59,6 @@ export default function* rootSaga() {
     unarchiveScope(),
     reportGetDays(),
     getReport(),
+    scheduleTask(),
   ]);
 }
