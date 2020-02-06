@@ -4,7 +4,7 @@ import { Toaster } from '@binarycapsule/ui-capsules';
 import { addTaskAtIndex, removeTask } from '../sections';
 import { storeSelectedTaskId } from '.';
 
-export const SCHEDULE_TASK_REQUEST = 'taskActions/SCHEDULE_TASK_REQUEST';
+export const SCHEDULE_TASK_REQUEST = 'tasks/SCHEDULE_TASK_REQUEST';
 
 export const scheduleTask = payload => ({
   type: SCHEDULE_TASK_REQUEST,
