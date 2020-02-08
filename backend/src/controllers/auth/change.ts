@@ -1,8 +1,20 @@
-const Joi = require('joi');
-const bcrypt = require('bcrypt');
-const { User } = require('../../models/User');
+import Joi from 'joi';
+import bcrypt from 'bcrypt';
+import { Response } from 'express';
+import { User } from '../../models/User';
+import { AuthRequest } from '../types';
 
-const validate = body => {
+interface Body {
+  oldPassword: string;
+  password: string;
+  confirm: string;
+}
+
+interface Request extends AuthRequest {
+  body: Body;
+}
+
+const validate = (body: Body) => {
   const schema = {
     oldPassword: Joi.string()
       .min(5)
@@ -26,7 +38,7 @@ const validate = body => {
  *
  * endpoint ➜ POST /api/auth/change
  */
-const change = async (req, res) => {
+export const change = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
@@ -40,13 +52,13 @@ const change = async (req, res) => {
 
   const user = await User.findById(req.userId).select('password');
 
-  const validPassword = await bcrypt.compare(oldPassword, user.password);
-  if (!validPassword) return res.status(400).json({ message: 'Wrong password' });
+  if (user) {
+    const validPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!validPassword) return res.status(400).json({ message: 'Wrong password' });
 
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(password, salt);
-  await user.save();
-  res.json({ message: '🥑' });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    await user.save();
+    res.json({ message: '🥑' });
+  }
 };
-
-module.exports = change;

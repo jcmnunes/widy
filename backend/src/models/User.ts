@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
-const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const jwt = require('jsonwebtoken');
-const { scopeSchema } = require('./Scope');
-const { taskSchema } = require('./Task');
+import { Response } from 'express';
+import mongoose, { Document, Model } from 'mongoose';
+import mongodbErrorHandler from 'mongoose-mongodb-errors';
+import jwt from 'jsonwebtoken';
+import { scopeSchema } from './Scope';
+import { taskSchema } from './Task';
 
 const userSchema = new mongoose.Schema(
   {
@@ -75,15 +76,27 @@ const userSchema = new mongoose.Schema(
 // The MongoDBErrorHandler plugin gives us a better 'unique' error
 userSchema.plugin(mongodbErrorHandler);
 
-userSchema.methods.generateAuthToken = function(res, days = 60) {
-  const token = jwt.sign({ id: this._id }, process.env.APP_SECRET, { expiresIn: `${days}d` });
-  res.cookie(process.env.COOKIE_KEY, token, {
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * days,
-  });
+userSchema.methods.generateAuthToken = function(res: Response, days: number = 60): void {
+  const { COOKIE_KEY, APP_SECRET, NODE_ENV } = process.env;
+
+  if (COOKIE_KEY && APP_SECRET) {
+    const token = jwt.sign({ id: this._id }, APP_SECRET, { expiresIn: `${days}d` });
+    res.cookie(COOKIE_KEY, token, {
+      secure: NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * days,
+    });
+  }
 };
 
-const User = mongoose.model('User', userSchema);
+interface IUser extends Document {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  resetPasswordToken: string | null;
+  resetPasswordExpires: number | null;
+  generateAuthToken(res: Response, days?: number): void;
+}
 
-exports.User = User;
+export const User: Model<IUser> = mongoose.model<IUser>('User', userSchema);

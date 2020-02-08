@@ -1,11 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const helmet = require('helmet');
-const compression = require('compression');
-const toJson = require('@meanie/mongoose-to-json');
-const handleErrors = require('./src/middlewares/handleErrors');
+import express from 'express';
+import mongoose from 'mongoose';
+import helmet from 'helmet';
+import compression from 'compression';
+import toJson from '@meanie/mongoose-to-json';
+import handleErrors from './middlewares/handleErrors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
 
-var cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -16,25 +17,29 @@ const ROOT_URL = `http://localhost:${port}`;
 mongoose.plugin(toJson);
 
 // Models
-require('./src/models/User');
-require('./src/models/Day');
+require('./models/User');
+require('./models/Day');
 // Routes
-const auth = require('./src/routes/auth');
-const users = require('./src/routes/users');
-const days = require('./src/routes/days');
-const tasks = require('./src/routes/tasks');
-const settings = require('./src/routes/settings');
-const scopes = require('./src/routes/scopes');
-const report = require('./src/routes/report');
+import auth from './routes/auth';
+import users from './routes/users';
+import days from './routes/days';
+import tasks from './routes/tasks';
+import settings from './routes/settings';
+import scopes from './routes/scopes';
+import report from './routes/report';
 
 const mongooseOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 };
 
 // eslint-disable-next-line no-console
-mongoose.connect(process.env.MONGO_URI, mongooseOptions).then(() => console.log('DB connected'));
+mongoose
+  .connect(process.env.MONGO_URI || '', mongooseOptions)
+  .then(() => console.log('DB connected'));
+
 mongoose.connection.on('error', err => {
   // eslint-disable-next-line no-console
   console.log(`DB connection error: ${err.message}`);
@@ -62,9 +67,7 @@ app.use('/api/report', report);
 
 if (!dev) {
   app.use(express.static('../frontend/build'));
-
-  const path = require('path');
-  app.get('*', (req, res) => {
+  app.get('*', (_, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
   });
 }
@@ -72,8 +75,7 @@ if (!dev) {
 // Error handling from async / await functions
 app.use(handleErrors);
 
-app.listen(port, err => {
-  if (err) throw err;
+app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Server listening on ${ROOT_URL}`);
 });

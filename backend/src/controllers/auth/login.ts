@@ -1,8 +1,14 @@
-const Joi = require('joi');
-const bcrypt = require('bcrypt');
-const { User } = require('../../models/User');
+import Joi from 'joi';
+import bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
+import { User } from '../../models/User';
 
-const validate = body => {
+interface Body {
+  email: string;
+  password: string;
+}
+
+const validate = (body: Body) => {
   const schema = {
     email: Joi.string()
       .min(5)
@@ -23,7 +29,7 @@ const validate = body => {
  *
  * endpoint ➜ POST /api/auth/login
  */
-const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -36,5 +42,3 @@ const login = async (req, res) => {
   user.generateAuthToken(res);
   res.json(user);
 };
-
-module.exports = login;

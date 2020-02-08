@@ -1,8 +1,20 @@
-const Joi = require('joi');
-const bcrypt = require('bcrypt');
-const { User } = require('../../models/User');
+import Joi from 'joi';
+import bcrypt from 'bcrypt';
+import { Response } from 'express';
+import { User } from '../../models/User';
+import { AuthRequest } from '../types';
 
-const validate = body => {
+interface Body {
+  password: string;
+  confirm: string;
+  token: string;
+}
+
+interface Request extends AuthRequest {
+  body: Body;
+}
+
+const validate = (body: Body) => {
   const schema = {
     password: Joi.string()
       .min(5)
@@ -23,7 +35,7 @@ const validate = body => {
  *
  * endpoint ➜ POST /api/auth/reset
  */
-const reset = async (req, res) => {
+export const reset = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
@@ -36,11 +48,9 @@ const reset = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(req.body.password, salt);
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = null;
+  user.resetPasswordExpires = null;
   await user.save();
   user.generateAuthToken(res);
   res.json({ message: '🥑' });
 };
-
-module.exports = reset;

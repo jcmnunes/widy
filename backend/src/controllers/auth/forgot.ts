@@ -1,9 +1,15 @@
-const Joi = require('joi');
-const crypto = require('crypto');
-const mail = require('../../services/mail');
-const { User } = require('../../models/User');
+import Joi from 'joi';
+import crypto from 'crypto';
+import { Response } from 'express';
+import mail from '../../services/mail';
+import { User } from '../../models/User';
+import { AuthRequest } from '../types';
 
-const validate = body => {
+interface Body {
+  email: string;
+}
+
+const validate = (body: Body) => {
   const schema = {
     email: Joi.string()
       .min(5)
@@ -20,7 +26,7 @@ const validate = body => {
  *
  * endpoint ➜ POST /api/auth/forgot
  */
-const forgot = async (req, res) => {
+export const forgot = async (req: AuthRequest, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -40,5 +46,3 @@ const forgot = async (req, res) => {
   }
   return res.status(200).json();
 };
-
-module.exports = forgot;
