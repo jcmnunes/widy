@@ -18,7 +18,6 @@ export function* deleteTaskSaga(action) {
   const activeTaskId = yield select(getActiveTaskId);
 
   const taskIndex = sectionsById[sectionId].tasks.indexOf(taskId);
-  // const selectedTask = tasksById[action.taskId];
 
   try {
     const params = { dayId, sectionId };
@@ -26,7 +25,7 @@ export function* deleteTaskSaga(action) {
     if (taskId === activeTaskId) {
       yield put({ type: activeTaskTypes.RESET_ACTIVE_TASK });
     }
-    yield call(deleteTask, taskId, params);
+    yield call(() => deleteTask(taskId, params));
     yield put({ type: tasksTypes.DELETE_TASK_SUCCESS, taskId });
   } catch (error) {
     yield Toaster.error({

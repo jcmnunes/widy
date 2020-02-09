@@ -2,7 +2,7 @@ import Joi from 'joi';
 import crypto from 'crypto';
 import { Response } from 'express';
 import mail from '../../services/mail';
-import { User } from '../../models/User';
+import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 
 interface Body {
@@ -30,7 +30,7 @@ export const forgot = async (req: AuthRequest, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = await User.findOne({ email: req.body.email });
+  const user = await UserModel.findOne({ email: req.body.email });
   if (user) {
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpires = Date.now() + 3600000;

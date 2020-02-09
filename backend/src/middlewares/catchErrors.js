@@ -7,7 +7,7 @@
  * @param {function} handler - async controller function
  * @return {function} - async route handler function
  */
-module.exports = handler => async (req, res, next) => {
+exports.catchErrors = handler => async (req, res, next) => {
   try {
     await handler(req, res);
   } catch (err) {

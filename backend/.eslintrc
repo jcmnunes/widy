@@ -26,7 +26,8 @@
     "semi": ["error", "always"],
     "import/prefer-default-export": ["off"],
     "@typescript-eslint/interface-name-prefix": ["off"],
-    "@typescript-eslint/explicit-function-return-type": ["off"]
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/no-empty-interface": ["off"]
   },
   "settings": {
     "import/resolver": {

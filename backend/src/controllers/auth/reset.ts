@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import { Response } from 'express';
-import { User } from '../../models/User';
+import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 
 interface Body {
@@ -39,7 +39,7 @@ export const reset = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
-  const user = await User.findOne({
+  const user = await UserModel.findOne({
     resetPasswordToken: req.body.token,
     resetPasswordExpires: { $gt: Date.now() },
   });

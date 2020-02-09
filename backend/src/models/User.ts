@@ -1,11 +1,11 @@
+import { model, Schema, Model, Document, Types } from 'mongoose';
 import { Response } from 'express';
-import mongoose, { Document, Model } from 'mongoose';
 import mongodbErrorHandler from 'mongoose-mongodb-errors';
 import jwt from 'jsonwebtoken';
-import { scopeSchema } from './Scope';
-import { taskSchema } from './Task';
+import { scopeSchema, Scope } from './Scope';
+import { taskSchema, Task } from './Task';
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -76,6 +76,7 @@ const userSchema = new mongoose.Schema(
 // The MongoDBErrorHandler plugin gives us a better 'unique' error
 userSchema.plugin(mongodbErrorHandler);
 
+// eslint-disable-next-line @typescript-eslint/no-inferrable-types
 userSchema.methods.generateAuthToken = function(res: Response, days: number = 60): void {
   const { COOKIE_KEY, APP_SECRET, NODE_ENV } = process.env;
 
@@ -89,14 +90,25 @@ userSchema.methods.generateAuthToken = function(res: Response, days: number = 60
   }
 };
 
-interface IUser extends Document {
+interface User extends Document {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
   resetPasswordToken: string | null;
   resetPasswordExpires: number | null;
+  settings: {
+    pomodoro: {
+      pomodoroLength: number;
+      shortBreak: number;
+      longBreak: number;
+      longBreakAfter: number;
+    };
+  };
+  scopes: Types.DocumentArray<Scope>;
+  archivedScopes: Types.DocumentArray<Scope>;
+  schedule: Types.DocumentArray<Task>;
   generateAuthToken(res: Response, days?: number): void;
 }
 
-export const User: Model<IUser> = mongoose.model<IUser>('User', userSchema);
+export const UserModel: Model<User> = model<User>('User', userSchema);

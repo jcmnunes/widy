@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { User } from '../../models/User';
+import { UserModel } from '../../models/User';
 
 interface Body {
   email: string;
@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = await User.findOne({ email: req.body.email });
+  const user = await UserModel.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Invalid email or password.');
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);

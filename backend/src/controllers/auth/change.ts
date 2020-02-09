@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import { Response } from 'express';
-import { User } from '../../models/User';
+import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 
 interface Body {
@@ -50,7 +50,7 @@ export const change = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'New password cannot be the same' });
   }
 
-  const user = await User.findById(req.userId).select('password');
+  const user = await UserModel.findById(req.userId).select('password');
 
   if (user) {
     const validPassword = await bcrypt.compare(oldPassword, user.password);

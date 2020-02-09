@@ -10,7 +10,6 @@ interface Error {
  *
  * Catches all async/await errors
  */
-// eslint-disable-next-line no-unused-vars
 export default (err: Error, req: Request, res: Response) => {
   const { status = 500, message } = err;
   res.status(status).json(message);
