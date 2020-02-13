@@ -10,17 +10,19 @@ const getTasksById = state => state.tasks.byId;
 export function* updateTaskSaga(action) {
   const dayId = action.context ? action.context.dayId : yield select(getDayId);
   const sectionId = action.context ? action.context.sectionId : yield select(getSectionId);
+  const { taskId, payload } = action;
 
   try {
-    const params = { dayId, sectionId, payload: action.payload };
+    const params = { dayId, sectionId, payload };
     if (!action.context) {
       yield put({
         type: types.UPDATE_TASK_SUCCESS,
-        taskId: action.taskId,
-        payload: params.payload,
+        taskId,
+        payload,
       });
     }
-    yield call(updateTask, action.taskId, params);
+
+    yield call(() => updateTask(taskId, params));
   } catch (error) {
     yield Toaster.error({
       title: 'Could not update the task',
@@ -28,11 +30,11 @@ export function* updateTaskSaga(action) {
     });
     if (!action.context) {
       const taskById = yield select(getTasksById);
-      const selectedTask = taskById[action.taskId];
+      const selectedTask = taskById[taskId];
       yield put({
         type: types.UPDATE_TASK_FAILURE,
         error,
-        taskId: action.taskId,
+        taskId,
         payload: selectedTask,
       });
     }

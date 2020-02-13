@@ -17,28 +17,30 @@ export function* startTaskSaga(action) {
     yield put(stopTask());
   }
 
+  const { taskId, sectionId, taskTitle, taskTime } = action;
+
   try {
     const params = {
       dayId,
-      sectionId: action.sectionId,
+      sectionId,
       start: moment().toISOString(),
     };
     yield put({
       type: types.UPDATE_TASK_SUCCESS,
-      taskId: action.taskId,
+      taskId,
       payload: { start: params.start },
     });
     const activeTask = {
-      taskId: action.taskId,
-      title: action.taskTitle,
-      sectionId: action.sectionId,
+      taskId,
+      title: taskTitle,
+      sectionId,
       dayId,
       start: params.start,
-      time: action.taskTime,
+      time: taskTime,
       inBreak: false,
     };
     yield put(storeActiveTask(activeTask));
-    yield call(startTask, action.taskId, params);
+    yield call(() => startTask(taskId, params));
   } catch (error) {
     yield put({ type: types.CREATE_TASK_FAILURE, error });
   }

@@ -11,7 +11,7 @@ export const scheduleTask = payload => ({
   payload,
 });
 
-const scheduleTaskApi = params => axios.post('/api/tasks/schedule', params);
+const scheduleTaskApi = (taskId, params) => axios.post(`/api/tasks/${taskId}schedule`, params);
 
 export function* scheduleTaskSaga(action) {
   const { dayId, sectionId, taskId, taskIndex } = action.payload;
@@ -21,7 +21,7 @@ export function* scheduleTaskSaga(action) {
   yield put(storeSelectedTaskId(''));
 
   try {
-    yield call(() => scheduleTaskApi({ dayId, sectionId, taskId }));
+    yield call(() => scheduleTaskApi(taskId, { dayId, sectionId }));
   } catch (error) {
     Toaster.error({
       title: 'Something went wrong',

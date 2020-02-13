@@ -34,7 +34,7 @@ export function* stopTaskSaga() {
       time: newTime,
     };
 
-    yield call(stopTask, taskId, params);
+    yield call(() => stopTask(taskId, params));
   } catch (error) {
     yield put({ type: types.CREATE_TASK_FAILURE, error });
   }

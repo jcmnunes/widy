@@ -1,1 +1,0 @@
-exports.getReport = require('./getReport');
