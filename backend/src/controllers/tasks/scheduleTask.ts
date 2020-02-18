@@ -4,17 +4,19 @@ import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
 
+type Params = {
+  id: string;
+};
+
 interface Body {
   dayId: string;
   sectionId: string;
-  taskId: string;
 }
 
 const validate = (body: Body) => {
   const schema = {
     dayId: Joi.string().required(),
     sectionId: Joi.string().required(),
-    taskId: Joi.string().required(),
   };
 
   return Joi.validate(body, schema);
@@ -22,19 +24,21 @@ const validate = (body: Body) => {
 
 interface Request extends AuthRequest {
   body: Body;
+  params: Params;
 }
 
 /**
  * Schedules a task
  *
- * endpoint ➜ POST /api/tasks/schedule
+ * endpoint ➜ POST /api/tasks/:id/schedule
  */
 export const scheduleTask = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {
-    body: { dayId, sectionId, taskId },
+    params: { id: taskId },
+    body: { dayId, sectionId },
     userId,
   } = req;
 

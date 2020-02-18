@@ -11,7 +11,7 @@ export const scheduleTask = payload => ({
   payload,
 });
 
-const scheduleTaskApi = (taskId, params) => axios.post(`/api/tasks/${taskId}schedule`, params);
+const scheduleTaskApi = (taskId, params) => axios.post(`/api/tasks/${taskId}/schedule`, params);
 
 export function* scheduleTaskSaga(action) {
   const { dayId, sectionId, taskId, taskIndex } = action.payload;
