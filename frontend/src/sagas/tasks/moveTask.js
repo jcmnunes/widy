@@ -8,17 +8,18 @@ const getDayId = state => state.days.selected;
 
 export function* moveTaskSaga(action) {
   const dayId = yield select(getDayId);
+
+  const { taskId, fromSectionId, toSectionId, fromIndex, toIndex } = action;
   const params = {
-    taskId: action.taskId,
     dayId,
-    fromSectionId: action.fromSectionId,
-    toSectionId: action.toSectionId,
-    fromIndex: action.fromIndex,
-    toIndex: action.toIndex,
+    fromSectionId,
+    toSectionId,
+    fromIndex,
+    toIndex,
   };
 
   try {
-    yield call(moveTask, params);
+    yield call(() => moveTask(taskId, params));
   } catch (error) {
     yield Toaster.error({
       title: 'Could not move the task',

@@ -1,5 +1,13 @@
 {
-  "extends": ["node", "plugin:prettier/recommended"],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "node",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "es6": true,
     "node": true,
@@ -15,6 +23,17 @@
     "indent": ["warn", 2],
     "quotes": ["error", "single"],
     "max-len": ["error", { "code": 100 }],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "import/prefer-default-export": ["off"],
+    "@typescript-eslint/interface-name-prefix": ["off"],
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/no-empty-interface": ["off"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
   }
 }

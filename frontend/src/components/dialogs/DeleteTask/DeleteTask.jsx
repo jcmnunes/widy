@@ -31,7 +31,7 @@ const DeleteTask = props => {
       contentLabel="Example dialog"
       actions={actions}
     >
-      Are you sure you want to delete?
+      Are you sure you want to delete this task?
     </Dialog>
   );
 };

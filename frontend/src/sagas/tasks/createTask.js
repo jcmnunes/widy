@@ -22,7 +22,7 @@ export function* createTaskSaga(action) {
         scopeId: action.scopeId,
       },
     };
-    const { data } = yield call(createTask, params);
+    const { data } = yield call(() => createTask(params));
     yield put({
       type: types.CREATE_TASK_SUCCESS,
       payload: {

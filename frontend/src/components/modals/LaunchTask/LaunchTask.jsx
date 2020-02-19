@@ -60,7 +60,7 @@ const LaunchTask = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      width="384px"
+      width="500px"
       contentLabel="Modal - Add a new task"
     >
       <form onSubmit={handleSubmit}>
