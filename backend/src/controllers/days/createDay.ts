@@ -1,9 +1,11 @@
 import Joi from 'joi';
 import { Response } from 'express';
+import { Types } from 'mongoose';
 import { UserModel } from '../../models/User';
 import { DayModel } from '../../models/Day';
 import { SectionModel } from '../../models/Section';
 import { AuthRequest } from '../types';
+import { Task } from '../../models/Task';
 
 interface Body {
   day: string;
@@ -63,7 +65,8 @@ export const createDay = async (req: Request, res: Response) => {
 
   const { id, day: savedDay } = await newDay.save();
 
-  user.schedule.forEach(task => task.remove());
+  // Remove all tasks in the schedule
+  user.schedule = ([] as unknown) as Types.DocumentArray<Task>;
   await user.save();
 
   res.json({ day: { id, day: savedDay }, message: '🥑' });
