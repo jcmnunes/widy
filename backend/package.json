@@ -1,6 +1,6 @@
 {
   "name": "widy-backend",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Widy app backend",
   "main": "build/index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "git://github.com/jcmnunes/widy.git"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
     "lint": "eslint ./src/**/*.{ts,js}",
