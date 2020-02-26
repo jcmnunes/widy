@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { getDays } from '../../api/days';
 import * as types from '../../actions/days/types';
 import * as activeTaskTypes from '../../actions/activeTask/types';
-import { loadItem } from '../../helpers/localStorage';
+import { loadItem, validateSelectedDayId } from '../../helpers/localStorage';
 
 const normalize = data => {
   const normalized = {
@@ -22,7 +22,10 @@ export function* getDaysSaga() {
     const { data } = yield call(getDays);
     const { byId, order } = normalize(data);
 
+    validateSelectedDayId(order);
+
     const selectedDayId = loadItem('selectedDayId') || order[0];
+
     yield put({ type: types.GET_DAYS_SUCCESS, byId, order, selectedDayId });
     yield put({ type: activeTaskTypes.ACTIVE_TASK_REQUEST });
     if (selectedDayId && order.length > 0) {

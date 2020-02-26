@@ -8,12 +8,12 @@
     "url": "git://github.com/jcmnunes/widy.git"
   },
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "nodemon src/index.ts",
+    "start:prod": "node build/index.js",
     "build": "tsc -p .",
     "lint": "eslint ./src/**/*.{ts,js}",
-    "sample": "node ./src/data/load-sample-data.js",
-    "delete": "node ./src/data/load-sample-data.js --delete"
+    "sample": "ts-node --files src/data/load-sample-data.ts",
+    "delete": "ts-node --files src/data/load-sample-data.ts --delete"
   },
   "author": "Jose Nunes",
   "license": "MIT",

@@ -27,3 +27,35 @@ export const saveItem = (key, value) => {
     // Ignore errors
   }
 };
+
+/**
+ * Removes item from localstorage
+ */
+export const removeItem = key => {
+  try {
+    localStorage.removeItem(key);
+  } catch (err) {
+    // Ignore errors
+  }
+};
+
+/**
+ * Checks if the saved day id in localStorage is valid (if it can
+ * be selected)
+ *
+ * @param validDayIds {string[]} - List of day ids
+ */
+export const validateSelectedDayId = validDayIds => {
+  // If the saved selected day id is not in the days
+  // list ➜ remove it from localStorage
+  const savedSelectedDayId = loadItem('selectedDayId');
+  if (!savedSelectedDayId) return true;
+
+  const isDayValid = validDayIds.includes(savedSelectedDayId);
+
+  if (!isDayValid) {
+    removeItem('selectedDayId');
+  }
+
+  return isDayValid;
+};
