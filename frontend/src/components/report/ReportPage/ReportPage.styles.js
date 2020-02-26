@@ -76,5 +76,5 @@ export const EmptyStateContainer = styled.div`
 
 export const EmptyStateText = styled.div`
   font-size: 16px;
-  color: ${props => props.theme.neutral400};
+  color: ${props => props.theme.neutral300};
 `;

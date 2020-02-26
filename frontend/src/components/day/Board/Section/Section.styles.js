@@ -17,7 +17,6 @@ export const SectionWithNoTasks = styled.div`
   transition: background-color 0.2s ease;
   font-size: 16px;
   color: ${props => props.theme.neutral300};
-  font-style: italic;
   cursor: pointer;
 
   &:hover {
