@@ -86,6 +86,10 @@ const ActiveTaskPopup = ({
   ) : null;
 };
 
+ActiveTaskPopup.defaultProps = {
+  selectedDayId: null,
+};
+
 ActiveTaskPopup.propTypes = {
   activeTask: PropTypes.shape({
     taskId: PropTypes.string.isRequired,
@@ -96,7 +100,7 @@ ActiveTaskPopup.propTypes = {
     time: PropTypes.number.isRequired,
     start: PropTypes.string,
   }).isRequired,
-  selectedDayId: PropTypes.string.isRequired,
+  selectedDayId: PropTypes.string,
   storeSelectedDay: PropTypes.func.isRequired,
   getDay: PropTypes.func.isRequired,
   stopTask: PropTypes.func.isRequired,

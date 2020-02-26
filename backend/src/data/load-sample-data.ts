@@ -9,29 +9,29 @@ const mongooseOptions = {
   useFindAndModify: false,
 };
 mongoose.connect(process.env.MONGO_URI, mongooseOptions).then(() => console.log('DB connected'));
-mongoose.connection.on('error', err => {
+mongoose.connection.on('error', (err: { message: string}) => {
   console.log(`DB connection error: ${err.message}`);
 });
 
 // import all of our models - they need to be imported only once
-const { Day } = require('../models/Day');
-const { User } = require('../models/User');
+const { DayModel } = require('../models/Day');
+const { UserModel } = require('../models/User');
 
 const days = JSON.parse(fs.readFileSync(__dirname + '/days.json', 'utf-8'));
 const users = JSON.parse(fs.readFileSync(__dirname + '/users.json', 'utf-8'));
 
 async function deleteData() {
   console.log('😢😢 Goodbye Data...');
-  await Day.remove();
-  await User.remove();
+  await DayModel.remove({});
+  await UserModel.remove({});
   console.log('Data Deleted. To load sample data, run\n\n\t npm run sample\n\n');
   process.exit();
 }
 
 async function loadData() {
   try {
-    await Day.insertMany(days);
-    await User.insertMany(users);
+    await DayModel.insertMany(days);
+    await UserModel.insertMany(users);
     console.log('👍👍👍👍👍👍👍👍 Done!');
     process.exit();
   } catch (e) {
