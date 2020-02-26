@@ -1,7 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getDay } from '../../api/days';
 import * as types from '../../actions/days/types';
 import { loadItem } from '../../helpers/localStorage';
+import { activeTaskSelector } from '../../selectors/tasks/tasksSelectors';
+import { storeSelectedTaskId } from '../../actions/tasks';
 
 const normalize = data => {
   const normalized = {
@@ -36,10 +38,18 @@ const normalize = data => {
 
 export function* getDaySaga(action) {
   try {
-    const { data } = yield call(getDay, action.payload);
+    const dayId = action.payload;
+
+    const { data } = yield call(getDay, dayId);
     const { sections, tasks } = normalize(data);
 
     yield put({ type: types.GET_DAY_SUCCESS, sections, tasks });
+
+    // If the day contains the active task ➜ select it
+    const { taskId: activeTaskId, dayId: activeTaskDayId } = yield select(activeTaskSelector);
+    if (activeTaskId && activeTaskDayId && activeTaskDayId === dayId) {
+      yield put(storeSelectedTaskId(activeTaskId));
+    }
   } catch (error) {
     // If we get a 404 we probably have a wrong id in localStorage
     // Delete it and load all days again
