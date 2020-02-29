@@ -13,8 +13,10 @@ export const daysFixture = {
 
 export default {
   loading: false,
+  isLoadingMoreDays: false,
   createDayLoading: false,
   selected: '',
   byId: {},
   order: [],
+  nextPage: null,
 };

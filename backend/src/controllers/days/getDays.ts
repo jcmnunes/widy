@@ -4,17 +4,33 @@ import { AuthRequest } from '../types';
 
 const MAX_DAYS = 100;
 
-interface Request extends AuthRequest {}
+interface Query {
+  page?: number;
+}
+
+interface Request extends AuthRequest {
+  query: Query;
+}
 
 /**
  * Gets a list of days
  *
  * endpoint ➜ GET /api/days
+ * endpoint ➜ GET /api/days?page=1
  */
 export const getDays = async (req: Request, res: Response) => {
-  const days = await DayModel.find({ belongsTo: req.userId })
-    .select('day')
-    .sort({ day: 'desc' })
-    .limit(MAX_DAYS);
-  res.json(days);
+  const page = req.query.page || 1;
+
+  const options = {
+    page,
+    sort: { day: 'desc' },
+    limit: MAX_DAYS,
+  };
+
+  const result = await DayModel.paginate({ belongsTo: req.userId }, options);
+
+  res.json({
+    days: result.docs,
+    nextPage: result.nextPage,
+  });
 };

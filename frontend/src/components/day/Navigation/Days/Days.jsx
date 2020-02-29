@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
+import { Button } from '@binarycapsule/ui-capsules';
 import moment from 'moment';
 import Day from '../Day';
 import { isToday } from '../../../../helpers/dates';
+import {
+  daysNextPageSelector,
+  isLoadingMoreDaysSelector,
+} from '../../../../selectors/days/daysSelectors';
+import LoadingNavigation from '../LoadingNavigation';
 
 const StyledDays = styled.div`
   display: grid;
@@ -15,23 +22,43 @@ const StyledDays = styled.div`
   grid-auto-rows: minmax(min-content, max-content);
 `;
 
-const Days = ({ days, order, selected, isSmall, handleDayClick }) => (
-  <StyledDays>
-    {order.map(id => (
-      <Day
-        key={id}
-        onClick={() => handleDayClick(id)}
-        selected={id === selected}
-        isSmall={isSmall}
-        isToday={isToday(days[id].day)}
-      >
-        {isSmall
-          ? moment(days[id].day).format('MMM DD')
-          : moment(days[id].day).format('ddd DD MMM YYYY')}
-      </Day>
-    ))}
-  </StyledDays>
-);
+const LoadMoreDays = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+`;
+
+const Days = ({ days, order, selected, isSmall, handleDayClick, getMoreDays }) => {
+  const nextPage = useSelector(daysNextPageSelector);
+  const isLoadingMoreDays = useSelector(isLoadingMoreDaysSelector);
+
+  return (
+    <StyledDays>
+      {order.map(id => (
+        <Day
+          key={id}
+          onClick={() => handleDayClick(id)}
+          selected={id === selected}
+          isSmall={isSmall}
+          isToday={isToday(days[id].day)}
+        >
+          {isSmall
+            ? moment(days[id].day).format('MMM DD')
+            : moment(days[id].day).format('ddd DD MMM YYYY')}
+        </Day>
+      ))}
+
+      {isLoadingMoreDays && <LoadingNavigation />}
+      {nextPage && !isLoadingMoreDays && (
+        <LoadMoreDays>
+          <Button onClick={() => getMoreDays(nextPage)} appearance="minimal" size="small">
+            Load more days
+          </Button>
+        </LoadMoreDays>
+      )}
+    </StyledDays>
+  );
+};
 
 Days.propTypes = {
   days: PropTypes.shape({
@@ -41,6 +68,7 @@ Days.propTypes = {
   selected: PropTypes.string.isRequired,
   handleDayClick: PropTypes.func.isRequired,
   isSmall: PropTypes.bool.isRequired,
+  getMoreDays: PropTypes.func.isRequired,
 };
 
 export default Days;
