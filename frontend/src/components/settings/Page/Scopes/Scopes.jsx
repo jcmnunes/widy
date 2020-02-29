@@ -26,7 +26,11 @@ const Scopes = () => {
   const filterScopes = scopesToFilter => {
     return scopesToFilter.filter(({ name, shortCode }) => {
       if (filter) {
-        return name.toLowerCase().includes(filter) || shortCode.toLowerCase().includes(filter);
+        const lowerCaseFilter = filter.toLowerCase();
+        return (
+          name.toLowerCase().includes(lowerCaseFilter) ||
+          shortCode.toLowerCase().includes(lowerCaseFilter)
+        );
       }
       return true;
     });
