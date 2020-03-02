@@ -41,7 +41,10 @@ class NotesEditor extends React.Component {
     this.state = {
       prevSelectedTaskId: id,
       value: Value.fromJSON(existingValue || initialValue),
+      saved: false,
     };
+
+    this.saveInterval = null;
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -58,13 +61,30 @@ class NotesEditor extends React.Component {
     return null;
   }
 
+  componentDidMount() {
+    this.saveInterval = setInterval(this.saveToDatabase, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.saveInterval);
+  }
+
   onChange = value => {
-    // Check to see if the document has changed before saving.
+    // Check to see if the document has changed
     if (value.document !== this.state.value.document) {
-      const payload = { notes: JSON.stringify(value.toJSON()) };
-      this.props.updateTask(this.props.selectedTask.id, payload);
+      this.setState({ saved: false });
     }
     this.setState({ value });
+  };
+
+  saveToDatabase = () => {
+    const { value, saved } = this.state;
+    if (!saved) {
+      const payload = { notes: JSON.stringify(value.toJSON()) };
+      this.props.updateTask(this.props.selectedTask.id, payload);
+
+      this.setState({ saved: true });
+    }
   };
 
   render() {

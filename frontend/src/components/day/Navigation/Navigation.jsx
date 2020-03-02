@@ -9,7 +9,7 @@ import Days from './Days';
 import LoadingNavigation from './LoadingNavigation';
 import { Heading1 } from '../../common/Typography';
 import { IconWidy, IconWidyText } from '../../../icons/widy';
-import { storeSelectedDay, getDays, getDay, createDay } from '../../../actions/days';
+import { createDay, getDay, getDays, getMoreDays, storeSelectedDay } from '../../../actions/days';
 import { storeSelectedTaskId } from '../../../actions/tasks';
 import settings from '../../../helpers/settings';
 
@@ -106,6 +106,7 @@ class Navigation extends Component {
                 selected={selected}
                 isSmall={size.width === DAYS_LIST_MIN_WIDTH}
                 handleDayClick={this.handleDayClick}
+                getMoreDays={this.props.getMoreDays}
               />
             )}
           </StyledNavigation>
@@ -128,6 +129,7 @@ Navigation.propTypes = {
   storeSelectedDay: PropTypes.func.isRequired,
   storeSelectedTaskId: PropTypes.func.isRequired,
   createDay: PropTypes.func.isRequired,
+  getMoreDays: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = state => ({
@@ -140,6 +142,7 @@ export const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getDays,
+  getMoreDays,
   getDay,
   storeSelectedDay,
   createDay,

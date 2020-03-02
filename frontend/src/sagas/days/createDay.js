@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import moment from 'moment';
 import { createDay } from '../../api/days';
 import * as types from '../../actions/days/types';
+import { saveItem } from '../../helpers/localStorage';
 
 export function* createDaySaga() {
   try {
@@ -11,6 +12,8 @@ export function* createDaySaga() {
 
     yield put({ type: types.CREATE_DAY_SUCCESS, day });
     yield put({ type: types.GET_DAY_REQUEST, payload: day.id });
+
+    saveItem('selectedDayId', day.id);
   } catch (error) {
     yield put({ type: types.CREATE_DAY_FAILURE, error });
   }

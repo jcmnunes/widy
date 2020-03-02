@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 import fetchDay from './days/getDay';
-import fetchDays from './days/getDays';
+import { watchGetDays as fetchDays, watchGetMoreDays as fetchMoreDays } from './days/getDays';
 import createDay from './days/createDay';
 import createTask from './tasks/createTask';
 import updateTask from './tasks/updateTask';
@@ -27,14 +27,15 @@ import {
   watchUnarchiveScopeSaga as unarchiveScope,
 } from '../components/settings/Page/Scopes/ScopesTable/ScopesTable.actions';
 import {
-  watchReportGetDaysSagaSaga as reportGetDays,
   watchGetReportSagaSaga as getReport,
+  watchReportGetDaysSagaSaga as reportGetDays,
 } from '../components/report/Report.actions';
 import { watchScheduleTaskSaga as scheduleTask } from '../actions/tasks/scheduleTask.actions';
 
 export default function* rootSaga() {
   yield all([
     fetchDays(),
+    fetchMoreDays(),
     fetchDay(),
     createDay(),
     createTask(),

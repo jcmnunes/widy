@@ -4,7 +4,7 @@ const selectedTaskIdSelector = state => state.tasks.selected;
 const tasksByIdSelector = state => state.tasks.byId;
 const planSectionIdSelector = state => state.sections.order[0];
 const sectionsByIdSelector = state => state.sections.byId;
-const activeTaskSelector = state => state.activeTask;
+export const activeTaskSelector = state => state.activeTask;
 
 export const selectedTaskSelector = createSelector(
   selectedTaskIdSelector,

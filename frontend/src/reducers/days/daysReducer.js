@@ -14,9 +14,25 @@ export default (state = initialState, action) => {
         byId: action.byId,
         order: action.order,
         selected: action.selectedDayId,
+        nextPage: action.nextPage,
       };
     case types.GET_DAYS_FAILURE:
       return { ...state, loading: false };
+    case types.GET_MORE_DAYS_REQUEST:
+      return { ...state, isLoadingMoreDays: true };
+    case types.GET_MORE_DAYS_SUCCESS:
+      return {
+        ...state,
+        isLoadingMoreDays: false,
+        byId: {
+          ...state.byId,
+          ...action.byId,
+        },
+        order: [...state.order, ...action.order],
+        nextPage: action.nextPage,
+      };
+    case types.GET_MORE_DAYS_FAILURE:
+      return { ...state, isLoadingMoreDays: false };
     case types.CREATE_DAY_REQUEST:
       return { ...state, createDayLoading: true };
     case types.CREATE_DAY_SUCCESS:

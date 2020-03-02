@@ -1,5 +1,6 @@
-import { model, Schema, Model, Document, Types } from 'mongoose';
+import { model, Schema, Document, Types, PaginateModel } from 'mongoose';
 import mongodbErrorHandler from 'mongoose-mongodb-errors';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import { sectionSchema, Section } from './Section';
 import { Task } from './Task';
 
@@ -21,6 +22,7 @@ export const daySchema = new Schema(
 
 // The MongoDBErrorHandler plugin gives us a better 'unique' error
 daySchema.plugin(mongodbErrorHandler);
+daySchema.plugin(mongoosePaginate);
 
 daySchema.statics.getActiveTask = function(userId: string) {
   return this.aggregate([
@@ -37,7 +39,7 @@ export interface Day extends Document {
   belongsTo: string;
 }
 
-interface IDayModel extends Model<Day> {
+interface IDayModel<T extends Document> extends PaginateModel<T> {
   getActiveTask(
     userId: string,
   ): {
@@ -50,4 +52,4 @@ interface IDayModel extends Model<Day> {
   }[];
 }
 
-export const DayModel: IDayModel = model<Day, IDayModel>('Day', daySchema);
+export const DayModel: IDayModel<Day> = model<Day, IDayModel<Day>>('Day', daySchema);

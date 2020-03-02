@@ -20,7 +20,7 @@ export const EmptyState = styled.div`
 
 export const Title = styled.h2`
   font-size: 16px;
-  color: ${props => props.theme.neutral400};
+  color: ${props => props.theme.neutral300};
   margin-top: 24px;
 `;
 

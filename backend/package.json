@@ -1,6 +1,6 @@
 {
   "name": "widy-backend",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "description": "Widy app backend",
   "main": "build/index.js",
   "repository": {
@@ -8,19 +8,20 @@
     "url": "git://github.com/jcmnunes/widy.git"
   },
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "nodemon src/index.ts",
+    "start:prod": "node build/index.js",
     "build": "tsc -p .",
     "lint": "eslint ./src/**/*.{ts,js}",
-    "sample": "node ./src/data/load-sample-data.js",
-    "delete": "node ./src/data/load-sample-data.js --delete"
+    "sample": "ts-node --files src/data/load-sample-data.ts",
+    "delete": "ts-node --files src/data/load-sample-data.ts --delete"
   },
   "author": "Jose Nunes",
   "license": "MIT",
   "dependencies": {
     "@meanie/mongoose-to-json": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
-    "bcrypt": "^3.0.8",
+    "@types/mongoose-paginate-v2": "^1.3.1",
+    "bcrypt": "^4.0.1",
     "compression": "^1.7.4",
     "concurrently": "^5.1.0",
     "connect-mongo": "^3.2.0",
@@ -29,7 +30,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
-    "helmet": "^3.21.2",
+    "helmet": "^3.21.3",
     "html-to-text": "^5.1.1",
     "joi": "^14.3.1",
     "joi-objectid": "^3.0.1",
@@ -37,10 +38,11 @@
     "juice": "^6.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "mongoose": "^5.9.1",
+    "mongoose": "^5.9.3",
     "mongoose-mongodb-errors": "0.0.2",
+    "mongoose-paginate-v2": "^1.3.6",
     "morgan": "^1.9.1",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.4",
     "nodemon": "^2.0.2",
     "pug": "^2.0.4"
   },
@@ -50,12 +52,12 @@
     "@types/express": "^4.17.2",
     "@types/helmet": "0.0.45",
     "@types/joi": "^14.3.4",
-    "@types/jsonwebtoken": "^8.3.7",
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/lodash": "^4.14.149",
-    "@types/mongoose": "^5.7.1",
-    "@types/node": "^13.7.2",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
+    "@types/mongoose": "^5.7.3",
+    "@types/node": "^13.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.10.0",
@@ -63,6 +65,6 @@
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   }
 }

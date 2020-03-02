@@ -1,6 +1,6 @@
 {
   "name": "widy",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "description": "Widy - What I did yesterday",
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
     "validate": "cd frontend && npm run format && npm run lint",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
-    "build": "npm run build:frontend && npm run build:backend"
+    "build": "npm run build:frontend && npm run build:backend",
+    "semantic-release": "npx semantic-release"
   }
 }
