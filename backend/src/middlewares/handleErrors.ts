@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 interface Error {
   status?: number;
@@ -7,10 +7,8 @@ interface Error {
 
 /**
  * Error handling middleware.
- *
- * Catches all async/await errors
  */
-export default (err: Error, req: Request, res: Response) => {
+export default function(err: Error, req: Request, res: Response, next: NextFunction) {
   const { status = 500, message } = err;
   res.status(status).json(message);
-};
+}

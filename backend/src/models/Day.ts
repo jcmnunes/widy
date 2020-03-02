@@ -39,7 +39,6 @@ export interface Day extends Document {
   belongsTo: string;
 }
 
-// interface IDayModel extends Model<Day> {
 interface IDayModel<T extends Document> extends PaginateModel<T> {
   getActiveTask(
     userId: string,
