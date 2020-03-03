@@ -4,6 +4,7 @@ import * as types from '../../actions/days/types';
 import { loadItem } from '../../helpers/localStorage';
 import { activeTaskSelector } from '../../selectors/tasks/tasksSelectors';
 import { storeSelectedTaskId } from '../../actions/tasks';
+import { storeSelectedSectionId } from '../../actions/sections';
 
 const normalize = data => {
   const normalized = {
@@ -46,8 +47,13 @@ export function* getDaySaga(action) {
     yield put({ type: types.GET_DAY_SUCCESS, sections, tasks });
 
     // If the day contains the active task ➜ select it
-    const { taskId: activeTaskId, dayId: activeTaskDayId } = yield select(activeTaskSelector);
-    if (activeTaskId && activeTaskDayId && activeTaskDayId === dayId) {
+    const {
+      taskId: activeTaskId,
+      dayId: activeTaskDayId,
+      sectionId: activeTaskSectionId,
+    } = yield select(activeTaskSelector);
+    if (activeTaskId && activeTaskSectionId && activeTaskDayId && activeTaskDayId === dayId) {
+      yield put(storeSelectedSectionId(activeTaskSectionId));
       yield put(storeSelectedTaskId(activeTaskId));
     }
   } catch (error) {
