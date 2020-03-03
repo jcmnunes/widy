@@ -24,8 +24,10 @@ export const getReport = dayId => ({
 
 export function* getDaysSaga() {
   try {
-    const { data } = yield call(() => getDaysApi());
-    yield put({ type: REPORT_GET_DAYS_SUCCESS, days: data });
+    const {
+      data: { days },
+    } = yield call(() => getDaysApi());
+    yield put({ type: REPORT_GET_DAYS_SUCCESS, days });
   } catch (error) {
     yield put({ type: REPORT_GET_DAYS_FAILURE });
     Toaster.error({

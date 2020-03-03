@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import uuidv4 from 'uuid/v4';
+import times from 'lodash/times';
 import { Icon24 } from '@binarycapsule/ui-capsules';
 import { pomodoroSettingsSelector } from '../../../../selectors/settings/settingsSelectors';
 import { getNumberOfPomodoros, getTotalTime } from '../../../../helpers/pomodoro';
@@ -39,11 +39,9 @@ const Stats = ({ time }) => {
     }
     return (
       <Pomodoros>
-        {Array(numPomodoros)
-          .fill('')
-          .map(() => (
-            <Icon24 key={uuidv4()} icon="TIME" />
-          ))}
+        {times(numPomodoros).map(key => (
+          <Icon24 key={key} icon="TIME" />
+        ))}
       </Pomodoros>
     );
   };

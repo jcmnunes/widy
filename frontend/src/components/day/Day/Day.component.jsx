@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -34,30 +34,35 @@ const Day = ({
 }) => {
   const pomodoro = useSelector(pomodoroSettingsSelector);
 
-  const renderDocTitle = (inBreak, elapsedTime) => {
-    if (!activeTaskId) {
-      document.title = 'WIDY';
-      return;
-    }
-    let renderedTime;
-    let symbol;
-    renderedTime = `${elapsedTime} / ${pomodoro.pomodoroLength}`;
-    symbol = '🔶';
-    if (inBreak) {
-      renderedTime = `${elapsedTime} / ${pomodoro.shortBreak}`;
-      symbol = '🔷';
-    }
-    document.title = `${symbol} ${renderedTime} min • ${activeTaskTitle}`;
-  };
+  const renderDocTitle = useCallback(
+    (inBreak, elapsedTime) => {
+      if (!activeTaskId) {
+        document.title = 'WIDY';
+        return;
+      }
+      let renderedTime;
+      let symbol;
+      renderedTime = `${elapsedTime} / ${pomodoro.pomodoroLength}`;
+      symbol = '🔶';
+      if (inBreak) {
+        renderedTime = `${elapsedTime} / ${pomodoro.shortBreak}`;
+        symbol = '🔷';
+      }
+      document.title = `${symbol} ${renderedTime} min • ${activeTaskTitle}`;
+    },
+    [activeTaskId, activeTaskTitle, pomodoro.pomodoroLength, pomodoro.shortBreak],
+  );
 
-  const updateTaskState = () => {
+  const updateTaskState = useCallback(() => {
     const time = activeTaskTime + moment().diff(activeTaskStart, 'seconds');
     const { inBreak, elapsedTime } = getCurrentPomodoroInfo(time, pomodoro);
     renderDocTitle(inBreak, elapsedTime);
-    updateActiveTask({ inBreak }); // TODO ➜ Dispatch only when inBreak changes
-  };
 
-  updateTaskState(); // TODO ➜ This issues a warning
+    // Note ➜ This update below is responsible to trigger a re-render
+    // of activeTask-subscribed components (like the Pomodoro).
+    // TODO: Improve this behavior
+    updateActiveTask({ inBreak });
+  }, [activeTaskStart, activeTaskTime, pomodoro, renderDocTitle, updateActiveTask]);
 
   useEffect(() => {
     if (timer) {
@@ -67,9 +72,9 @@ const Day = ({
     if (activeTaskId) {
       timer = setInterval(updateTaskState, 1000);
     }
+    updateTaskState();
     return () => clearInterval(timer);
-    // TODO ➜ Fix linter warning below
-  }, [activeTaskId, activeTaskTime, activeTaskStart]); // eslint-disable-line
+  }, [activeTaskId, activeTaskTime, activeTaskStart, updateTaskState]);
 
   return (
     <StyledDay>
