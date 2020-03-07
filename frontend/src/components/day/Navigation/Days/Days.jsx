@@ -47,11 +47,14 @@ const Days = ({ days, order, selected, isSmall, handleDayClick, getMoreDays }) =
             : moment(days[id].day).format('ddd DD MMM YYYY')}
         </Day>
       ))}
-
-      {isLoadingMoreDays && <LoadingNavigation />}
-      {nextPage && !isLoadingMoreDays && (
+      {nextPage && (
         <LoadMoreDays>
-          <Button onClick={() => getMoreDays(nextPage)} appearance="minimal" size="small">
+          <Button
+            onClick={() => getMoreDays(nextPage)}
+            appearance="minimal"
+            size="small"
+            isLoading={isLoadingMoreDays}
+          >
             Load more days
           </Button>
         </LoadMoreDays>
