@@ -10,7 +10,6 @@ import {
   daysNextPageSelector,
   isLoadingMoreDaysSelector,
 } from '../../../../selectors/days/daysSelectors';
-import LoadingNavigation from '../LoadingNavigation';
 
 const StyledDays = styled.div`
   display: grid;
