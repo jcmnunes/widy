@@ -27,11 +27,11 @@ export const getCurrentPomodoroInfo = (time, settings) => {
   const { pomodoroLength, shortBreak } = settings;
   const remainingTime = timeInMinutes % (pomodoroLength + shortBreak);
 
-  const info = { inBreak: false, elapsedTime: formatTime(remainingTime) };
+  const info = { inBreak: false, elapsedTime: formatTime(remainingTime * 60) };
 
   if (remainingTime >= pomodoroLength) {
     info.inBreak = true;
-    info.elapsedTime = formatTime(remainingTime - pomodoroLength);
+    info.elapsedTime = formatTime((remainingTime - pomodoroLength) * 60);
   }
 
   return info;
@@ -45,15 +45,18 @@ export const getCurrentPomodoroInfo = (time, settings) => {
  *   getTotalTime(64 * 60) ➜ { hours: 1, minutes: 4 }
  *
  * @param {number} time - Time in secs
- * @returns {{ hours: number, minutes: number }} - Object containing two integers representing
- * time in hours and minutes
+ * @returns {{ hours: number, minutes: number, seconds: number }} - Object containing three
+ * integers representing time in hours, minutes and seconds
  */
 export const getTotalTime = time => {
-  const hours = time / 60 / 60;
+  const hours = Math.floor(time / 60 / 60);
+  const minutes = Math.floor((time - hours * 60 * 60) / 60);
+  const seconds = Math.round(time - hours * 60 * 60 - minutes * 60);
 
   return {
-    hours: Math.floor(hours),
-    minutes: Math.floor((hours - Math.floor(hours)) * 60),
+    hours,
+    minutes,
+    seconds,
   };
 };
 
@@ -72,14 +75,13 @@ export const formatTotalTime = time => {
 };
 
 /**
- * Converts time in secs to a formatted string (00 : 00)
+ * Converts time in seconds to a formatted string (00 : 00)
  *
- * @param {number} time - Time to format (secs)
+ * @param {number} time - Time to format (seconds)
  * @returns {string} - Formatted time ➜ 00 : 00
  */
 export const formatTime = time => {
-  const mins = Math.floor(time);
-  const secs = Math.round((time - Math.floor(time)) * 60);
+  const { minutes, seconds } = getTotalTime(time);
 
-  return `${mins} : ${String(secs).padStart(2, '0')}`;
+  return `${minutes} : ${seconds.toString().padStart(2, '0')}`;
 };

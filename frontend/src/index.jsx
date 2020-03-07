@@ -11,6 +11,9 @@ import store, { runSaga } from './store';
 import history from './router/history';
 import { INIT_REQUEST } from './components/auth/Init/Init.types';
 
+// Run axios config
+import './api/axios';
+
 runSaga();
 
 store.dispatch({ type: INIT_REQUEST });
