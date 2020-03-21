@@ -7,6 +7,7 @@ import {
 } from './PlanTask.actions';
 import { scopesSelector } from '../../../../selectors/scopes/scopesSelectors';
 import { findScopeCode } from '../../../../helpers/scopes';
+import { canScheduleTaskSelector } from '../../../../selectors/tasks/tasksSelectors';
 
 const mapStateToProps = (state, ownProps) => {
   const task = state.tasks.byId[ownProps.taskId];
@@ -16,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedTaskId: state.tasks.selected,
     taskTitle: task ? task.title : '',
     scopeCode: findScopeCode(task.scopeId, scopes),
+    canScheduleTask: canScheduleTaskSelector(state),
   };
 };
 

@@ -36,6 +36,7 @@ class PlanTask extends Component {
       handlePlanTaskClick,
       handlePlanTaskRename,
       handlePlanTaskLaunch,
+      canScheduleTask,
     } = this.props;
     const { showDeleteTaskDialog } = this.state;
     return (
@@ -68,8 +69,11 @@ class PlanTask extends Component {
                 </Tooltip>
                 <Control>
                   <PlanTaskMenu
+                    taskId={taskId}
+                    sectionId={sectionId}
                     handleTrashClick={this.handleTrashClick}
                     handlePlanTaskRename={handlePlanTaskRename}
+                    canScheduleTask={canScheduleTask}
                   />
                 </Control>
               </Actions>
@@ -101,6 +105,7 @@ PlanTask.propTypes = {
   handlePlanTaskClick: PropTypes.func.isRequired,
   handlePlanTaskRename: PropTypes.func.isRequired,
   handlePlanTaskLaunch: PropTypes.func.isRequired,
+  canScheduleTask: PropTypes.bool.isRequired,
 };
 
 export default PlanTask;
