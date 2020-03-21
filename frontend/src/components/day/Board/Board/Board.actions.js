@@ -21,7 +21,7 @@ export const onDragEnd = (result, sectionsById, activeTaskId) => dispatch => {
   } else {
     // When moving a task to the Plan we should stop it
     if (sectionsById[toSectionId].isPlan) {
-      dispatch(updateTaskInStore(draggableId, { time: 0, start: null }));
+      dispatch(updateTaskInStore(draggableId, { time: 0, start: null, completed: false }));
       // The task was active
       if (draggableId === activeTaskId) {
         dispatch(resetActiveTask());

@@ -34,7 +34,7 @@ const TaskMenuComponent = ({
           <DropdownItem text="Rename" icon="EDIT" handleAction={handleTaskRename} />
           {canScheduleTask && (
             <DropdownItem
-              text={'Schedule for "tomorrow"'}
+              text="Schedule"
               icon="SCHEDULE"
               handleAction={() => setShowScheduleTaskDialog(true)}
             />

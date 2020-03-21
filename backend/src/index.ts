@@ -36,9 +36,7 @@ const mongooseOptions = {
 };
 
 // eslint-disable-next-line no-console
-mongoose
-  .connect(process.env.MONGO_URI || '', mongooseOptions)
-  .then(() => console.log('DB connected'));
+mongoose.connect(process.env.MONGO_URI!, mongooseOptions).then(() => console.log('DB connected'));
 
 mongoose.connection.on('error', err => {
   // eslint-disable-next-line no-console
@@ -46,6 +44,9 @@ mongoose.connection.on('error', err => {
 });
 
 const app = express();
+
+app.use(helmet.noCache());
+app.disable('x-powered-by');
 
 if (!dev) {
   app.use(helmet());
@@ -68,7 +69,7 @@ app.use('/api/report', report);
 if (!dev) {
   app.use(express.static('../frontend/build'));
   app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', '..', 'frontend', 'build', 'index.html'));
   });
 }
 
