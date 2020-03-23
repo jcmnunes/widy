@@ -22,6 +22,7 @@ export const getDays = async (req: Request, res: Response) => {
   const page = req.query.page || 1;
 
   const options = {
+    select: 'day',
     page,
     sort: { day: 'desc' },
     limit: MAX_DAYS,
