@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@binarycapsule/editor": "^1.1.1",
-    "@binarycapsule/ui-capsules": "^1.10.2",
+    "@binarycapsule/ui-capsules": "^1.10.3",
     "@nivo/pie": "^0.61.1",
     "axios": "^0.19.2",
     "focus-visible": "^5.0.2",

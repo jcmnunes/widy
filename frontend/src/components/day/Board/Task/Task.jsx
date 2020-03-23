@@ -38,11 +38,6 @@ const Task = ({
       onChange={() => handleTaskCompletedStateChange(isActive, isCompleted, taskId, sectionId)}
     />
     <TaskTitle onDoubleClick={() => handleTaskRename()}>{children}</TaskTitle>
-    {/*
-    <StyledCopyButton>
-      <TaskCopyButton taskTitle={children} />
-    </StyledCopyButton>
-    */}
     <ScopeCode scopeCode={scopeCode} style={{ lineHeight: '23px' }} />
     {!isCompleted && (
       <Controls>

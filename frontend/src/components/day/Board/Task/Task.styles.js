@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
 const getColors = props => {
   const colors = {
@@ -27,39 +27,19 @@ const getColors = props => {
   return colors;
 };
 
-const pulseAnimationIsActive = props => keyframes`
-  from {
-    border-color: ${props.theme.yellow100};
-    box-shadow: 0 0 0 4px ${props.theme.yellow050};
-  }
-
-  to {
-    border-color: ${props.theme.yellow700};
-    box-shadow: 0 0 0 4px ${props.theme.yellow200};
-  }
-`;
-
-const pulseAnimationInBreak = props => keyframes`
-  from {
-    border-color: ${props.theme.blue050};
-    box-shadow: 0 0 0 4px ${props.theme.blue050};
-  }
-
-  to {
-    border-color: ${props.theme.blue400};
-    box-shadow: 0 0 0 4px ${props.theme.blue100};
-  }
-`;
-
-const getAnimation = props => {
-  if (props.isInBreak) return pulseAnimationInBreak(props);
-  if (props.isActive) return pulseAnimationIsActive(props);
-  return null;
-};
-
 export const StyledCopyButton = styled.div`
   display: none;
   height: 24px;
+`;
+
+const isActiveMixin = css`
+  border-color: ${({ theme }) => theme.yellow700};
+  box-shadow: 0 0 0 4px ${({ theme }) => theme.yellow200};
+`;
+
+const isInBreakMixin = css`
+  border-color: ${({ theme }) => theme.blue400};
+  box-shadow: 0 0 0 4px ${({ theme }) => theme.blue100};
 `;
 
 export const StyledTask = styled.div`
@@ -74,10 +54,8 @@ export const StyledTask = styled.div`
   margin: 4px 0;
   color: ${props => (props.isCompleted ? props.theme.neutral300 : props.theme.neutral700)};
   cursor: pointer;
-  animation: ${props => getAnimation(props)};
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  ${({ isActive }) => isActive && isActiveMixin};
+  ${({ isInBreak }) => isInBreak && isInBreakMixin};
 
   &:hover {
     background-color: ${props =>
