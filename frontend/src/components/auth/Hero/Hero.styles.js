@@ -11,7 +11,7 @@ export const Container = styled.div`
   align-content: center;
   justify-items: start;
 
-  @media (max-width: ${props => props.theme.bp_large}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     display: none;
   }
 `;

@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-import { Table, Icon20 } from '@binarycapsule/ui-capsules';
+import {
+  Table,
+  Icon,
+  TableHead,
+  TableHeaderCell,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@binarycapsule/ui-capsules';
 import { formatTotalTime } from '../../../../helpers/pomodoro';
 
-const ScopeRow = styled(Table.Row)`
+const ScopeRow = styled(TableRow)`
   background: ${props => props.theme.neutral100} !important;
   color: ${props => props.theme.neutral600};
   font-weight: 700;
 `;
 
-const TaskRow = styled(Table.Row)`
+const TaskRow = styled(TableRow)`
   background: #fff !important;
 
   > td:first-child {
@@ -21,34 +29,34 @@ const TaskRow = styled(Table.Row)`
 const TasksTable = ({ data }) => {
   return (
     <Table>
-      <Table.Head>
-        <Table.HeaderCell>Tasks</Table.HeaderCell>
-        <Table.HeaderCell textAlign="center">Completed</Table.HeaderCell>
-        <Table.HeaderCell>Time</Table.HeaderCell>
-      </Table.Head>
-      <Table.Body>
+      <TableHead>
+        <TableHeaderCell>Tasks</TableHeaderCell>
+        <TableHeaderCell textAlign="center">Completed</TableHeaderCell>
+        <TableHeaderCell>Time</TableHeaderCell>
+      </TableHead>
+      <TableBody>
         {data.map(
           scope =>
             scope.tasks.length > 0 && (
               <React.Fragment key={scope.id}>
                 <ScopeRow>
-                  <Table.Cell>{scope.scopeTitle}</Table.Cell>
-                  <Table.Cell />
-                  <Table.Cell noWrap>{formatTotalTime(scope.time)}</Table.Cell>
+                  <TableCell>{scope.scopeTitle}</TableCell>
+                  <TableCell />
+                  <TableCell noWrap>{formatTotalTime(scope.time)}</TableCell>
                 </ScopeRow>
                 {scope.tasks.map(({ id, title, completed, time }, index) => (
                   <TaskRow key={id} isEven={index % 2}>
-                    <Table.Cell>{title}</Table.Cell>
-                    <Table.Cell textAlign="center">
-                      {completed ? <Icon20 icon="CHECK" /> : ''}
-                    </Table.Cell>
-                    <Table.Cell noWrap>{formatTotalTime(time)}</Table.Cell>
+                    <TableCell>{title}</TableCell>
+                    <TableCell textAlign="center">
+                      {completed ? <Icon icon="check" /> : ''}
+                    </TableCell>
+                    <TableCell noWrap>{formatTotalTime(time)}</TableCell>
                   </TaskRow>
                 ))}
               </React.Fragment>
             ),
         )}
-      </Table.Body>
+      </TableBody>
     </Table>
   );
 };

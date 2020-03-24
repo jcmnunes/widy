@@ -69,7 +69,7 @@ class Section extends Component {
         </Droppable>
         <Button
           appearance="minimal"
-          iconBefore="PLUS"
+          iconBefore="plus"
           onClick={openCreateTaskModal}
           style={{ marginTop: 8 }}
           data-test="add-task-button"

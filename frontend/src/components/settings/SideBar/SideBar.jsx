@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Icon24, theme } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon, theme } from '@binarycapsule/ui-capsules';
 
 const StyledSideBar = styled.div`
   background: ${props => props.theme.neutral050};
@@ -10,7 +10,7 @@ const StyledSideBar = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (min-width: ${props => props.theme.bp_xlarge}) {
+  @media (min-width: ${props => props.theme.breakpoints.xl}) {
     display: flex;
   }
 `;
@@ -18,8 +18,8 @@ const StyledSideBar = styled.div`
 const SideBar = () => {
   return (
     <StyledSideBar>
-      <Icon24
-        icon="SETTINGS"
+      <IllustratedIcon
+        icon="settings"
         size="128px"
         primaryColor={theme.neutral100}
         secondaryColor={theme.neutral100}

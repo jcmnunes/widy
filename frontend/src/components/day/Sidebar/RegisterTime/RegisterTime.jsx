@@ -13,7 +13,7 @@ const RegisterTime = ({ canRegisterTime, openModal }) => {
 
   return canRegisterTime ? (
     <StyledInsertTime>
-      <Button iconBefore="TIME" onClick={handleOnClick}>
+      <Button iconBefore="clock" onClick={handleOnClick}>
         Register Time
       </Button>
     </StyledInsertTime>

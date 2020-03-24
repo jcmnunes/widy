@@ -16,7 +16,7 @@ const TaskCopyButton = ({ taskTitle, shouldStopPropagation, ...other }) => {
       data-test="copy-button"
       {...other}
     >
-      <IconButton icon="COPY" onClick={event => shouldStopPropagation && event.stopPropagation()} />
+      <IconButton icon="copy" onClick={event => shouldStopPropagation && event.stopPropagation()} />
     </CopyToClipboard>
   );
 };

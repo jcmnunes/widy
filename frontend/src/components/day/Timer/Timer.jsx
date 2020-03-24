@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-import { IconButton } from '@binarycapsule/ui-capsules';
-import theme from '@binarycapsule/ui-capsules/esm/theme';
+import { IconButton, theme } from '@binarycapsule/ui-capsules';
 
 const StyledIconButton = styled(IconButton)`
   svg {
@@ -41,7 +40,7 @@ const Timer = ({
   return (
     <StyledIconButton
       colors={renderColors()}
-      icon={activeTask.taskId === taskId ? 'STOP' : 'PLAY'}
+      icon={activeTask.taskId === taskId ? 'stop' : 'play'}
       onClick={handleClick}
       size={size}
     />

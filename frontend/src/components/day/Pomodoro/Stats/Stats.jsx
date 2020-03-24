@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import times from 'lodash/times';
-import { Icon24 } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon } from '@binarycapsule/ui-capsules';
 import { pomodoroSettingsSelector } from '../../../../selectors/settings/settingsSelectors';
 import { getNumberOfPomodoros, getTotalTime } from '../../../../helpers/pomodoro';
 import { Empty, Multiplier, Pomodoros, StyledStats, Td, Units, Value } from './Stats.styles';
@@ -33,14 +33,14 @@ const Stats = ({ time }) => {
       return (
         <Pomodoros>
           <Multiplier>{numPomodoros} x</Multiplier>
-          <Icon24 icon="TIME" />
+          <IllustratedIcon icon="time" />
         </Pomodoros>
       );
     }
     return (
       <Pomodoros>
         {times(numPomodoros).map(key => (
-          <Icon24 key={key} icon="TIME" />
+          <IllustratedIcon key={key} icon="time" />
         ))}
       </Pomodoros>
     );

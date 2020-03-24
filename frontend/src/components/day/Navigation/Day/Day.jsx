@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-import { Icon20 } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon } from '@binarycapsule/ui-capsules';
 import Badge from '../../../common/Badge/Badge';
 
 const StyledDay = styled.button`
@@ -41,7 +41,7 @@ const Day = ({ onClick, selected, isSmall, isToday, children }) => (
       {isToday && <Badge>Today</Badge>}
       <span>{children}</span>
     </Content>
-    {!isSmall && <Icon20 icon="CHEV_RIGHT" />}
+    {!isSmall && <IllustratedIcon icon="chev_right" />}
   </StyledDay>
 );
 

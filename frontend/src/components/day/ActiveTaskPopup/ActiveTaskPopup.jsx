@@ -79,7 +79,7 @@ const ActiveTaskPopup = ({
         </Tooltip>
         <TaskTitle>{activeTask.title}</TaskTitle>
         <Tooltip placement="top" tooltip="Stop the task">
-          <IconButton icon="STOP" colors={getStopButtonColors()} onClick={handleStopButtonClick} />
+          <IconButton icon="stop" colors={getStopButtonColors()} onClick={handleStopButtonClick} />
         </Tooltip>
       </StyledTask>
     </StyledPopup>

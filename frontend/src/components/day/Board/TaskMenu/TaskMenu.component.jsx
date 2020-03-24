@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
 import DeleteTaskDialog from '../../../dialogs/DeleteTask/DeleteTask.container';
-import { StyledTaskMenu } from './TaskMenu.styles';
 import ScheduleTaskDialog from '../../../dialogs/ScheduleTask/ScheduleTaskDialog';
+import { StyledTaskMenu } from './TaskMenu.styles';
 
 const TaskMenuComponent = ({
   taskId,
@@ -27,19 +27,19 @@ const TaskMenuComponent = ({
   return (
     <>
       <StyledTaskMenu>
-        <Dropdown trigger={<IconButton icon="DOTS_H" />} placement="right">
-          {canRegisterTime ? (
-            <DropdownItem text="Register Time" icon="TIME" handleAction={handleRegisterTimeClick} />
-          ) : null}
-          <DropdownItem text="Rename" icon="EDIT" handleAction={handleTaskRename} />
+        <Dropdown trigger={<IconButton icon="dots_h" />} placement="right">
+          {canRegisterTime && (
+            <DropdownItem text="Register Time" icon="time" handleAction={handleRegisterTimeClick} />
+          )}
+          <DropdownItem text="Rename" icon="edit" handleAction={handleTaskRename} />
           {canScheduleTask && (
             <DropdownItem
               text="Schedule"
-              icon="SCHEDULE"
+              icon="schedule"
               handleAction={() => setShowScheduleTaskDialog(true)}
             />
           )}
-          <DropdownItem text="Delete" icon="TRASH" handleAction={handleDeleteClick} />
+          <DropdownItem text="Delete" icon="trash" handleAction={handleDeleteClick} />
         </Dropdown>
       </StyledTaskMenu>
 
