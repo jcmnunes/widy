@@ -18,7 +18,7 @@ export const Control = styled.div`
 const DotsMenu = ({ children }) => {
   return (
     <Control>
-      <Dropdown trigger={<IconButton icon="DOTS_H" />} placement="right">
+      <Dropdown trigger={<IconButton icon="dots_h" />} placement="right">
         {children}
       </Dropdown>
     </Control>

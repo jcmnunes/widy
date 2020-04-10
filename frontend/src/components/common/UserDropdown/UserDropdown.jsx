@@ -14,16 +14,16 @@ const UserDropdown = () => {
   return (
     <Dropdown
       placement="right"
-      trigger={<IconButton hasBackground hasChev icon="USER_CIRCLE" isRound />}
+      trigger={<IconButton hasBackground hasChev icon="user_circle" isRound />}
     >
       <DropdownItem
         text="Settings"
-        icon="SETTINGS"
+        icon="settings"
         handleAction={() => history.push('/settings/account')}
       />
       <DropdownItem
         text="Log out"
-        icon="LOGOUT"
+        icon="logout"
         handleAction={() => dispatch(logoutRequest())}
         isLoading={isLogoutLoading}
         closeOnAction={false}

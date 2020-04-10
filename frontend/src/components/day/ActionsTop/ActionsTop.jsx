@@ -12,7 +12,7 @@ const ActionsTop = ({ selectedDayId }) => {
     <StyledActionsTop>
       <IconButton
         text="Report"
-        icon="SURVEY"
+        icon="survey"
         isRound
         hasBackground
         onClick={() => history.push(`/report/${selectedDayId}`)}

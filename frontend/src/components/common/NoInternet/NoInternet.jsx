@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Icon24, Modal, ModalBody, theme } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon, Modal, ModalBody, theme } from '@binarycapsule/ui-capsules';
 import { Offline } from 'react-detect-offline';
 
 const Content = styled.div`
@@ -29,8 +29,8 @@ const NoInternet = () => (
     <Modal contentLabel="Offline-modal" isOpen width="340px">
       <ModalBody>
         <Content>
-          <Icon24
-            icon="WIFI_OFF"
+          <IllustratedIcon
+            icon="wifi_off"
             primaryColor={theme.neutral300}
             secondaryColor={theme.red500}
             size="138px"

@@ -30,9 +30,9 @@ const DeleteTask = props => {
       onRequestClose={props.handleClose}
       contentLabel="Example dialog"
       actions={actions}
-    >
-      Are you sure you want to delete this task?
-    </Dialog>
+      title="Delete task?"
+      message="Are you sure you want to delete this task?"
+    />
   );
 };
 

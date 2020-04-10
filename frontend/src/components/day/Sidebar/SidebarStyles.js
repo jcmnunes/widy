@@ -6,7 +6,7 @@ export const StyledSidebar = styled.div`
   height: 100vh;
   overflow-y: auto;
 
-  @media (min-width: ${props => props.theme.bp_xlarge}) {
+  @media (min-width: ${props => props.theme.breakpoints.xl}) {
     padding: 48px;
   }
 `;

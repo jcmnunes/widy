@@ -37,9 +37,9 @@ const ScheduleTaskDialog = ({ isOpen, taskId, sectionId, onRequestClose }) => {
         },
       ]}
       onRequestClose={onRequestClose}
-    >
-      Are you sure you want to schedule this task?
-    </Dialog>
+      title="Schedule task?"
+      message=" Are you sure you want to schedule this task?"
+    />
   );
 };
 

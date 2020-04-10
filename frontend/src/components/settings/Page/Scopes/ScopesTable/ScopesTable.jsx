@@ -72,10 +72,10 @@ const ScopesTable = ({ isArchived, scopes }) => {
             <ScopeCode scopeCode={scope.shortCode} onClick={() => setSelectedScope(scope)} />
             <ScopeName onClick={() => setSelectedScope(scope)}>{scope.name}</ScopeName>
             <DotsMenu>
-              <DropdownItem text="Edit" icon="EDIT" handleAction={() => setSelectedScope(scope)} />
+              <DropdownItem text="Edit" icon="edit" handleAction={() => setSelectedScope(scope)} />
               <DropdownItem
                 text={isArchived ? 'Unarchive' : 'Archive'}
-                icon={isArchived ? 'UNARCHIVE' : 'ARCHIVE'}
+                icon={isArchived ? 'unarchive' : 'archive'}
                 isLoading={isArchivingScope}
                 handleAction={() => {
                   isArchived

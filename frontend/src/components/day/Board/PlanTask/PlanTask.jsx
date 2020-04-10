@@ -57,12 +57,9 @@ class PlanTask extends Component {
               </TitleContainer>
               <Actions>
                 <ScopeCode scopeCode={scopeCode} />
-                {/*
-                <TaskCopyButton taskTitle={taskTitle} />
-                */}
                 <Tooltip tooltip="Start working on this task" delayShow={1000}>
                   <IconButton
-                    icon="LAUNCH"
+                    icon="launch"
                     onClick={handlePlanTaskLaunch}
                     colors={[theme.neutral200, theme.neutral400, theme.blue100, theme.blue500]}
                   />
