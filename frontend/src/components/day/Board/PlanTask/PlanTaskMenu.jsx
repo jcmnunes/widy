@@ -14,16 +14,16 @@ const PlanTaskMenu = ({
 
   return (
     <>
-      <Dropdown trigger={<IconButton icon="DOTS_H" onClick={() => {}} />} placement="right">
-        <DropdownItem text="Rename" icon="EDIT" handleAction={handlePlanTaskRename} />
+      <Dropdown trigger={<IconButton icon="dots_h" onClick={() => {}} />} placement="right">
+        <DropdownItem text="Rename" icon="edit" handleAction={handlePlanTaskRename} />
         {canScheduleTask && (
           <DropdownItem
             text="Schedule"
-            icon="SCHEDULE"
+            icon="schedule"
             handleAction={() => setShowScheduleTaskDialog(true)}
           />
         )}
-        <DropdownItem text="Delete" icon="TRASH" handleAction={handleTrashClick} />
+        <DropdownItem text="Delete" icon="trash" handleAction={handleTrashClick} />
       </Dropdown>
 
       <ScheduleTaskDialog

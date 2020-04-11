@@ -26,7 +26,7 @@ const Page = () => {
   return (
     <StyledPage>
       <ActionsTop>
-        <IconButton icon="LOGOUT" isRound onClick={() => history.push('/')} text="Exit Settings" />
+        <IconButton icon="logout" isRound onClick={() => history.push('/')} text="Exit Settings" />
       </ActionsTop>
       <Switch>
         <Route path="/settings/account">

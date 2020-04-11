@@ -29,7 +29,7 @@ const Sidebar = ({ selectedTaskId, isSelectedTaskInPlan, openModal }) => {
           <NotesEditor />
           <Heading2>Time Management</Heading2>
           {isSelectedTaskInPlan ? (
-            <Button iconBefore="ROCKET" onClick={handleLaunchClick}>
+            <Button iconBefore="rocket" onClick={handleLaunchClick}>
               Launch task
             </Button>
           ) : (

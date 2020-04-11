@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon24 } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon } from '@binarycapsule/ui-capsules';
 import LogoComponent from '../Logo/Logo.component';
 import { Container, IconWrapper, Item, ItemDescription, ItemTitle, Title } from './Hero.styles';
 
@@ -9,7 +9,7 @@ const HeroComponent = () => (
     <Title>What I Did Yesterday?</Title>
     <Item>
       <IconWrapper>
-        <Icon24 icon="CHART" size="32px" />
+        <IllustratedIcon icon="chart" size="32px" />
       </IconWrapper>
       <div>
         <ItemTitle>Keep track of what you do</ItemTitle>
@@ -18,7 +18,7 @@ const HeroComponent = () => (
     </Item>
     <Item>
       <IconWrapper>
-        <Icon24 icon="TIME" size="32px" />
+        <IllustratedIcon icon="time" size="32px" />
       </IconWrapper>
       <div>
         <ItemTitle>Stay in the flow</ItemTitle>
@@ -27,7 +27,7 @@ const HeroComponent = () => (
     </Item>
     <Item>
       <IconWrapper>
-        <Icon24 icon="SURVEY" size="32px" />
+        <IllustratedIcon icon="survey" size="32px" />
       </IconWrapper>
       <div>
         <ItemTitle>Get handy reports easily</ItemTitle>

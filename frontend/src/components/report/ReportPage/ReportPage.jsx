@@ -68,7 +68,7 @@ const ReportPage = ({ dayId }) => {
           <ReportDescription>{reportLoading ? '' : formatDay(day)}</ReportDescription>
         </div>
         <ActionsContainer>
-          <IconButton icon="LOGOUT" isRound onClick={() => history.push('/')} text="Exit Report" />
+          <IconButton icon="logout" isRound onClick={() => history.push('/')} text="Exit Report" />
           <UserDropdown />
         </ActionsContainer>
       </ActionsTop>

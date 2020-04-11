@@ -16,7 +16,7 @@ export const Container = styled.div`
   align-items: center;
   background: ${props => props.theme.neutral050};
 
-  @media (max-width: ${props => props.theme.bp_large}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     flex-direction: column;
 
     ${LogoWrapper} {
@@ -34,7 +34,7 @@ export const StyledCard = styled.div`
   display: flex;
   position: relative;
 
-  @media (max-width: ${props => props.theme.bp_large}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     max-width: 480px;
     height: auto;
     margin-top: 48px;
@@ -50,7 +50,7 @@ export const Form = styled.div`
   border-left: 2px solid ${props => props.theme.neutral300};
   padding: 64px;
 
-  @media (max-width: ${props => props.theme.bp_large}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     border-left: none;
     border-radius: 12px;
   }

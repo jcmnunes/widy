@@ -46,7 +46,7 @@ const Scopes = () => {
             <Button
               onClick={() => setIsOpen(true)}
               appearance="primary"
-              iconBefore="PLUS"
+              iconBefore="plus"
               size="large"
             >
               Create new scope
@@ -57,7 +57,7 @@ const Scopes = () => {
                 onChange={({ target: { value } }) => setFilter(value)}
                 placeholder="Search scopes"
                 size="large"
-                iconBefore="SEARCH"
+                iconBefore="search"
               />
             </ScopesSearch>
           </ActionsTop>

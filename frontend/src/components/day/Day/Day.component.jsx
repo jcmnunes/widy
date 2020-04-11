@@ -16,9 +16,9 @@ const StyledDay = styled.div`
   grid-template-columns: 15px 105px 3fr 2fr;
   height: 100vh;
   transition: all 0.3s ease;
-  min-width: ${props => props.theme.bp_xlarge};
+  min-width: ${props => props.theme.breakpoints.xl};
 
-  @media (min-width: ${props => props.theme.bp_xlarge}) {
+  @media (min-width: ${props => props.theme.breakpoints.xl}) {
     grid-template-columns: 15px 254px 1fr 1fr;
   }
 `;

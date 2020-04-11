@@ -31,7 +31,7 @@ const StyledNavigation = styled.div`
     padding: 0 4px;
   }
 
-  @media (min-width: ${props => props.theme.bp_xlarge}) {
+  @media (min-width: ${props => props.theme.breakpoints.xl}) {
     padding: 36px 24px 24px;
 
     .header {
@@ -91,7 +91,7 @@ class Navigation extends Component {
                 isDisabled={isTodayCreated || loading}
                 onClick={this.createDay}
                 appearance="primary"
-                iconBefore="PLUS"
+                iconBefore="plus"
                 isBlock={size.width === DAYS_LIST_MIN_WIDTH}
               >
                 {size.width > DAYS_LIST_MIN_WIDTH ? 'Add Day' : ''}

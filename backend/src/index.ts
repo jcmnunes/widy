@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
+import noCache from 'nocache';
 import compression from 'compression';
 import toJson from '@meanie/mongoose-to-json';
 import handleErrors from './middlewares/handleErrors';
@@ -19,6 +20,7 @@ mongoose.plugin(toJson);
 // Models
 require('./models/User');
 require('./models/Day');
+
 // Routes
 import auth from './routes/auth';
 import users from './routes/users';
@@ -45,7 +47,7 @@ mongoose.connection.on('error', err => {
 
 const app = express();
 
-app.use(helmet.noCache());
+app.use(noCache());
 app.disable('x-powered-by');
 
 if (!dev) {

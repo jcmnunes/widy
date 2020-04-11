@@ -4,9 +4,9 @@ import { AuthRequest } from '../types';
 
 const MAX_DAYS = 100;
 
-interface Query {
-  page?: number;
-}
+type Query = {
+  page: string;
+};
 
 interface Request extends AuthRequest {
   query: Query;
@@ -19,11 +19,11 @@ interface Request extends AuthRequest {
  * endpoint ➜ GET /api/days?page=1
  */
 export const getDays = async (req: Request, res: Response) => {
-  const page = req.query.page || 1;
+  const page = typeof req.query.page === 'string' ? req.query.page : '1';
 
   const options = {
     select: 'day',
-    page,
+    page: parseInt(page),
     sort: { day: 'desc' },
     limit: MAX_DAYS,
   };
