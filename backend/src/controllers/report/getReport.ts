@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
-import { Scope } from '../../models/Scope';
 
 type Params = {
   dayId: string;
@@ -19,19 +18,6 @@ const validate = (params: Params) => {
 
 interface Request extends AuthRequest {
   params: Params;
-}
-
-interface ReportTask {
-  id: string;
-  title: string;
-  time: number;
-  completed: boolean;
-  scope: Scope | null;
-  section: {
-    id: string;
-    title: string;
-    isPlan: boolean;
-  };
 }
 
 /**
@@ -53,27 +39,7 @@ export const getReport = async (req: Request, res: Response) => {
   const user = await UserModel.findById(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  const getScope = (scopeId: string | null) => {
-    if (scopeId) {
-      return user.scopes.id(scopeId) || user.archivedScopes.id(scopeId);
-    }
-    return null;
-  };
-
-  const tasks = day.sections.reduce<ReportTask[]>((acc, section) => {
-    const { tasks, _id: sectionId, title, isPlan } = section;
-    return [
-      ...acc,
-      ...tasks.map(({ id, title: taskTitle, time, scopeId, completed }) => ({
-        id,
-        title: taskTitle,
-        time,
-        completed,
-        scope: getScope(scopeId),
-        section: { id: sectionId, title, isPlan },
-      })),
-    ];
-  }, []);
+  const tasks = await DayModel.getReportTasks(dayId, userId);
   const totalTime = tasks.reduce((acc, { time }) => acc + time, 0);
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(task => task.completed).length;

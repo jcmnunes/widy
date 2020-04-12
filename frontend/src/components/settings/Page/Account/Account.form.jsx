@@ -13,6 +13,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const AccountForm = ({ account: { firstName, lastName, email } }) => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -23,8 +25,6 @@ const AccountForm = ({ account: { firstName, lastName, email } }) => {
       dispatch(saveAccountSettings(values, formik.initialValues, { resetForm, setSubmitting }));
     },
   });
-
-  const dispatch = useDispatch();
 
   const isSavingAccount = formik.isSubmitting;
 
@@ -38,7 +38,7 @@ const AccountForm = ({ account: { firstName, lastName, email } }) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="First name"
-          size="large"
+          inputSize="large"
           value={formik.values.firstName}
           error={formik.errors.firstName && formik.touched.firstName ? formik.errors.firstName : ''}
         />
@@ -51,14 +51,14 @@ const AccountForm = ({ account: { firstName, lastName, email } }) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Last name"
-          size="large"
+          inputSize="large"
           value={formik.values.lastName}
           error={formik.errors.lastName && formik.touched.lastName ? formik.errors.lastName : ''}
         />
       </StyledLabel>
       <StyledLabel>
         Email
-        <Input size="large" value={email} isDisabled />
+        <Input inputSize="large" value={email} isDisabled />
       </StyledLabel>
       <Actions>
         {formik.dirty && (

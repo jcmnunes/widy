@@ -68,7 +68,7 @@ const AddTask = ({ isOpen, isLoading, startCreateTaskRequest, closeModal }) => {
                 value={title}
                 placeholder="Task name"
                 onChange={handleOnChange}
-                size="large"
+                inputSize="large"
                 autoFocus
                 error={error}
               />

@@ -22,20 +22,20 @@ export function* createTaskSaga(action) {
         scopeId: action.scopeId,
       },
     };
-    const { data } = yield call(() => createTask(params));
+    const { data: task } = yield call(() => createTask(params));
     yield put({
       type: types.CREATE_TASK_SUCCESS,
       payload: {
         dayId,
         sectionId,
         task: {
-          id: data.task.id,
-          title: data.task.title,
-          notes: data.task.notes,
-          time: data.task.time,
-          start: data.task.start,
-          completed: data.task.completed,
-          scopeId: data.task.scopeId,
+          id: task.id,
+          title: task.title,
+          notes: task.notes,
+          time: task.time,
+          start: task.start,
+          completed: task.completed,
+          scopeId: task.scopeId,
         },
       },
     });
@@ -43,6 +43,8 @@ export function* createTaskSaga(action) {
       type: modalTypes.CLOSE_MODAL,
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
     yield put({ type: types.CREATE_TASK_FAILURE, error });
   }
 }

@@ -1,8 +1,7 @@
 import Joi from 'joi';
-import { UserModel } from '../../models/User';
-import { validateScope } from '../../helpers/validateScope';
 import { AuthRequest } from '../types';
 import { Response } from 'express';
+import { ScopeModel } from '../../models/Scope';
 
 interface Body {
   id: string;
@@ -45,38 +44,35 @@ export const updateScope = async (req: Request, res: Response) => {
     userId,
   } = req;
 
-  const user = await UserModel.findById(userId);
-  if (!user) return res.status(404).json({ error: 'User not found' });
-
-  const { scopes, archivedScopes } = user;
-
-  // Check if scope name and code already exists
-  const validationError = validateScope({
-    id,
+  // Check if scope name already exists
+  const foundWithSameName = await ScopeModel.findOne({
     name,
+    owner: userId,
+    _id: { $ne: id },
+  });
+  if (foundWithSameName)
+    return res.status(400).json({ field: 'name', error: 'Scope name exists.' });
+
+  // Check if scope shortCode already exists
+  const foundWithSameCode = await ScopeModel.findOne({
     shortCode,
-    scopes,
-    archivedScopes,
+    owner: userId,
+    _id: { $ne: id },
+  });
+  if (foundWithSameCode)
+    return res.status(400).json({ field: 'shortCode', error: 'Scope code exists.' });
+
+  const scope = await ScopeModel.findOne({
+    _id: id,
+    owner: userId,
   });
 
-  if (validationError) {
-    return res.status(400).json(validationError);
-  }
+  if (!scope) return res.status(404).json({ error: 'Scope not found ' });
 
-  const scope = user.scopes.id(id);
-  const archivedScope = user.archivedScopes.id(id);
+  scope.name = name;
+  scope.shortCode = shortCode;
 
-  if (scope) {
-    scope.set({ name, shortCode });
-    await user.save();
-    res.json(scope);
-  }
+  await scope.save();
 
-  if (archivedScope) {
-    archivedScope.set({ name, shortCode });
-    await user.save();
-    res.json(archivedScope);
-  }
-
-  res.status(404).json({ error: 'Scope not found ' });
+  res.json(scope);
 };

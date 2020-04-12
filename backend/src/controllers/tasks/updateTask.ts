@@ -55,7 +55,7 @@ export const updateTask = async (req: Request, res: Response) => {
   if (!task) return res.status(404).json({ error: 'Task not found' });
 
   task.set(payload);
-
   await day.save();
-  res.json({ message: '🥑' });
+
+  res.json(task);
 };

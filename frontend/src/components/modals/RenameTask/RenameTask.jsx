@@ -42,7 +42,7 @@ const RenameTask = ({ isOpen, selectedTaskId, selectedTaskTitle, closeModal, upd
             type="text"
             value={title}
             onChange={handleOnChange}
-            size="large"
+            inputSize="large"
             autoFocus
             error={error}
           />

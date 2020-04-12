@@ -6,14 +6,14 @@ interface Request extends AuthRequest {
   body: Body;
 }
 
-interface ActiveTask {
+export interface ActiveTask {
   taskId: string;
   sectionId: string;
   dayId: string;
   inBreak: boolean;
   title: string;
   time: number;
-  start: number | null;
+  start: string | null;
 }
 
 /**
@@ -45,5 +45,5 @@ export const getActiveTask = async (req: Request, res: Response) => {
     activeTask.dayId = resultArray[0]._id;
   }
 
-  res.json({ message: '🥑', activeTask });
+  res.json(activeTask);
 };

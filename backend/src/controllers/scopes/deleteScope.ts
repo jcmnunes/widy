@@ -1,50 +1,46 @@
 import Joi from 'joi';
 import { Response } from 'express';
-import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
+import { ScopeModel } from '../../models/Scope';
 
-interface Body {
+type Params = {
   id: string;
-}
+};
 
-const validate = (body: Body) => {
+const validate = (params: Params) => {
   const schema = {
     id: Joi.string().required(),
   };
 
-  return Joi.validate(body, schema);
+  return Joi.validate(params, schema);
 };
 
 interface Request extends AuthRequest {
-  body: Body;
+  params: Params;
 }
 
 /**
  * Deletes a Scope
  *
- * endpoint ➜ DELETE /api/scopes
+ * endpoint ➜ DELETE /api/scopes/:id
  */
 export const deleteScope = async (req: Request, res: Response) => {
-  const { error } = validate(req.body);
+  const { error } = validate(req.params);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {
-    body: { id },
+    params: { id },
     userId,
   } = req;
 
-  const user = await UserModel.findById(userId);
-  if (!user) return res.status(404).json({ error: 'User not found' });
-
-  if (user.scopes.length === 0) {
-    return res.status(400).json({ error: 'There are no scopes to delete' });
+  try {
+    await ScopeModel.findOneAndDelete({
+      _id: id,
+      owner: userId,
+    });
+  } catch (err) {
+    return res.status(404).json({ error: 'Scope not found' });
   }
-
-  const scope = user.scopes.id(id);
-  if (!scope) return res.status(404).json({ error: 'Scope not found' });
-
-  scope.remove();
-  await user.save();
 
   res.json({ message: '🥑' });
 };

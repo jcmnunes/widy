@@ -4,9 +4,7 @@ import * as types from '../../actions/activeTask/types';
 
 export function* getActiveTaskSaga() {
   try {
-    const {
-      data: { activeTask },
-    } = yield call(getActiveTask);
+    const { data: activeTask } = yield call(getActiveTask);
 
     yield put({ type: types.ACTIVE_TASK_SUCCESS, activeTask });
   } catch (error) {

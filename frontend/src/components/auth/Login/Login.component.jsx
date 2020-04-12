@@ -94,7 +94,7 @@ class LoginComponent extends Component {
               name="email"
               type="text"
               error={emailError}
-              size="large"
+              inputSize="large"
               onChange={this.handleOnChange}
             />
           </InputField>
@@ -106,7 +106,7 @@ class LoginComponent extends Component {
               name="password"
               type="password"
               error={passwordError}
-              size="large"
+              inputSize="large"
               onChange={this.handleOnChange}
             />
           </InputField>

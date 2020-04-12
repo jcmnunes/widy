@@ -70,5 +70,6 @@ export const scheduleTask = async (req: Request, res: Response) => {
 
   await day.save();
   await user.save();
-  res.json({ message: '🥑' });
+
+  res.json(task);
 };

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components/macro';
-import { WithToasts, ReactModal, theme } from '@binarycapsule/ui-capsules';
+import { WithToasts, setAppElement, theme } from '@binarycapsule/ui-capsules';
 import App from './App';
 import store, { runSaga } from './store';
 import history from './router/history';
@@ -18,7 +18,7 @@ runSaga();
 
 store.dispatch({ type: INIT_REQUEST });
 
-ReactModal.setAppElement('#root');
+setAppElement('#root');
 
 ReactDOM.render(
   <Provider store={store}>

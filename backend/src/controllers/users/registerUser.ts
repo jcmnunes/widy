@@ -14,23 +14,10 @@ interface Body {
 
 const validate = (body: Body) => {
   const schema = {
-    firstName: Joi.string()
-      .min(1)
-      .max(255)
-      .required(),
-    lastName: Joi.string()
-      .min(1)
-      .max(255)
-      .required(),
-    email: Joi.string()
-      .min(5)
-      .max(255)
-      .required()
-      .email(),
-    password: Joi.string()
-      .min(5)
-      .max(255)
-      .required(),
+    firstName: Joi.string().min(1).max(255).required(),
+    lastName: Joi.string().min(1).max(255).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(5).max(255).required(),
   };
 
   return Joi.validate(body, schema);

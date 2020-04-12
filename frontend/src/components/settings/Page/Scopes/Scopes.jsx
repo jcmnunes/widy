@@ -56,7 +56,7 @@ const Scopes = () => {
                 value={filter}
                 onChange={({ target: { value } }) => setFilter(value)}
                 placeholder="Search scopes"
-                size="large"
+                inputSize="large"
                 iconBefore="search"
               />
             </ScopesSearch>

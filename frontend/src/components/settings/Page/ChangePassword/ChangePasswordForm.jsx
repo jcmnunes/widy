@@ -12,12 +12,14 @@ const validationSchema = Yup.object().shape({
   confirm: Yup.string()
     .required('Please confirm your new password')
     // eslint-disable-next-line func-names
-    .test('dontMatch', 'Password do not match', function(value) {
+    .test('dontMatch', 'Password do not match', function (value) {
       return this.parent.password === value;
     }),
 });
 
 const ChangePasswordForm = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       oldPassword: '',
@@ -30,8 +32,6 @@ const ChangePasswordForm = () => {
     },
   });
 
-  const dispatch = useDispatch();
-
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
       <StyledLabel>
@@ -43,7 +43,7 @@ const ChangePasswordForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Enter your current password"
-          size="large"
+          inputSize="large"
           value={formik.values.oldPassword}
           error={
             formik.errors.oldPassword && formik.touched.oldPassword ? formik.errors.oldPassword : ''
@@ -59,7 +59,7 @@ const ChangePasswordForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Enter a new password"
-          size="large"
+          inputSize="large"
           value={formik.values.password}
           error={formik.errors.password && formik.touched.password ? formik.errors.password : ''}
         />
@@ -73,7 +73,7 @@ const ChangePasswordForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Confirm your new password"
-          size="large"
+          inputSize="large"
           value={formik.values.confirm}
           error={formik.errors.confirm && formik.touched.confirm ? formik.errors.confirm : ''}
         />

@@ -74,7 +74,7 @@ const LaunchTask = ({
                 value={id}
                 onChange={handleOnChange}
                 checked={id === checkedId}
-                size="large"
+                inputSize="large"
               >
                 {label}
               </Radio>

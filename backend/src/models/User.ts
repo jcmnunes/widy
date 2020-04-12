@@ -2,7 +2,6 @@ import { model, Schema, Model, Document, Types } from 'mongoose';
 import { Response } from 'express';
 import mongodbErrorHandler from 'mongoose-mongodb-errors';
 import jwt from 'jsonwebtoken';
-import { scopeSchema, Scope } from './Scope';
 import { taskSchema, Task } from './Task';
 
 const userSchema = new Schema(
@@ -65,8 +64,6 @@ const userSchema = new Schema(
         },
       },
     },
-    scopes: [scopeSchema],
-    archivedScopes: [scopeSchema],
     schedule: [taskSchema],
   },
   /* gives us "createdAt" and "updatedAt" fields automatically */
@@ -77,13 +74,14 @@ const userSchema = new Schema(
 userSchema.plugin(mongodbErrorHandler);
 
 // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-userSchema.methods.generateAuthToken = function(res: Response, days: number = 60): void {
+userSchema.methods.generateAuthToken = function (res: Response, days: number = 60): void {
   const { COOKIE_KEY, APP_SECRET, NODE_ENV } = process.env;
 
   if (COOKIE_KEY && APP_SECRET) {
     const token = jwt.sign({ id: this._id }, APP_SECRET, { expiresIn: `${days}d` });
     res.cookie(COOKIE_KEY, token, {
       secure: NODE_ENV === 'production',
+      sameSite: NODE_ENV === 'production' ? 'lax' : 'none',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * days,
     });
@@ -105,8 +103,6 @@ interface User extends Document {
       longBreakAfter: number;
     };
   };
-  scopes: Types.DocumentArray<Scope>;
-  archivedScopes: Types.DocumentArray<Scope>;
   schedule: Types.DocumentArray<Task>;
   generateAuthToken(res: Response, days?: number): void;
 }

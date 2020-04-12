@@ -70,7 +70,7 @@ const ActiveTaskPopup = ({
       >
         <Tooltip placement="top" tooltip="Complete the task">
           <Checkbox
-            size="large"
+            inputSize="large"
             checked={false}
             onChange={handleCheckChange}
             onClick={handleCheckClick}

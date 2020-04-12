@@ -12,10 +12,12 @@ export const allScopesSelector = createSelector(
   (scopes, archivedScopes) => [...scopes, ...archivedScopes],
 );
 
-export const scopesOptionsSelector = createSelector(scopesSelector, scopes =>
-  scopes.map(({ id, name, shortCode }) => ({
-    value: id,
-    label: name,
-    shortCode,
-  })),
-);
+// export const scopesOptionsSelector = createSelector(scopesSelector, scopes =>
+//   scopes.map(({ id, name, shortCode }) => ({
+//     value: id,
+//     label: name,
+//     shortCode,
+//   })),
+// );
+
+export const scopesOptionsSelector = () => [];

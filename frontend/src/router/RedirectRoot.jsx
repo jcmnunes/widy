@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 class RedirectRoot extends Component {
   componentDidMount() {
-    this.props.history.push('/');
+    this.props.history.push('/day');
   }
 
   render() {

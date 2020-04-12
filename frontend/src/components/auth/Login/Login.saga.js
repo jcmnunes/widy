@@ -21,7 +21,7 @@ export function* loginSaga(action) {
     const { data } = yield call(loginAPI, action.params);
     yield put(initSuccess(data));
     yield put(loginSuccess());
-    yield history.push('/');
+    yield history.push('/day');
   } catch (error) {
     yield put(loginFailure(getErrorMessage(error)));
   }

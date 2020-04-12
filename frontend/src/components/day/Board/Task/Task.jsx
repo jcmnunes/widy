@@ -33,7 +33,7 @@ const Task = ({
     {...other}
   >
     <Checkbox
-      size="large"
+      inputSize="large"
       checked={isCompleted}
       onChange={() => handleTaskCompletedStateChange(isActive, isCompleted, taskId, sectionId)}
     />

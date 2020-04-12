@@ -10,15 +10,8 @@ interface Body {
 
 const validate = (body: Body) => {
   const schema = {
-    email: Joi.string()
-      .min(5)
-      .max(255)
-      .email()
-      .required(),
-    password: Joi.string()
-      .min(5)
-      .max(255)
-      .required(),
+    email: Joi.string().min(5).max(255).email().required(),
+    password: Joi.string().min(5).max(255).required(),
   };
 
   return Joi.validate(body, schema);

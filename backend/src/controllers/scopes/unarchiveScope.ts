@@ -1,47 +1,46 @@
 import Joi from 'joi';
 import { Response } from 'express';
-import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
+import { ScopeModel } from '../../models/Scope';
 
-interface Body {
+type Params = {
   id: string;
-}
+};
 
-const validate = (body: Body) => {
+const validate = (params: Params) => {
   const schema = {
     id: Joi.string().required(),
   };
 
-  return Joi.validate(body, schema);
+  return Joi.validate(params, schema);
 };
 
 interface Request extends AuthRequest {
-  body: Body;
+  params: Params;
 }
 
 /**
  * Unarchives a scope
  *
- * endpoint ➜ PUT /api/scopes/unarchive
+ * endpoint ➜ PUT /api/scopes/:id/unarchive
  */
 export const unarchiveScope = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {
-    body: { id },
+    params: { id },
     userId,
   } = req;
 
-  const user = await UserModel.findById(userId);
-  if (!user) return res.status(404).json({ error: 'User not found' });
+  const scope = await ScopeModel.findOne({ _id: id, owner: userId });
 
-  const archivedScope = user.archivedScopes.id(id);
-  if (!archivedScope) return res.status(404).json({ error: 'Scope not found' });
+  if (!scope) return res.status(404).json({ error: 'Scope not found' });
 
-  user.archivedScopes.id(id).remove();
-  user.scopes.unshift(archivedScope);
-  await user.save();
+  if (scope.isArchived) return res.status(400).json({ error: 'Scope is not archived' });
 
-  res.json(archivedScope);
+  scope.isArchived = false;
+  await scope.save();
+
+  res.json(scope);
 };

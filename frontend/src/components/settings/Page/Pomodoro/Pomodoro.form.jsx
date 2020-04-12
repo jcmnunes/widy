@@ -33,6 +33,8 @@ const validationSchema = Yup.object().shape({
 const PomodoroForm = ({
   pomodoroSettings: { pomodoroLength, shortBreak, longBreak, longBreakAfter },
 }) => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       pomodoroLength,
@@ -45,8 +47,6 @@ const PomodoroForm = ({
       dispatch(savePomodoroSettings(values, formik.initialValues, { resetForm, setSubmitting }));
     },
   });
-
-  const dispatch = useDispatch();
 
   const isSavingPomodoroSettings = formik.isSubmitting;
 
@@ -61,7 +61,7 @@ const PomodoroForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Pomodoro length"
-          size="large"
+          inputSize="large"
           value={formik.values.pomodoroLength}
           error={
             formik.errors.pomodoroLength && formik.touched.pomodoroLength
@@ -79,7 +79,7 @@ const PomodoroForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Short break"
-          size="large"
+          inputSize="large"
           value={formik.values.shortBreak}
           error={
             formik.errors.shortBreak && formik.touched.shortBreak ? formik.errors.shortBreak : ''
@@ -95,7 +95,7 @@ const PomodoroForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Long break"
-          size="large"
+          inputSize="large"
           value={formik.values.longBreak}
           error={formik.errors.longBreak && formik.touched.longBreak ? formik.errors.longBreak : ''}
         />
@@ -109,7 +109,7 @@ const PomodoroForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Long break"
-          size="large"
+          inputSize="large"
           value={formik.values.longBreakAfter}
           error={
             formik.errors.longBreakAfter && formik.touched.longBreakAfter

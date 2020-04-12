@@ -6,6 +6,7 @@ import sections from './sections/sectionsReducer';
 import tasks from './tasks/tasksReducer';
 import activeTask from './activeTask/activeTaskReducer';
 import report from '../components/report/Report.reducer';
+import { activeTaskReducer as newActiveTask } from '../features/day/activeTask/activeTaskSlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -15,6 +16,9 @@ const rootReducer = combineReducers({
   tasks,
   activeTask,
   report,
+  newActiveTask,
 });
 
 export default rootReducer;
+
+export type RootState = ReturnType<typeof rootReducer>;

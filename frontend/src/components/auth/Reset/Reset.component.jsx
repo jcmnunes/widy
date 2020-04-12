@@ -100,7 +100,7 @@ class Reset extends Component {
               name="password"
               type="password"
               error={passwordError}
-              size="large"
+              inputSize="large"
               onChange={this.handleOnChange}
             />
           </InputField>
@@ -111,7 +111,7 @@ class Reset extends Component {
               name="confirm"
               type="password"
               error={confirmError}
-              size="large"
+              inputSize="large"
               onChange={this.handleOnChange}
             />
           </InputField>

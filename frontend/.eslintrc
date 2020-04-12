@@ -1,5 +1,13 @@
 {
-  "extends": ["airbnb", "react-app", "plugin:prettier/recommended", "plugin:import/errors"],
+  "extends": [
+    "airbnb",
+    "react-app",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["react", "import", "@typescript-eslint", "react-hooks"],
   "rules": {
     "no-debugger": 2,
     "no-alert": 2,
@@ -31,13 +39,41 @@
         "depth": 3
       }
     ],
-    "import/prefer-default-export": 0
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["state", "draftState"] }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/no-empty-function": ["off"],
+    "@typescript-eslint/no-non-null-assertion": ["off"],
+    "import/prefer-default-export": ["off"],
+    "@typescript-eslint/no-empty-interface": ["off"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ignorePackages": true,
+        "pattern": {
+          "ts": "never",
+          "tsx": "never",
+          "jsx": "never",
+          "js": "never"
+        }
+      }
+    ]
   },
   "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx"]
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+  "overrides": [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "react/prop-types": "off",
+        "@typescript-eslint/explicit-function-return-type": ["off"]
       }
     }
-  }
+  ]
 }

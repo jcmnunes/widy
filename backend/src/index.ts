@@ -20,6 +20,7 @@ mongoose.plugin(toJson);
 // Models
 require('./models/User');
 require('./models/Day');
+require('./models/Scope');
 
 // Routes
 import auth from './routes/auth';
@@ -69,9 +70,9 @@ app.use('/api/scopes', scopes);
 app.use('/api/report', report);
 
 if (!dev) {
-  app.use(express.static('../frontend/build'));
+  app.use(express.static(process.env.STATIC_DIR!));
   app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, '..', '..', 'frontend', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, process.env.INDEX_FILE!));
   });
 }
 
