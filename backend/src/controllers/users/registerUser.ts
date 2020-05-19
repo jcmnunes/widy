@@ -1,9 +1,10 @@
 import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import Joi from 'joi';
-import _ from 'lodash';
+import pick from 'lodash/pick';
 import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
+import { ScheduleModel } from '../../models/Schedule';
 
 interface Body {
   firstName: string;
@@ -39,11 +40,17 @@ export const registerUser = async (req: Request, res: Response) => {
   let user = await UserModel.findOne({ email: req.body.email });
   if (user) return res.status(400).send('User already registered.');
 
-  user = new UserModel(_.pick(req.body, ['firstName', 'lastName', 'email', 'password']));
+  user = new UserModel(pick(req.body, ['firstName', 'lastName', 'email', 'password']));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
+  const schedule = new ScheduleModel({
+    owner: user._id,
+    tasks: [],
+  });
+  await schedule.save();
+
   user.generateAuthToken(res);
-  res.send(_.pick(user, ['_id', 'firstName', 'lastName', 'email']));
+  res.send(pick(user, ['_id', 'firstName', 'lastName', 'email']));
 };

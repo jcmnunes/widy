@@ -1,11 +1,11 @@
 import Joi from 'joi';
 import { Response } from 'express';
 import { Types } from 'mongoose';
-import { UserModel } from '../../models/User';
 import { DayModel } from '../../models/Day';
 import { SectionModel } from '../../models/Section';
 import { AuthRequest } from '../types';
 import { Task } from '../../models/Task';
+import { ScheduleModel } from '../../models/Schedule';
 
 interface Body {
   day: string;
@@ -38,8 +38,13 @@ export const createDay = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Day exists' });
   }
 
-  const user = await UserModel.findById(req.userId);
-  if (!user) return res.status(404).json({ message: 'User not found ' });
+  const schedule = await ScheduleModel.findOne({
+    owner: req.userId,
+  });
+
+  if (!schedule) {
+    return res.status(404).json({ error: 'Schedule not found' });
+  }
 
   const newDay = new DayModel({
     day,
@@ -47,7 +52,7 @@ export const createDay = async (req: Request, res: Response) => {
       new SectionModel({
         title: 'Plan',
         isPlan: true,
-        tasks: user.schedule,
+        tasks: schedule.tasks,
       }),
       new SectionModel({
         title: 'In the morning',
@@ -66,8 +71,8 @@ export const createDay = async (req: Request, res: Response) => {
   const { id, day: savedDay } = await newDay.save();
 
   // Remove all tasks in the schedule
-  user.schedule = ([] as unknown) as Types.DocumentArray<Task>;
-  await user.save();
+  schedule.tasks = ([] as unknown) as Types.DocumentArray<Task>;
+  await schedule.save();
 
   res.json({ day: { id, day: savedDay }, message: '🥑' });
 };

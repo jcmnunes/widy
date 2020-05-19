@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import { Response } from 'express';
-import { UserModel } from '../../models/User';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
+import { ScheduleModel } from '../../models/Schedule';
 
 type Params = {
   id: string;
@@ -63,13 +63,18 @@ export const scheduleTask = async (req: Request, res: Response) => {
 
   section.tasks.id(taskId).remove();
 
-  const user = await UserModel.findById(userId);
-  if (!user) return res.status(404).json({ error: 'User not found' });
+  const schedule = await ScheduleModel.findOne({
+    owner: userId,
+  });
 
-  user.schedule.push(task);
+  if (!schedule) {
+    return res.status(404).json({ error: 'Schedule not found' });
+  }
+
+  schedule.tasks.push(task);
 
   await day.save();
-  await user.save();
+  await schedule.save();
 
   res.json(task);
 };

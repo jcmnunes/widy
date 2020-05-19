@@ -21,6 +21,7 @@ mongoose.plugin(toJson);
 require('./models/User');
 require('./models/Day');
 require('./models/Scope');
+require('./models/Schedule');
 
 // Routes
 import auth from './routes/auth';

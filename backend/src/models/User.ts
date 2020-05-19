@@ -1,8 +1,7 @@
-import { model, Schema, Model, Document, Types } from 'mongoose';
+import { model, Schema, Model, Document } from 'mongoose';
 import { Response } from 'express';
 import mongodbErrorHandler from 'mongoose-mongodb-errors';
 import jwt from 'jsonwebtoken';
-import { taskSchema, Task } from './Task';
 
 const userSchema = new Schema(
   {
@@ -64,7 +63,6 @@ const userSchema = new Schema(
         },
       },
     },
-    schedule: [taskSchema],
   },
   /* gives us "createdAt" and "updatedAt" fields automatically */
   { timestamps: true },
@@ -103,7 +101,6 @@ interface User extends Document {
       longBreakAfter: number;
     };
   };
-  schedule: Types.DocumentArray<Task>;
   generateAuthToken(res: Response, days?: number): void;
 }
 
