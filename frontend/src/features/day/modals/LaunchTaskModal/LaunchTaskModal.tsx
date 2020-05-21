@@ -9,7 +9,7 @@ import {
   Radio,
 } from '@binarycapsule/ui-capsules';
 import { Error, Radios } from './LaunchTaskModal.styles';
-import { SelectOption } from '../../../../types';
+import { SelectOption } from '../../../../typings/types';
 import useDay, { TaskDto } from '../../api/useDay';
 import { useMoveTask } from '../../api/useMoveTask';
 import { useToggleActiveTask } from '../../api/useToggleActiveTask';

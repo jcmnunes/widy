@@ -1,12 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
 import useDay, { useSection, useTask } from '../api/useDay';
 import { IllustrationTodoList } from '../../../icons/Illustrations';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
 import { Heading2 } from '../../../components/common/Typography';
 import {
+  SidebarCloseButton,
   SideBarEmptyState,
   SideBarEmptyStateText,
   SidebarSection,
@@ -15,6 +18,8 @@ import {
 import { ScopeSelect } from '../ScopeSelect/ScopeSelect';
 import { useScopesOptions } from '../api/useScopes';
 import { useUpdateTask } from '../api/useUpdateTask';
+import { sidebarSliceActions } from './SidebarSlice';
+import { isSidebarOpenSelector } from './SideBar.selectors';
 
 interface Props {}
 
@@ -25,6 +30,9 @@ export const SideBar: React.FC<Props> = () => {
   const task = useTask(dayId, sectionId, taskId);
   const scopesOptions = useScopesOptions();
   const [updateTask] = useUpdateTask();
+
+  const isSidebarOpen = useSelector(isSidebarOpenSelector);
+  const dispatch = useDispatch();
 
   if (!section || !task) {
     return (
@@ -38,7 +46,14 @@ export const SideBar: React.FC<Props> = () => {
   }
 
   return (
-    <StyledSidebar>
+    <StyledSidebar isOpen={isSidebarOpen}>
+      <SidebarCloseButton>
+        <Button
+          onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
+          appearance="minimal"
+          iconBefore="x"
+        />
+      </SidebarCloseButton>
       <SidebarSection>
         <div>{day ? moment(day.day).format('ddd DD MMM YYYY') : ''}</div>
       </SidebarSection>

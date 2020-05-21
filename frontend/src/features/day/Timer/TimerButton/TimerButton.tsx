@@ -34,7 +34,10 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
     <IconButton
       colors={isActive ? colors.active : undefined}
       icon={isActive ? 'stop' : 'play'}
-      onClick={() => toggleActiveTask({ dayId, sectionId, task })}
+      onClick={e => {
+        e.stopPropagation();
+        toggleActiveTask({ dayId, sectionId, task });
+      }}
       size={size}
     />
   );

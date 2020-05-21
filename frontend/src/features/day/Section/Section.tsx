@@ -7,6 +7,7 @@ import {
 } from 'react-beautiful-dnd';
 import { Button } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { Task } from '../Task/Task';
 import { SectionEmpty } from './Section.empty';
 import { SectionDto } from '../api/useDay';
@@ -18,6 +19,7 @@ import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
+import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 
 interface Props {
   dayId: string;
@@ -34,8 +36,11 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
 
   const [updateTask] = useUpdateTask();
 
+  const dispatch = useDispatch();
+
   const onTaskClick = (sectionId: string, taskId: string) => {
     history.push(`/day/${dayId}/${sectionId}/${taskId}`);
+    dispatch(sidebarSliceActions.openSidebar());
   };
 
   const renderSection = (provided: DroppableProvided, _snapshot: DroppableStateSnapshot) => (

@@ -7,6 +7,8 @@ import tasks from './tasks/tasksReducer';
 import activeTask from './activeTask/activeTaskReducer';
 import report from '../components/report/Report.reducer';
 import { activeTaskReducer as newActiveTask } from '../features/day/activeTask/activeTaskSlice';
+import { sidebarSliceReducer as sidebar } from '../features/day/SideBar/SidebarSlice';
+import { daysNavSliceReducer as daysNav } from '../features/daysNav/DaysNavSlice';
 
 const rootReducer = combineReducers({
   auth,
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   activeTask,
   report,
   newActiveTask,
+  sidebar,
+  daysNav,
 });
 
 export default rootReducer;
