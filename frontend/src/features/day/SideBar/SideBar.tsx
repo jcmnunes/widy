@@ -20,6 +20,7 @@ import { useScopesOptions } from '../api/useScopes';
 import { useUpdateTask } from '../api/useUpdateTask';
 import { sidebarSliceActions } from './SidebarSlice';
 import { isSidebarOpenSelector } from './SideBar.selectors';
+import { NotesEditor } from '../NotesEditor/NotesEditor';
 
 interface Props {}
 
@@ -93,7 +94,7 @@ export const SideBar: React.FC<Props> = () => {
       </SidebarSection>
       <SidebarSection>
         <Heading2>Notes</Heading2>
-        {/* TODO ➜ NotesEditor */}
+        {dayId && sectionId && <NotesEditor dayId={dayId} sectionId={sectionId} task={task} />}
       </SidebarSection>
     </StyledSidebar>
   );
