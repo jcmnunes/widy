@@ -9,6 +9,7 @@ import useDays from '../daysNav/api/useDays';
 import { Board } from './Board/Board';
 import { SideBar } from './SideBar/SideBar';
 import { StatusBar } from '../../components/StatusBar/StatusBar';
+import { ActiveTaskPopup } from './ActiveTaskPopup/ActiveTaskPopup';
 import { activeTaskActions } from './activeTask/activeTaskSlice';
 import { useActiveTask } from './api/useActiveTask';
 import { useScopes } from './api/useScopes';
@@ -57,6 +58,7 @@ export const Day: React.FC<Props> = () => {
         <DaysNav />
         <Board dayId={dayId} />
         <SideBar />
+        <ActiveTaskPopup />
       </StyledDay>
 
       <ReactQueryDevtools initialIsOpen={false} />

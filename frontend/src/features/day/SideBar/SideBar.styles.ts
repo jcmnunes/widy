@@ -42,7 +42,7 @@ export const SidebarCloseButton = styled.div`
 `;
 
 export const SidebarSection = styled.div`
-  margin: 12px 0;
+  margin: 12px 0 16px;
 `;
 
 export const SideBarEmptyState = styled.div`

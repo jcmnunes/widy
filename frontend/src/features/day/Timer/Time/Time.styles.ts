@@ -7,14 +7,14 @@ export const StyledTime = styled.span`
   margin-left: 12px;
 `;
 
-export const Values = styled.span`
+export const Values = styled.span<{ size: 'sm' | 'md' }>`
   display: inline-block;
-  font-size: 22px;
-  margin-right: 4px;
+  font-size: ${({ size }) => (size === 'sm' ? '16px' : '22px')};
+  margin-right: ${({ size }) => (size === 'sm' ? '2px' : '4px')};
 `;
 
-export const Units = styled.span`
+export const Units = styled.span<{ size: 'sm' | 'md' }>`
   display: inline-block;
-  font-size: 14px;
-  margin-right: 8px;
+  font-size: ${({ size }) => (size === 'sm' ? '12px' : '14px')};
+  margin-right: ${({ size }) => (size === 'sm' ? '4px' : '8px')};
 `;

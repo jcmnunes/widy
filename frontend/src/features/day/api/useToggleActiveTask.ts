@@ -7,7 +7,7 @@ import { useUpdateTask } from './useUpdateTask';
 interface Params {
   dayId?: string;
   sectionId: string;
-  task: TaskDto;
+  task: Pick<TaskDto, 'id' | 'title' | 'time'>;
 }
 
 export const useToggleActiveTask = () => {

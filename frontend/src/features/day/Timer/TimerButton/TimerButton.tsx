@@ -5,7 +5,7 @@ import { useActiveTask } from '../../api/useActiveTask';
 import { TaskDto } from '../../api/useDay';
 import { useToggleActiveTask } from '../../api/useToggleActiveTask';
 
-const colors = {
+export const colors = {
   active: [theme.yellow400, theme.yellow900, theme.yellow500, theme.yellow900],
 };
 

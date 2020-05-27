@@ -19,6 +19,7 @@ import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
+import { useToggleActiveTask } from '../api/useToggleActiveTask';
 import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 
 interface Props {
@@ -35,6 +36,7 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
+  const toggleActiveTask = useToggleActiveTask();
 
   const dispatch = useDispatch();
 
@@ -68,7 +70,14 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
                   isCompleted={task.completed}
                   isDragging={snapshot.isDragging}
                   onClick={() => onTaskClick(id, task.id)}
-                  onCompletedChange={() =>
+                  onCompletedChange={() => {
+                    if (task.id === activeTask?.taskId) {
+                      toggleActiveTask({
+                        dayId,
+                        sectionId: id,
+                        task,
+                      });
+                    }
                     updateTask({
                       taskId: task.id,
                       body: {
@@ -78,8 +87,8 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
                           completed: !task.completed,
                         },
                       },
-                    })
-                  }
+                    });
+                  }}
                 >
                   {isPlan ? (
                     <Launcher sectionId={id} task={task} taskIndex={index} />

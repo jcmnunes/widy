@@ -3,27 +3,28 @@ import { getTotalTime } from '../../../../helpers/pomodoro';
 import { StyledTime, Units, Values } from './Time.styles';
 
 interface Props {
+  size?: 'sm' | 'md';
   time: number;
 }
 
-export const Time: React.FC<Props> = ({ time }) => {
+export const Time: React.FC<Props> = ({ time, size = 'md' }) => {
   const { hours, minutes, seconds } = getTotalTime(time);
 
   return (
     <StyledTime>
       {hours > 0 && (
         <>
-          <Values>{hours}</Values>
-          <Units>h</Units>
+          <Values size={size}>{hours}</Values>
+          <Units size={size}>h</Units>
         </>
       )}
       <>
-        <Values>{minutes}</Values>
-        <Units>min</Units>
+        <Values size={size}>{minutes}</Values>
+        <Units size={size}>min</Units>
       </>
       <>
-        <Values>{seconds}</Values>
-        <Units>s</Units>
+        <Values size={size}>{seconds}</Values>
+        <Units size={size}>s</Units>
       </>
     </StyledTime>
   );

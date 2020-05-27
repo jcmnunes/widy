@@ -16,7 +16,7 @@ interface Props {
   isDragging?: boolean;
   onClick?(): void;
   onCompletedChange?(): void;
-  task: TaskDto;
+  task: Partial<TaskDto>;
 }
 
 export const Task: React.FC<Props> = ({
@@ -49,6 +49,7 @@ export const Task: React.FC<Props> = ({
           inputSize="large"
           checked={!!isCompleted}
           onChange={!isTemp ? onCompletedChange : () => {}}
+          onClick={e => e.stopPropagation()}
         />
       )}
       <TaskTitle isTemp={isTemp} isCompleted={isCompleted}>
