@@ -15,7 +15,6 @@ import logout from '../components/auth/Logout/Logout.saga';
 import forgot from '../components/auth/Forgot/Forgot.sagas';
 import reset from '../components/auth/Reset/Reset.saga';
 import init from '../components/auth/Init/Init.saga';
-import { watchSavePomodoroSettingsSaga as savePomodoroSettings } from '../components/settings/Page/Pomodoro/Pomodoro.actions';
 import { watchSaveAccountSettingsSaga as saveAccountSettings } from '../components/settings/Page/Account/Account.actions';
 import { watchChangePasswordSaga as changePassword } from '../components/settings/Page/ChangePassword/ChangePassword.actions';
 import {
@@ -51,7 +50,6 @@ export default function* rootSaga() {
     forgot(),
     reset(),
     init(),
-    savePomodoroSettings(),
     saveAccountSettings(),
     changePassword(),
     createScope(),

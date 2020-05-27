@@ -25,9 +25,6 @@ const MenuBar = () => {
         <StyledLink to="/settings/scopes" isActive={pageId === 'scopes'}>
           Scopes
         </StyledLink>
-        <StyledLink to="/settings/pomodoro" isActive={pageId === 'pomodoro'}>
-          Pomodoro
-        </StyledLink>
       </Links>
     </StyledMenuBar>
   );

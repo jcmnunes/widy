@@ -4,7 +4,6 @@ import { Route, Switch, useHistory } from 'react-router';
 import { IconButton } from '@binarycapsule/ui-capsules';
 import Account from './Account/Account';
 import ChangePassword from './ChangePassword/ChangePassword';
-import Pomodoro from './Pomodoro/Pomodoro';
 import Scopes from './Scopes/Scopes';
 
 const StyledPage = styled.div`
@@ -42,9 +41,6 @@ const Page = () => {
         </Route>
         <Route path="/settings/scopes">
           <Scopes />
-        </Route>
-        <Route path="/settings/pomodoro">
-          <Pomodoro />
         </Route>
       </Switch>
     </StyledPage>
