@@ -6,12 +6,11 @@ import { Brand } from './Brand/Brand';
 import { DaysNavCloseButton, LoadMoreDays, StyledDaysNav } from './DaysNav.styles';
 import { DaysNavHeader } from './DaysNavHeader/DaysNavHeader';
 import { DaysList } from './DaysList/DaysList';
-import LoadingNavigation from '../../components/day/Navigation/LoadingNavigation';
-import useDays from './api/useDays';
+import { DaysNavLoading } from './DaysNav.loading';
+import { DaysNavError } from './DaysNav.error';
 import { isDaysNavOpenSelector } from './DaysNav.selectors';
 import { daysNavSliceActions } from './DaysNavSlice';
-
-const ErrorState = () => <div>Something went wrong :/</div>;
+import useDays from './api/useDays';
 
 interface Props {}
 
@@ -34,8 +33,8 @@ export const DaysNav: React.FC<Props> = () => {
       </DaysNavCloseButton>
       <Brand />
       <DaysNavHeader isTodayCreated={isTodayCreated} />
-      {status === 'loading' && <LoadingNavigation />}
-      {status === 'error' && <ErrorState />}
+      {status === 'loading' && <DaysNavLoading />}
+      {status === 'error' && <DaysNavError />}
       {status === 'success' && !!days && <DaysList days={days} />}
       {canFetchMore && (
         <LoadMoreDays>

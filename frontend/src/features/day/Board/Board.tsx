@@ -45,7 +45,6 @@ export const Board: React.FC<Props> = ({ dayId }) => {
     <StyledBoard>
       <BoardHeader status={getDayStatus} day={day} />
       {(getDayStatus === 'loading' || getActiveTaskStatus === 'loading') && <BoardLoading />}
-      {/* TODO ➜ BoardError */}
       {(getDayStatus === 'error' || getActiveTaskStatus === 'error') && <BoardError />}
 
       <DragDropContext onDragEnd={handleDragEnd}>
