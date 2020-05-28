@@ -1,50 +1,26 @@
 import { all } from 'redux-saga/effects';
-import fetchDay from './days/getDay';
-import { watchGetDays as fetchDays, watchGetMoreDays as fetchMoreDays } from './days/getDays';
-import createDay from './days/createDay';
-import createTask from './tasks/createTask';
-import updateTask from './tasks/updateTask';
-import deleteTask from './tasks/deleteTask';
-import moveTask from './tasks/moveTask';
-import startTask from './tasks/startTask';
-import stopTask from './tasks/stopTask';
-import launchTask from './tasks/launchTask';
-import getActiveTask from './activeTask/getActiveTask';
-import login from '../components/auth/Login/Login.saga';
-import logout from '../components/auth/Logout/Logout.saga';
-import forgot from '../components/auth/Forgot/Forgot.sagas';
-import reset from '../components/auth/Reset/Reset.saga';
-import init from '../components/auth/Init/Init.saga';
-import { watchSaveAccountSettingsSaga as saveAccountSettings } from '../components/settings/Page/Account/Account.actions';
-import { watchChangePasswordSaga as changePassword } from '../components/settings/Page/ChangePassword/ChangePassword.actions';
+import login from '../features/auth/Login/Login.saga';
+import logout from '../features/auth/Logout/Logout.saga';
+import forgot from '../features/auth/Forgot/Forgot.sagas';
+import reset from '../features/auth/Reset/Reset.saga';
+import init from '../features/auth/Init/Init.saga';
+import { watchSaveAccountSettingsSaga as saveAccountSettings } from '../features/settings/Page/Account/Account.actions';
+import { watchChangePasswordSaga as changePassword } from '../features/settings/Page/ChangePassword/ChangePassword.actions';
 import {
   watchCreateScopeSaga as createScope,
   watchUpdateScopeSaga as updateScope,
-} from '../components/settings/Page/Scopes/ScopeModal/ScopeModal.actions';
+} from '../features/settings/Page/Scopes/ScopeModal/ScopeModal.actions';
 import {
   watchArchiveScopeSaga as archiveScope,
   watchUnarchiveScopeSaga as unarchiveScope,
-} from '../components/settings/Page/Scopes/ScopesTable/ScopesTable.actions';
+} from '../features/settings/Page/Scopes/ScopesTable/ScopesTable.actions';
 import {
   watchGetReportSagaSaga as getReport,
   watchReportGetDaysSagaSaga as reportGetDays,
-} from '../components/report/Report.actions';
-import { watchScheduleTaskSaga as scheduleTask } from '../actions/tasks/scheduleTask.actions';
+} from '../features/report/Report.actions';
 
 export default function* rootSaga() {
   yield all([
-    fetchDays(),
-    fetchMoreDays(),
-    fetchDay(),
-    createDay(),
-    createTask(),
-    updateTask(),
-    moveTask(),
-    deleteTask(),
-    startTask(),
-    stopTask(),
-    launchTask(),
-    getActiveTask(),
     login(),
     logout(),
     forgot(),
@@ -58,6 +34,5 @@ export default function* rootSaga() {
     unarchiveScope(),
     reportGetDays(),
     getReport(),
-    scheduleTask(),
   ]);
 }

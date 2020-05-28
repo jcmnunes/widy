@@ -4,7 +4,7 @@ import { IconButton, Tooltip } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ActiveTaskPopupHeader, StyledActiveTaskPopup } from './ActiveTaskPopup.styles';
-import { Heading2 } from '../../../components/common/Typography';
+import { Heading2 } from '../../../components/Typography';
 import { useActiveTask } from '../api/useActiveTask';
 import { Task } from '../Task/Task';
 import { colors as playButtonColors } from '../Timer/TimerButton/TimerButton';

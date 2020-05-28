@@ -14,7 +14,7 @@ import { SectionDto } from '../api/useDay';
 import { AddTaskModal } from '../modals/AddTaskModal/AddTaskModal';
 import { TimerButton } from '../Timer/TimerButton/TimerButton';
 import { SectionWithTasks, StyledSection, TasksContainer } from './Section.styles';
-import { Heading2 } from '../../../components/common/Typography';
+import { Heading2 } from '../../../components/Typography';
 import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';

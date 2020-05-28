@@ -16,7 +16,7 @@ import {
   ShortCodeHelper,
   ShortCodeLabel,
   ShortCodeWrapper,
-} from '../../../../components/settings/Page/Scopes/ScopeModal/ScopeModal';
+} from '../../../settings/Page/Scopes/ScopeModal/ScopeModal';
 import { ScopeDto, ScopeOption } from '../../api/useScopes';
 import { useUpsertScope } from '../../api/useUpsertScope';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTotalTime } from '../../../../helpers/pomodoro';
+import { getTotalTime } from '../../../../helpers/timeHelpers';
 import { StyledTime, Units, Values } from './Time.styles';
 
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@binarycapsule/ui-capsules';
-import { Heading1 } from '../../../components/common/Typography';
+import { Heading1 } from '../../../components/Typography';
 import { StyledDaysNavHeader } from './DaysNavHeader.styles';
 import { useCreateDay } from '../api/useCreateDay';
 

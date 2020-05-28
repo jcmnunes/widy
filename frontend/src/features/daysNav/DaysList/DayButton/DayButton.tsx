@@ -1,7 +1,7 @@
 import React from 'react';
 import { IllustratedIcon } from '@binarycapsule/ui-capsules';
 import { StyledDayButton, Content } from './DayButton.styles';
-import Badge from '../../../../components/common/Badge/Badge';
+import Badge from '../../../../components/Badge/Badge';
 
 interface Props {
   isSelected: boolean;

@@ -9,7 +9,7 @@ const initialState: ActiveTaskState = {
 };
 
 const activeTask = createSlice({
-  name: 'newActiveTask',
+  name: 'activeTask',
   initialState,
   reducers: {
     activeTaskTick(state) {

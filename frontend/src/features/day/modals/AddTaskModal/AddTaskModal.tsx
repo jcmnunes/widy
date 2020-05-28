@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components/macro';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -9,10 +10,18 @@ import {
   ModalFooter,
   ModalTitle,
 } from '@binarycapsule/ui-capsules';
-import { FormHeading, Section } from '../../../../components/modals/AddTask/AddTask.styles';
 import { useCreateTask } from '../../api/useCreateTask';
 import { useScopesOptions } from '../../api/useScopes';
 import { ScopeSelect } from '../../ScopeSelect/ScopeSelect';
+import { Heading2 } from '../../../../components/Typography';
+
+const Section = styled.div`
+  margin-bottom: 24px;
+`;
+
+const FormHeading = styled(Heading2)`
+  margin-bottom: 4px;
+`;
 
 interface ScopeOption {
   value: string;

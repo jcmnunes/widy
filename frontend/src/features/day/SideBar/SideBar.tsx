@@ -7,7 +7,7 @@ import { Timer } from '../Timer/Timer';
 import useDay, { useSection, useTask } from '../api/useDay';
 import { IllustrationTodoList } from '../../../icons/Illustrations';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
-import { Heading2 } from '../../../components/common/Typography';
+import { Heading2 } from '../../../components/Typography';
 import {
   SidebarCloseButton,
   SideBarEmptyState,

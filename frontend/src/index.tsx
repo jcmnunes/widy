@@ -7,12 +7,12 @@ import { Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components/macro';
 import { WithToasts, setAppElement, theme } from '@binarycapsule/ui-capsules';
 import App from './App';
-import store, { runSaga } from './store';
+import store, { runSaga } from './store/store';
 import history from './router/history';
-import { INIT_REQUEST } from './components/auth/Init/Init.types';
+import { INIT_REQUEST } from './features/auth/Init/Init.types';
 
 // Run axios config
-import './api/axios';
+import './axios/axios';
 
 runSaga();
 

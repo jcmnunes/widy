@@ -1,7 +1,7 @@
-import { LOGIN_SUCCESS } from '../../components/auth/Login/Login.types';
-import { RESET_SUCCESS } from '../../components/auth/Reset/Reset.types';
-import { LOGOUT_SUCCESS } from '../../components/auth/Logout/Logout.types';
-import { INIT_FAILURE, INIT_SUCCESS } from '../../components/auth/Init/Init.types';
+import { LOGIN_SUCCESS } from '../../features/auth/Login/Login.types';
+import { RESET_SUCCESS } from '../../features/auth/Reset/Reset.types';
+import { LOGOUT_SUCCESS } from '../../features/auth/Logout/Logout.types';
+import { INIT_FAILURE, INIT_SUCCESS } from '../../features/auth/Init/Init.types';
 
 const initialState = false;
 
