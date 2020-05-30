@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Button, Icon } from '@binarycapsule/ui-capsules';
+import { AxiosError } from 'axios';
 import { IllustrationOldPC } from '../../../icons/Illustrations';
 import { Brand } from '../../daysNav/Brand/Brand';
 
@@ -32,9 +33,14 @@ const Header = styled.div`
   height: 64px;
 `;
 
-interface Props {}
+interface Props {
+  error?: AxiosError;
+}
 
-export const BoardError: React.FC<Props> = () => {
+// TODO ➜ Improve error handling
+export const BoardError: React.FC<Props> = ({ error }) => {
+  const status = error?.response?.status;
+
   return (
     <StyledBoardError>
       <Header>
@@ -42,11 +48,15 @@ export const BoardError: React.FC<Props> = () => {
       </Header>
       <IllustrationOldPC />
       <ErrorText>
-        <Icon icon="exclamation_c" /> Oops, something went wrong...
+        <Icon icon="exclamation_c" />{' '}
+        {status === 404 ? 'Day not found' : 'Oops, something went wrong...'}
       </ErrorText>
-      <Button appearance="minimal" iconBefore="refresh" onClick={() => document.location.reload()}>
-        Refresh the page
-      </Button>
+
+      {status !== 404 && (
+        <Button appearance="minimal" iconBefore="refresh" onClick={document.location.reload}>
+          Refresh the page
+        </Button>
+      )}
     </StyledBoardError>
   );
 };

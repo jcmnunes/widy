@@ -1,8 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { ReactQueryConfigProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
 import { DaysNav } from '../daysNav/DaysNav';
 import { StyledDay } from './Day.styles';
 import useDays from '../daysNav/api/useDays';
@@ -49,19 +47,13 @@ export const Day: React.FC<Props> = () => {
     return () => clearInterval(timer);
   }, [activeTaskId, dispatch]);
 
-  const queryConfig = useRef({ refetchAllOnWindowFocus: true, suspense: false });
-
   return (
-    <ReactQueryConfigProvider config={queryConfig.current}>
-      <StyledDay>
-        <StatusBar />
-        <DaysNav />
-        <Board dayId={dayId} />
-        <SideBar />
-        <ActiveTaskPopup />
-      </StyledDay>
-
-      <ReactQueryDevtools initialIsOpen={false} />
-    </ReactQueryConfigProvider>
+    <StyledDay>
+      <StatusBar />
+      <DaysNav />
+      <Board dayId={dayId} />
+      <SideBar />
+      <ActiveTaskPopup />
+    </StyledDay>
   );
 };
