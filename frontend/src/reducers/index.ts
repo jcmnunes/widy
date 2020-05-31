@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
 import auth from './auth/authReducer';
-import report from '../features/report/Report.reducer';
 import { activeTaskReducer as activeTask } from '../features/day/activeTask/activeTaskSlice';
 import { sidebarSliceReducer as sidebar } from '../features/day/SideBar/SidebarSlice';
 import { daysNavSliceReducer as daysNav } from '../features/daysNav/DaysNavSlice';
 
 const rootReducer = combineReducers({
   auth,
-  report,
   activeTask,
   sidebar,
   daysNav,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { AxiosError } from 'axios';
-import useDay from '../api/useDay';
+import { useDay } from '../api/useDay';
 import { Section } from '../Section/Section';
 import { BoardLoading } from './Board.loading';
 import { StyledBoard } from './Board.styles';
@@ -9,7 +9,7 @@ import { BoardHeader } from './BoardHeader/BoardHeader';
 import { BoardError } from './Board.error';
 import { useActiveTask } from '../api/useActiveTask';
 import { useMoveTask } from '../api/useMoveTask';
-import useDays from '../../daysNav/api/useDays';
+import { useDays } from '../../daysNav/api/useDays';
 import NoDays from '../../../components/NoDays';
 
 interface Props {

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
 import { isLoadingSelector as isLogoutLoadingSelector } from '../auth/Logout/Logout.selectors';
 import { logoutRequest } from '../auth/Logout/Logout.actions';
 
 export const UserMenu = () => {
+  const { dayId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -19,7 +20,7 @@ export const UserMenu = () => {
       <DropdownItem
         text="Settings"
         icon="settings"
-        handleAction={() => history.push('/settings/account')}
+        handleAction={() => history.push(`/settings/account${dayId ? `/${dayId}` : ''}`)}
       />
       <DropdownItem
         text="Log out"

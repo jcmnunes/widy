@@ -14,7 +14,7 @@ const Routes = () => (
   <Switch>
     <PrivateRoute exact path="/" component={RedirectRoot} />
     <PrivateRoute exact path="/day/:dayId?/:sectionId?/:taskId?" component={Day} />
-    <PrivateRoute exact path="/settings/:pageId" component={Settings} />
+    <PrivateRoute exact path="/settings/:pageId/:dayId?" component={Settings} />
     <PrivateRoute exact path="/report/:dayId" component={Report} />
     <AuthRoute exact path="/login" component={LoginCard} />
     <AuthRoute exact path="/forgot" component={Forgot} />

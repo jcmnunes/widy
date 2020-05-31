@@ -31,9 +31,9 @@ const getDayById = async (_: string, dayId: string) => {
   return data;
 };
 
-export default function useDay(dayId?: string) {
+export const useDay = (dayId?: string) => {
   return useQuery(dayId ? ['days', dayId] : null, getDayById);
-}
+};
 
 export const useSection = (dayId?: string, sectionId?: string): SectionDto | null => {
   const { data: day } = useDay(dayId);

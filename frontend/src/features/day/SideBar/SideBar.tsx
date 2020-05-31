@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
-import useDay, { useSection, useTask } from '../api/useDay';
+import { useDay, useSection, useTask } from '../api/useDay';
 import { IllustrationTodoList } from '../../../icons/Illustrations';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
 import { Heading2 } from '../../../components/Typography';

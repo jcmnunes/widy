@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
 import {
   Table,
   Icon,
@@ -8,25 +6,21 @@ import {
   TableHeaderCell,
   TableBody,
   TableCell,
-  TableRow,
 } from '@binarycapsule/ui-capsules';
 import { formatTotalTime } from '../../../../helpers/timeHelpers';
+import { ScopeRow, TaskRow } from './TasksTable.styles';
+import { ReportTask } from '../../api/useReport';
 
-const ScopeRow = styled(TableRow)`
-  background: ${props => props.theme.neutral100} !important;
-  color: ${props => props.theme.neutral600};
-  font-weight: 700;
-`;
+interface Props {
+  data: {
+    scopeTitle: string;
+    id: string;
+    time?: number;
+    tasks: Pick<ReportTask, 'id' | 'title' | 'completed' | 'time'>[];
+  }[];
+}
 
-const TaskRow = styled(TableRow)`
-  background: #fff !important;
-
-  > td:first-child {
-    padding-left: 32px;
-  }
-`;
-
-const TasksTable = ({ data }) => {
+export const TasksTable: React.FC<Props> = ({ data }) => {
   return (
     <Table>
       <TableHead>
@@ -42,10 +36,10 @@ const TasksTable = ({ data }) => {
                 <ScopeRow>
                   <TableCell>{scope.scopeTitle}</TableCell>
                   <TableCell />
-                  <TableCell noWrap>{formatTotalTime(scope.time)}</TableCell>
+                  <TableCell noWrap>{scope.time ? formatTotalTime(scope.time) : ''}</TableCell>
                 </ScopeRow>
-                {scope.tasks.map(({ id, title, completed, time }, index) => (
-                  <TaskRow key={id} isEven={index % 2}>
+                {scope.tasks.map(({ id, title, completed, time }) => (
+                  <TaskRow key={id}>
                     <TableCell>{title}</TableCell>
                     <TableCell textAlign="center">
                       {completed ? <Icon icon="check" /> : ''}
@@ -60,22 +54,3 @@ const TasksTable = ({ data }) => {
     </Table>
   );
 };
-
-TasksTable.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      scopeTitle: PropTypes.string.isRequired,
-      time: PropTypes.number.isRequired,
-      tasks: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          title: PropTypes.string.isRequired,
-          completed: PropTypes.bool.isRequired,
-          time: PropTypes.number.isRequired,
-        }),
-      ).isRequired,
-    }),
-  ).isRequired,
-};
-
-export default TasksTable;

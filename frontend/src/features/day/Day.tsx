@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { DaysNav } from '../daysNav/DaysNav';
 import { StyledDay } from './Day.styles';
-import useDays from '../daysNav/api/useDays';
+import { useDays } from '../daysNav/api/useDays';
 import { Board } from './Board/Board';
 import { SideBar } from './SideBar/SideBar';
 import { StatusBar } from '../../components/StatusBar/StatusBar';

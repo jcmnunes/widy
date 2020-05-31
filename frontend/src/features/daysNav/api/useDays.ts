@@ -16,7 +16,7 @@ const getDays = async (_: string, page = 1) => {
   return data;
 };
 
-export default function useDays() {
+export const useDays = () => {
   const exports = useInfiniteQuery<GetDaysDto, string, number | undefined>('days', getDays, {
     getFetchMore: lastPage => lastPage.nextPage || false,
   });
@@ -24,7 +24,7 @@ export default function useDays() {
   const days = extractDays(exports.data);
 
   return { ...exports, days };
-}
+};
 
 export const extractDays = (data: GetDaysDto[]): DayDto[] => {
   const nestedDays = data.map(({ days }) => days);

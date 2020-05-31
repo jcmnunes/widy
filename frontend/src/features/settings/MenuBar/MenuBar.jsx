@@ -6,7 +6,9 @@ import { IconWidy, IconWidyText } from '../../../icons/widy';
 import { Brand, Links, StyledMenuBar, StyledLink } from './MenuBar.styles';
 
 const MenuBar = () => {
-  const { pageId } = useParams();
+  const { pageId, dayId } = useParams();
+
+  const getRoute = route => `/settings/${route}${dayId ? `/${dayId}` : ''}`;
 
   return (
     <StyledMenuBar>
@@ -16,13 +18,13 @@ const MenuBar = () => {
       </Brand>
       <Heading1>Settings</Heading1>
       <Links>
-        <StyledLink to="/settings/account" isActive={pageId === 'account'}>
+        <StyledLink to={getRoute('account')} isActive={pageId === 'account'}>
           Account
         </StyledLink>
-        <StyledLink to="/settings/changePassword" isActive={pageId === 'changePassword'}>
+        <StyledLink to={getRoute('changePassword')} isActive={pageId === 'changePassword'}>
           Change Password
         </StyledLink>
-        <StyledLink to="/settings/scopes" isActive={pageId === 'scopes'}>
+        <StyledLink to={getRoute('scopes')} isActive={pageId === 'scopes'}>
           Scopes
         </StyledLink>
       </Links>

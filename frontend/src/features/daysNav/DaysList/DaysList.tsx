@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { StyledDaysList } from './DaysList.styles';
 import { DayButton } from './DayButton/DayButton';
 import { isToday } from '../../../helpers/dates';
@@ -16,9 +16,10 @@ export const DaysList: React.FC<Props> = ({ days }) => {
   const { dayId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const reportMatch = useRouteMatch('/report/:dayId');
 
   const onDayClick = (id: string) => {
-    history.push(`/day/${id}`);
+    history.push(reportMatch ? `/report/${id}` : `/day/${id}`);
     dispatch(daysNavSliceActions.closeDaysNav());
   };
 

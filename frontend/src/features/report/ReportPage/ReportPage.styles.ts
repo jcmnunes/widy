@@ -78,3 +78,18 @@ export const EmptyStateText = styled.div`
   font-size: 16px;
   color: ${props => props.theme.neutral300};
 `;
+
+export const LoadingReport = styled.div`
+  flex-direction: column;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SpinnerText = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  color: ${props => props.theme.neutral400};
+  margin-bottom: 12px;
+`;

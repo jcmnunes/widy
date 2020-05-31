@@ -1,5 +1,18 @@
 import styled from 'styled-components/macro';
 
+export const StyledPage = styled.div`
+  flex: 1;
+  padding: 48px 32px;
+  overflow-y: auto;
+  position: relative;
+`;
+
+export const ActionsTop = styled.div`
+  position: absolute;
+  top: 48px;
+  right: 32px;
+`;
+
 export const PageTitle = styled.h2`
   font-size: 24px;
   font-weight: 700;

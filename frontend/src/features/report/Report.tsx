@@ -2,9 +2,9 @@ import React from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components/macro';
 import MainBar from './MainBar/MainBar';
-import Navigation from './Navigation/Navigation';
 import SideBar from './SideBar/SideBar';
-import ReportPage from './ReportPage/ReportPage';
+import { DaysNav } from '../daysNav/DaysNav';
+import { ReportPage } from './ReportPage/ReportPage';
 
 const StyledReport = styled.div`
   display: flex;
@@ -12,13 +12,15 @@ const StyledReport = styled.div`
   height: 100vh;
 `;
 
-const Report = () => {
+interface Props {}
+
+const Report: React.FC<Props> = () => {
   const { dayId } = useParams();
 
   return (
     <StyledReport>
       <MainBar />
-      <Navigation />
+      <DaysNav />
       <ReportPage dayId={dayId} />
       <SideBar />
     </StyledReport>

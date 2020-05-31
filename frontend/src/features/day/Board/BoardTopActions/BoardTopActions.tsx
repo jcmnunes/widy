@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react';
 import { IconButton } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { UserMenu } from '../../../userMenu/UserMenu';
-import useDays from '../../../daysNav/api/useDays';
+import { useDays } from '../../../daysNav/api/useDays';
 import { StyledBoardTopActions } from './BoardTopActions.styles';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}

@@ -10,7 +10,7 @@ import { DaysNavLoading } from './DaysNav.loading';
 import { DaysNavError } from './DaysNav.error';
 import { isDaysNavOpenSelector } from './DaysNav.selectors';
 import { daysNavSliceActions } from './DaysNavSlice';
-import useDays from './api/useDays';
+import { useDays } from './api/useDays';
 
 interface Props {}
 

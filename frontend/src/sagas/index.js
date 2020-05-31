@@ -14,10 +14,6 @@ import {
   watchArchiveScopeSaga as archiveScope,
   watchUnarchiveScopeSaga as unarchiveScope,
 } from '../features/settings/Page/Scopes/ScopesTable/ScopesTable.actions';
-import {
-  watchGetReportSagaSaga as getReport,
-  watchReportGetDaysSagaSaga as reportGetDays,
-} from '../features/report/Report.actions';
 
 export default function* rootSaga() {
   yield all([
@@ -32,7 +28,5 @@ export default function* rootSaga() {
     updateScope(),
     archiveScope(),
     unarchiveScope(),
-    reportGetDays(),
-    getReport(),
   ]);
 }

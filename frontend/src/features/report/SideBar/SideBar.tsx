@@ -19,7 +19,9 @@ const StyledSideBar = styled.div`
   }
 `;
 
-const SideBar = () => {
+interface Props {}
+
+const SideBar: React.FC<Props> = () => {
   return (
     <StyledSideBar>
       <IllustratedIcon

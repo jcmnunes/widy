@@ -1,25 +1,14 @@
 import React from 'react';
-import styled from 'styled-components/macro';
 import { Route, Switch, useHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { IconButton } from '@binarycapsule/ui-capsules';
 import Account from './Account/Account';
 import ChangePassword from './ChangePassword/ChangePassword';
 import Scopes from './Scopes/Scopes';
-
-const StyledPage = styled.div`
-  flex: 1;
-  padding: 48px 32px;
-  overflow-y: auto;
-  position: relative;
-`;
-
-const ActionsTop = styled.div`
-  position: absolute;
-  top: 48px;
-  right: 32px;
-`;
+import { ActionsTop, StyledPage } from './Page.styles';
 
 const Page = () => {
+  const { dayId } = useParams();
   const history = useHistory();
 
   return (
@@ -28,7 +17,7 @@ const Page = () => {
         <IconButton
           icon="logout"
           isRound
-          onClick={() => history.push('/day')}
+          onClick={() => history.push(`/day${dayId ? `/${dayId}` : ''}`)}
           text="Exit Settings"
         />
       </ActionsTop>
