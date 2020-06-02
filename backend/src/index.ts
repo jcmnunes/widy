@@ -20,13 +20,14 @@ mongoose.plugin(toJson);
 // Models
 require('./models/User');
 require('./models/Day');
+require('./models/Scope');
+require('./models/Schedule');
 
 // Routes
 import auth from './routes/auth';
 import users from './routes/users';
 import days from './routes/days';
 import tasks from './routes/tasks';
-import settings from './routes/settings';
 import scopes from './routes/scopes';
 import report from './routes/report';
 
@@ -64,14 +65,13 @@ app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/days', days);
 app.use('/api/tasks', tasks);
-app.use('/api/settings', settings);
 app.use('/api/scopes', scopes);
 app.use('/api/report', report);
 
 if (!dev) {
-  app.use(express.static('../frontend/build'));
+  app.use(express.static(process.env.STATIC_DIR!));
   app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, '..', '..', 'frontend', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, process.env.INDEX_FILE!));
   });
 }
 

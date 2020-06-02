@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { PageSpinner, theme } from '@binarycapsule/ui-capsules';
-import Modals from './components/modals/Modals';
-import NoInternet from './components/common/NoInternet/NoInternet';
+import NoInternet from './components/NoInternet/NoInternet';
 import Routes from './router/routes';
 import { version } from '../package.json';
 import { IconWidyText } from './icons/widy';
@@ -31,7 +30,6 @@ class App extends Component {
         ) : (
           <Routes />
         )}
-        <Modals />
         <NoInternet />
       </div>
     );
