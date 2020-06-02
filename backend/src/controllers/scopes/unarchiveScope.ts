@@ -25,7 +25,7 @@ interface Request extends AuthRequest {
  * endpoint ➜ PUT /api/scopes/:id/unarchive
  */
 export const unarchiveScope = async (req: Request, res: Response) => {
-  const { error } = validate(req.body);
+  const { error } = validate(req.params);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {
@@ -37,7 +37,7 @@ export const unarchiveScope = async (req: Request, res: Response) => {
 
   if (!scope) return res.status(404).json({ error: 'Scope not found' });
 
-  if (scope.isArchived) return res.status(400).json({ error: 'Scope is not archived' });
+  if (!scope.isArchived) return res.status(400).json({ error: 'Scope is not archived' });
 
   scope.isArchived = false;
   await scope.save();

@@ -7,18 +7,13 @@ import {
   ModalBody,
   ModalFooter,
   ModalTitle,
+  Message,
 } from '@binarycapsule/ui-capsules';
+import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
-import { queryCache } from 'react-query';
-import { produce } from 'immer';
-import {
-  InputField,
-  ShortCodeHelper,
-  ShortCodeLabel,
-  ShortCodeWrapper,
-} from '../../../settings/Page/Scopes/ScopeModal/ScopeModal';
 import { ScopeDto, ScopeOption } from '../../api/useScopes';
 import { useUpsertScope } from '../../api/useUpsertScope';
+import { InputField, ShortCodeLabel, ShortCodeWrapper, ShortCodeHelper } from './ScopeModal.styles';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Please enter the scope's name"),
@@ -28,11 +23,13 @@ const validationSchema = Yup.object().shape({
 interface Props {
   scope?: ScopeDto;
   closeModal(): void;
-  onUpsertScope(scope: ScopeOption): void;
+  onUpsertScope?(scope: ScopeOption): void;
 }
 
 export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }) => {
-  const [createScope, { status }] = useUpsertScope();
+  const [upsertScope, { status, error }] = useUpsertScope();
+  const upsertScopeError = error as AxiosError | undefined;
+
   const formik = useFormik({
     initialValues: {
       name: scope ? scope.name : '',
@@ -40,21 +37,16 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
     },
     validationSchema,
     onSubmit: ({ name, shortCode }) => {
-      createScope(
-        { name, shortCode },
+      upsertScope(
+        { name, shortCode, id: scope?.id },
         {
           onSuccess(newScope) {
-            queryCache.setQueryData<ScopeDto[] | undefined>('scopes', scopes => {
-              if (!scopes) return scopes;
-              return produce(scopes, draftState => {
-                draftState.push(newScope);
+            onUpsertScope &&
+              onUpsertScope({
+                value: newScope.id,
+                label: newScope.name,
+                shortCode: newScope.shortCode,
               });
-            });
-            onUpsertScope({
-              value: newScope.id,
-              label: newScope.name,
-              shortCode: newScope.shortCode,
-            });
             closeModal();
           },
         },
@@ -67,6 +59,14 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
           <ModalTitle>{scope ? 'Edit scope' : 'Create new scope'}</ModalTitle>
+          {status === 'error' && upsertScopeError && (
+            <>
+              <Message appearance="error">
+                {upsertScopeError?.response?.data?.error || 'Something went wrong'}
+              </Message>
+              <div style={{ marginBottom: 12 }} />
+            </>
+          )}
           <InputField>
             Name
             <Input
@@ -111,7 +111,7 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
             appearance="secondary"
             size="large"
             onClick={closeModal}
-            isDisabled={formik.isSubmitting}
+            isDisabled={status === 'loading'}
           >
             Cancel
           </Button>

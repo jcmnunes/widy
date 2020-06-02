@@ -14,13 +14,17 @@ export interface ScopeOption {
   shortCode: string;
 }
 
-const getScopes = async () => {
-  const { data } = await axios.get<ScopeDto[]>(`/api/scopes`);
+const getScopes = async (_: string, isArchived?: boolean) => {
+  const { data } = await axios.get<ScopeDto[]>(`/api/scopes${isArchived ? `?isArchived=1` : ''}`);
   return data;
 };
 
 export const useScopes = () => {
   return useQuery('scopes', getScopes);
+};
+
+export const useArchivedScopes = (isArchived: boolean) => {
+  return useQuery(isArchived ? ['archivedScopes', isArchived] : null, getScopes);
 };
 
 export const useScopesOptions = (): ScopeOption[] => {

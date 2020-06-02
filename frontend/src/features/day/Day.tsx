@@ -10,7 +10,6 @@ import { StatusBar } from '../../components/StatusBar/StatusBar';
 import { ActiveTaskPopup } from './ActiveTaskPopup/ActiveTaskPopup';
 import { activeTaskActions } from './activeTask/activeTaskSlice';
 import { useActiveTask } from './api/useActiveTask';
-import { useScopes } from './api/useScopes';
 
 let timer: number | undefined;
 
@@ -22,7 +21,6 @@ export const Day: React.FC<Props> = () => {
   const dispatch = useDispatch();
 
   const { days } = useDays();
-  useScopes();
 
   const { data: activeTaskData } = useActiveTask();
   const activeTaskId = activeTaskData ? activeTaskData.taskId : null;

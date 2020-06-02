@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { queryCache, useMutation } from 'react-query';
 import { produce } from 'immer';
-import { Toaster } from '@binarycapsule/ui-capsules';
 import { ScopeDto } from './useScopes';
 
 interface UpsertScopeBody {
@@ -45,16 +44,6 @@ export const useUpsertScope = () => {
         return produce(scopes, draftState => {
           draftState.push(data);
         });
-      });
-    },
-
-    onError: (err, newTodo, rollback) => {
-      if (typeof rollback === 'function') {
-        rollback();
-      }
-
-      Toaster.error({
-        title: 'Oops, something went wrong',
       });
     },
   });

@@ -6,14 +6,6 @@ import reset from '../features/auth/Reset/Reset.saga';
 import init from '../features/auth/Init/Init.saga';
 import { watchSaveAccountSettingsSaga as saveAccountSettings } from '../features/settings/Page/Account/Account.actions';
 import { watchChangePasswordSaga as changePassword } from '../features/settings/Page/ChangePassword/ChangePassword.actions';
-import {
-  watchCreateScopeSaga as createScope,
-  watchUpdateScopeSaga as updateScope,
-} from '../features/settings/Page/Scopes/ScopeModal/ScopeModal.actions';
-import {
-  watchArchiveScopeSaga as archiveScope,
-  watchUnarchiveScopeSaga as unarchiveScope,
-} from '../features/settings/Page/Scopes/ScopesTable/ScopesTable.actions';
 
 export default function* rootSaga() {
   yield all([
@@ -24,9 +16,5 @@ export default function* rootSaga() {
     init(),
     saveAccountSettings(),
     changePassword(),
-    createScope(),
-    updateScope(),
-    archiveScope(),
-    unarchiveScope(),
   ]);
 }

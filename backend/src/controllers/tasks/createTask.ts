@@ -64,7 +64,7 @@ export const createTask = async (req: Request, res: Response) => {
   const day = await DayModel.findOne({
     _id: dayId,
     belongsTo: userId,
-  }).populate('sections.tasks.scope');
+  });
 
   if (!day) return res.status(404).json({ error: 'Day not found' });
 
@@ -76,5 +76,10 @@ export const createTask = async (req: Request, res: Response) => {
 
   await day.save();
 
-  res.json(day);
+  const savedDay = await DayModel.findOne({
+    _id: dayId,
+    belongsTo: userId,
+  }).populate('sections.tasks.scope');
+
+  res.json(savedDay);
 };

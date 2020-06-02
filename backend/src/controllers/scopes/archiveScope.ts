@@ -25,7 +25,7 @@ interface Request extends AuthRequest {
  * endpoint ➜ PUT /api/scopes/:id/archive
  */
 export const archiveScope = async (req: Request, res: Response) => {
-  const { error } = validate(req.body);
+  const { error } = validate(req.params);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {

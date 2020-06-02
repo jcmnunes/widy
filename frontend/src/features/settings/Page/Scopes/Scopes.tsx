@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Button, Input, Checkbox } from '@binarycapsule/ui-capsules';
 import ScopesTable from './ScopesTable/ScopesTable';
 import { PageDescription, PageTitle } from '../Page.styles';
-import ScopeModal from './ScopeModal/ScopeModal';
-import {
-  archivedScopesSelector,
-  scopesSelector,
-} from '../../../../selectors/scopes/scopesSelectors';
+import { ScopesTableLoading } from './ScopesTable/ScopesTable.loading';
 import {
   ActionsTop,
   ScopesPageWrapper,
   ScopesSearch,
   ShowArchiveScopesToggle,
 } from './Scopes.styles';
+import { useScopes, ScopeDto, useArchivedScopes } from '../../../day/api/useScopes';
+import { ScopeModal } from '../../../day/modals/ScopeModal/ScopeModal';
 
 const Scopes = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isScopeModalOpen, setIsScopeModalOpen] = useState(false);
   const [showArchivedScopes, setShowArchivedScopes] = useState(false);
   const [filter, setFilter] = useState('');
 
-  const scopes = useSelector(scopesSelector);
-  const archivedScopes = useSelector(archivedScopesSelector);
+  const { data: scopes, status: scopesStatus } = useScopes();
+  const { data: archivedScopes, status: archivedScopesStatus } = useArchivedScopes(
+    showArchivedScopes,
+  );
 
-  const filterScopes = scopesToFilter => {
+  const filterScopes = (scopesToFilter: ScopeDto[]) => {
     return scopesToFilter.filter(({ name, shortCode }) => {
       if (filter) {
         const lowerCaseFilter = filter.toLowerCase();
@@ -44,10 +43,11 @@ const Scopes = () => {
         <ScopesPageWrapper>
           <ActionsTop>
             <Button
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsScopeModalOpen(true)}
               appearance="primary"
               iconBefore="plus"
               size="large"
+              disabled={scopesStatus === 'loading'}
             >
               Create new scope
             </Button>
@@ -58,25 +58,36 @@ const Scopes = () => {
                 placeholder="Search scopes"
                 inputSize="large"
                 iconBefore="search"
+                disabled={scopesStatus === 'loading'}
               />
             </ScopesSearch>
           </ActionsTop>
-          <ScopesTable scopes={filterScopes(scopes)} />
+          {scopesStatus === 'loading' ? (
+            <ScopesTableLoading />
+          ) : (
+            <ScopesTable scopes={filterScopes(scopes!)} />
+          )}
           <ShowArchiveScopesToggle>
             <Checkbox
               appearance="primary"
               checked={showArchivedScopes}
               onChange={() => setShowArchivedScopes(!showArchivedScopes)}
+              isDisabled={scopesStatus === 'loading'}
             >
               Show archived scopes
             </Checkbox>
           </ShowArchiveScopesToggle>
-          {showArchivedScopes && (
-            <ScopesTable isArchived scopes={filterScopes(archivedScopes)} filter={filter} />
+          {archivedScopesStatus === 'loading' ? (
+            <ScopesTableLoading />
+          ) : (
+            showArchivedScopes &&
+            archivedScopesStatus === 'success' && (
+              <ScopesTable isArchived scopes={filterScopes(archivedScopes!)} />
+            )
           )}
         </ScopesPageWrapper>
       </div>
-      {isOpen && <ScopeModal closeModal={() => setIsOpen(false)} />}
+      {isScopeModalOpen && <ScopeModal closeModal={() => setIsScopeModalOpen(false)} />}
     </>
   );
 };

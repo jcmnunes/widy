@@ -3,27 +3,27 @@ import { AuthRequest } from '../types';
 import { Response } from 'express';
 import { ScopeModel } from '../../models/Scope';
 
-interface Body {
+type Params = {
   id: string;
-  payload: {
-    name: string;
-    shortCode: string;
-  };
+};
+
+interface Body {
+  name: string;
+  shortCode: string;
 }
 
-const validate = (body: Body) => {
+const validate = (params: Params, body: Body) => {
   const schema = {
     id: Joi.string().required(),
-    payload: Joi.object({
-      name: Joi.string().required(),
-      shortCode: Joi.string().required(),
-    }).required(),
+    name: Joi.string().required(),
+    shortCode: Joi.string().required(),
   };
 
-  return Joi.validate(body, schema);
+  return Joi.validate({ ...params, ...body }, schema);
 };
 
 interface Request extends AuthRequest {
+  params: Params;
   body: Body;
 }
 
@@ -33,14 +33,12 @@ interface Request extends AuthRequest {
  * endpoint ➜ PUT /api/scopes
  */
 export const updateScope = async (req: Request, res: Response) => {
-  const { error } = validate(req.body);
+  const { error } = validate(req.params, req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   const {
-    body: {
-      id,
-      payload: { name, shortCode },
-    },
+    params: { id },
+    body: { name, shortCode },
     userId,
   } = req;
 

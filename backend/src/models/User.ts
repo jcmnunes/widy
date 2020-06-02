@@ -43,26 +43,6 @@ const userSchema = new Schema(
       type: Date,
       private: true,
     },
-    settings: {
-      pomodoro: {
-        pomodoroLength: {
-          type: Number,
-          default: 25,
-        },
-        shortBreak: {
-          type: Number,
-          default: 5,
-        },
-        longBreak: {
-          type: Number,
-          default: 15,
-        },
-        longBreakAfter: {
-          type: Number,
-          default: 4,
-        },
-      },
-    },
   },
   /* gives us "createdAt" and "updatedAt" fields automatically */
   { timestamps: true },
@@ -93,14 +73,6 @@ interface User extends Document {
   password: string;
   resetPasswordToken: string | null;
   resetPasswordExpires: number | null;
-  settings: {
-    pomodoro: {
-      pomodoroLength: number;
-      shortBreak: number;
-      longBreak: number;
-      longBreakAfter: number;
-    };
-  };
   generateAuthToken(res: Response, days?: number): void;
 }
 
