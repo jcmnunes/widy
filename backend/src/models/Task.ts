@@ -23,8 +23,9 @@ export const taskSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    scopeId: {
+    scope: {
       type: Schema.Types.ObjectId,
+      ref: 'Scope',
       default: null,
     },
   },
@@ -39,9 +40,9 @@ export interface Task extends Document {
   title: string;
   notes: string | null;
   time: number;
-  start: number | null;
+  start: string | null;
   completed: boolean;
-  scopeId: string | null;
+  scope: string | null;
 }
 
 export const TaskModel: Model<Task> = model<Task>('Task', taskSchema);

@@ -51,8 +51,11 @@ export const deleteTask = async (req: Request, res: Response) => {
   const section = day.sections.id(sectionId);
   if (!section) return res.status(404).json({ error: 'Section not found' });
 
-  section.tasks.id(taskId).remove();
+  const task = section.tasks.id(taskId);
+  if (!task) return res.status(404).json({ error: 'Task not found' });
 
+  task.remove();
   await day.save();
-  res.json({ message: '🥑' });
+
+  res.json(task);
 };

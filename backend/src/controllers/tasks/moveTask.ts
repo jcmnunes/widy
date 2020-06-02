@@ -25,9 +25,7 @@ const validate = (params: Params, body: Body) => {
     fromSectionId: Joi.string().required(),
     toSectionId: Joi.string().required(),
     fromIndex: Joi.number().required(),
-    toIndex: Joi.number()
-      .required()
-      .allow(null),
+    toIndex: Joi.number().required().allow(null),
   };
 
   return Joi.validate({ ...params, ...body }, schema);
@@ -69,7 +67,7 @@ export const moveTask = async (req: Request, res: Response) => {
   if (!task) return res.status(404).json({ error: 'No task found' });
 
   if (fromSectionId === toSectionId) {
-    if (toIndex) {
+    if (toIndex !== null) {
       fromSection.tasks = move(fromSection.tasks, fromIndex, toIndex) as Types.DocumentArray<Task>;
     }
   } else {

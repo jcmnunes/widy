@@ -9,11 +9,11 @@ interface Body {
   sectionId: string;
   payload: {
     title: string;
-    notes: string;
-    time: number;
-    start: number | null;
-    completed: boolean;
-    scopeId: string | null;
+    scope?: string;
+    notes?: string;
+    time?: number;
+    start?: number;
+    completed?: boolean;
   };
 }
 
@@ -22,15 +22,12 @@ const validate = (body: Body) => {
     dayId: Joi.string().required(),
     sectionId: Joi.string().required(),
     payload: Joi.object({
-      title: Joi.string()
-        .min(1)
-        .max(500)
-        .required(),
-      notes: Joi.object().allow(''),
-      time: Joi.number().required(),
+      title: Joi.string().min(1).max(500).required(),
+      notes: Joi.object().allow('').allow(null),
+      time: Joi.number().allow(null),
       start: Joi.date().allow(null),
-      completed: Joi.boolean(),
-      scopeId: Joi.string().allow(null),
+      completed: Joi.boolean().allow(null),
+      scope: Joi.string().allow(null),
     }),
   };
 
@@ -55,17 +52,34 @@ export const createTask = async (req: Request, res: Response) => {
     userId,
   } = req;
 
+  const newTask = {
+    notes: '',
+    time: 0,
+    start: null,
+    scope: null,
+    completed: false,
+    ...payload,
+  };
+
   const day = await DayModel.findOne({
     _id: dayId,
     belongsTo: userId,
   });
+
   if (!day) return res.status(404).json({ error: 'Day not found' });
 
   const section = day.sections.id(sectionId);
   if (!section) return res.status(404).json({ error: 'Section not found' });
 
-  const task = new TaskModel(payload);
+  const task = new TaskModel(newTask);
   section.tasks.push(task);
+
   await day.save();
-  res.json({ task });
+
+  const savedDay = await DayModel.findOne({
+    _id: dayId,
+    belongsTo: userId,
+  }).populate('sections.tasks.scope');
+
+  res.json(savedDay);
 };

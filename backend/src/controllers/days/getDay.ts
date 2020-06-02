@@ -30,11 +30,12 @@ export const getDay = async (req: Request, res: Response) => {
     params: { id },
     userId,
   } = req;
-  const day = await DayModel.findOne({
-    _id: id,
-    belongsTo: userId,
-  });
+
+  const day = await DayModel.findOne({ _id: id, belongsTo: userId }).populate(
+    'sections.tasks.scope',
+  );
+
   if (!day) return res.status(404).json({ error: 'Day not found' });
 
-  res.send(day);
+  res.json(day);
 };
