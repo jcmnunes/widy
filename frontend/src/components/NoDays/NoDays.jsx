@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { IllustrationNoDays } from '../../icons/Illustrations';
+import { IllustrationNoDays } from '../../illustrations/IllustrationNoDays';
 
 const StyledNoDays = styled.div`
   margin-top: 32px;

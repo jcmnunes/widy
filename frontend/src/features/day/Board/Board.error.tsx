@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Button, Icon } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
-import { IllustrationOldPC } from '../../../icons/Illustrations';
 import { Brand } from '../../daysNav/Brand/Brand';
+import { IllustrationOldPC } from '../../../illustrations/IllustrationOldPC';
 
 const StyledBoardError = styled.div`
   width: 100%;

@@ -5,7 +5,6 @@ import TaskPerSectionChart from './TaskPerSectionChart/TaskPerSectionChart';
 import UserDropdown from '../../../components/UserDropdown/UserDropdown';
 import { formatTotalTime } from '../../../helpers/timeHelpers';
 import { formatDay } from '../../../helpers/dates';
-import { IllustrationBoss } from '../../../icons/Illustrations';
 import { TasksTable } from './TasksTable/TasksTable';
 import {
   ActionsContainer,
@@ -28,6 +27,7 @@ import {
   selectTasksTableData,
   selectTimePerSectionPieChartData,
 } from '../api/useReport';
+import { IllustrationBoss } from '../../../illustrations/IllustrationBoss';
 
 interface Props {
   dayId: string;

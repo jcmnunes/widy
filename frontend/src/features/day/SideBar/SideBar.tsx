@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
 import { useDay, useSection, useTask } from '../api/useDay';
-import { IllustrationTodoList } from '../../../icons/Illustrations';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
 import { Heading2 } from '../../../components/Typography';
 import {
@@ -21,6 +20,7 @@ import { useUpdateTask } from '../api/useUpdateTask';
 import { sidebarSliceActions } from './SidebarSlice';
 import { isSidebarOpenSelector } from './SideBar.selectors';
 import { NotesEditor } from '../NotesEditor/NotesEditor';
+import { IllustrationTodoList } from '../../../illustrations/IllustrationTodoList';
 
 interface Props {}
 
