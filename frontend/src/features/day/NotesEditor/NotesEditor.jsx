@@ -9,7 +9,7 @@ import { useUpdateTask } from '../api/useUpdateTask';
 
 export const NotesEditor = ({ dayId, sectionId, task }) => {
   const [value, setValue] = useState(Value.fromJSON(initialValue));
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(true);
 
   const [updateTask] = useUpdateTask();
 
