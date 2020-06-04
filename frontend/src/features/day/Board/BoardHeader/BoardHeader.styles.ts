@@ -11,6 +11,10 @@ export const StyledBoardHeader = styled.div`
   top: 0;
   padding-top: 48px;
   background: white;
+
+  @media (min-width: 800px) {
+    align-items: center;
+  }
 `;
 
 export const BoardTitleContainer = styled.div`
