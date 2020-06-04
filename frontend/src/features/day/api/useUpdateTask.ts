@@ -33,13 +33,13 @@ const updateTask = async ({ taskId, body }: UpdateTaskVariables) => {
 export const useUpdateTask = () => {
   return useMutation(updateTask, {
     onMutate: ({ taskId, body: { dayId, sectionId, payload } }) => {
-      queryCache.cancelQueries(['days', dayId]);
+      queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
       const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], currentDay => {
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
           const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -70,7 +70,7 @@ export const useUpdateTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['days', dayId], previousDay);
+      return () => queryCache.setQueryData(['day', dayId], previousDay);
     },
 
     onError: (_, __, rollback) => {
@@ -85,7 +85,7 @@ export const useUpdateTask = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['days', dayId]);
+      queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
     },
   });

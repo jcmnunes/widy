@@ -12,7 +12,7 @@ interface Props {
 export const DayButton: React.FC<Props> = ({ isSelected, isToday, onClick, children }) => {
   return (
     <StyledDayButton isSelected={isSelected} onClick={onClick}>
-      <Content>
+      <Content isToday={isToday}>
         {isToday && <Badge>Today</Badge>}
         <span>{children}</span>
       </Content>

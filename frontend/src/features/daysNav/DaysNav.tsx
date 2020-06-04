@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Button } from '@binarycapsule/ui-capsules';
 import { useDispatch, useSelector } from 'react-redux';
 import { Brand } from './Brand/Brand';
-import { DaysNavCloseButton, LoadMoreDays, StyledDaysNav } from './DaysNav.styles';
+import { DaysNavCloseButton, StyledDaysNav } from './DaysNav.styles';
 import { DaysNavHeader } from './DaysNavHeader/DaysNavHeader';
 import { DaysList } from './DaysList/DaysList';
 import { DaysNavLoading } from './DaysNav.loading';
@@ -35,18 +35,13 @@ export const DaysNav: React.FC<Props> = () => {
       <DaysNavHeader isTodayCreated={isTodayCreated} />
       {status === 'loading' && <DaysNavLoading />}
       {status === 'error' && <DaysNavError />}
-      {status === 'success' && !!days && <DaysList days={days} />}
-      {canFetchMore && (
-        <LoadMoreDays>
-          <Button
-            onClick={() => fetchMore()}
-            appearance="minimal"
-            size="small"
-            isLoading={isFetchingMore}
-          >
-            Load more days
-          </Button>
-        </LoadMoreDays>
+      {status === 'success' && !!days && (
+        <DaysList
+          days={days}
+          canFetchMore={canFetchMore}
+          isFetchingMore={isFetchingMore}
+          fetchMore={fetchMore}
+        />
       )}
     </StyledDaysNav>
   );

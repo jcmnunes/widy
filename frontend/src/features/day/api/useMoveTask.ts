@@ -88,13 +88,13 @@ export const useMoveTask = () => {
 
       const { dayId } = body;
 
-      queryCache.cancelQueries(['days', dayId]);
+      queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
       const previousActiveTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], day =>
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], day =>
         updateCache({
           day,
           taskId,
@@ -109,7 +109,7 @@ export const useMoveTask = () => {
       }
 
       return () => {
-        queryCache.setQueryData(['days', dayId], previousDay);
+        queryCache.setQueryData(['day', dayId], previousDay);
         queryCache.setQueryData('activeTask', previousActiveTask);
       };
     },
@@ -130,7 +130,7 @@ export const useMoveTask = () => {
 
       const { dayId } = body;
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], day =>
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], day =>
         updateCache({
           day,
           taskId,
@@ -140,7 +140,7 @@ export const useMoveTask = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['days', dayId]);
+      queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
     },
   });
