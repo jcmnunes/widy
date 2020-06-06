@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",

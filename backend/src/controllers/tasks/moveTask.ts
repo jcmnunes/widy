@@ -75,6 +75,7 @@ export const moveTask = async (req: Request, res: Response) => {
     if (toSection.isPlan) {
       task.time = 0;
       task.start = null;
+      task.completed = false;
     }
     fromSection.tasks = remove(fromSection.tasks, fromIndex) as Types.DocumentArray<Task>;
 

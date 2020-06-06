@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router';
 import { queryCache, useMutation } from 'react-query';
 import produce from 'immer';
 import arrayMove from 'array-move';
+import cloneDeep from 'lodash/cloneDeep';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto } from './useDay';
 import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
@@ -53,24 +54,30 @@ const updateCache = ({
       });
     }
 
-    // Drag to the Plan
-    if (day.sections[toSectionIndex].isPlan) {
-      // If the draggable is the active task ➜ stop it
-      if (activeTaskId === taskId) {
-        queryCache.setQueryData('activeTask', emptyActiveTask);
-      }
-    }
-
     const toSection = day.sections[toSectionIndex];
     const fromSection = day.sections[fromSectionIndex];
     const task = fromSection.tasks.find(({ id }) => id === taskId);
 
     if (!task) return day;
 
+    const newTask = cloneDeep(task);
+
+    // Drag to the Plan
+    if (day.sections[toSectionIndex].isPlan) {
+      // If the draggable is the active task ➜ stop it
+      if (activeTaskId === taskId) {
+        queryCache.setQueryData('activeTask', emptyActiveTask);
+      }
+
+      newTask.completed = false;
+      newTask.start = null;
+      newTask.time = 0;
+    }
+
     const toIndexMod = toIndex === null ? toSection.tasks.length : toIndex;
 
     return produce(day, draftState => {
-      draftState.sections[toSectionIndex].tasks = arrayInsert(toSection.tasks, toIndexMod, task);
+      draftState.sections[toSectionIndex].tasks = arrayInsert(toSection.tasks, toIndexMod, newTask);
       draftState.sections[fromSectionIndex].tasks = arrayRemove(fromSection.tasks, fromIndex);
     });
   }
