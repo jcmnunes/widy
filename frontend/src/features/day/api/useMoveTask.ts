@@ -15,12 +15,12 @@ interface MoveTaskBody {
   toSectionId: string;
   fromIndex: number;
   toIndex: number | null;
+  start?: string;
 }
 
 export interface MoveTaskVariables {
   taskId: string;
   body: MoveTaskBody;
-  isOptimistic?: boolean;
 }
 
 const moveTask = async ({ taskId, body }: MoveTaskVariables) => {
@@ -37,7 +37,7 @@ const updateCache = ({
   day,
   taskId,
   activeTaskId,
-  body: { fromSectionId, toSectionId, fromIndex, toIndex },
+  body: { fromSectionId, toSectionId, fromIndex, toIndex, start, dayId },
 }: UpdateCacheParams) => {
   if (day) {
     const fromSectionIndex = day.sections.findIndex(({ id }) => id === fromSectionId);
@@ -74,6 +74,20 @@ const updateCache = ({
       newTask.time = 0;
     }
 
+    // We are launching a task
+    if (start) {
+      newTask.start = start;
+
+      queryCache.setQueryData('activeTask', {
+        time: newTask.time,
+        title: newTask.title,
+        taskId: newTask.id,
+        sectionId: toSectionId,
+        dayId,
+        start,
+      } as ActiveTaskDto);
+    }
+
     const toIndexMod = toIndex === null ? toSection.tasks.length : toIndex;
 
     return produce(day, draftState => {
@@ -90,10 +104,8 @@ export const useMoveTask = () => {
   const { taskId: selectedTaskId } = useParams();
 
   return useMutation(moveTask, {
-    onMutate: ({ taskId, body, isOptimistic = true }) => {
-      if (!isOptimistic) return null;
-
-      const { dayId } = body;
+    onMutate: ({ taskId, body }) => {
+      const { dayId, start } = body;
 
       queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
@@ -111,7 +123,7 @@ export const useMoveTask = () => {
       );
 
       // We are moving the currently selected task ➜ update the URL
-      if (selectedTaskId === taskId) {
+      if (selectedTaskId === taskId || start) {
         history.push(`/day/${body.dayId}/${body.toSectionId}/${taskId}`);
       }
 
@@ -130,20 +142,6 @@ export const useMoveTask = () => {
         title: 'Oops, something went wrong',
         message: 'Task was not moved',
       });
-    },
-
-    onSuccess: (_, { taskId, body, isOptimistic = true }) => {
-      if (isOptimistic) return;
-
-      const { dayId } = body;
-
-      queryCache.setQueryData<DayDto | undefined>(['day', dayId], day =>
-        updateCache({
-          day,
-          taskId,
-          body,
-        }),
-      );
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
