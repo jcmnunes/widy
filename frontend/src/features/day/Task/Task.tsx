@@ -49,16 +49,13 @@ export const Task: React.FC<Props> = ({
           inputSize="large"
           checked={!!isCompleted}
           onChange={!isTemp ? onCompletedChange : () => {}}
-          onClick={e => e.stopPropagation()}
         />
       )}
       <TaskTitle isTemp={isTemp} isCompleted={isCompleted}>
         {title}
       </TaskTitle>
       {scope && <ScopeCode scopeCode={scope.shortCode} />}
-      {children && !isTemp && !isCompleted && (
-        <ActionsContainer onClick={e => e.stopPropagation()}>{children}</ActionsContainer>
-      )}
+      {children && !isTemp && !isCompleted && <ActionsContainer>{children}</ActionsContainer>}
     </StyledTask>
   );
 };
