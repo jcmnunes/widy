@@ -39,6 +39,8 @@ export const useUpdateTask = () => {
       const previousDay = queryCache.getQueryData(['day', dayId]);
       const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
 
+      const previousActiveTask = queryCache.getQueryData('activeTask');
+
       queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
@@ -70,7 +72,10 @@ export const useUpdateTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['day', dayId], previousDay);
+      return () => {
+        queryCache.setQueryData(['day', dayId], previousDay);
+        queryCache.setQueryData('activeTask', previousActiveTask);
+      };
     },
 
     onError: (_, __, rollback) => {

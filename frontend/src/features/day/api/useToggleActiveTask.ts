@@ -42,13 +42,15 @@ export const useToggleActiveTask = () => {
 
       // If "this" is not the active task ➜ start it
       if (activeTaskId !== task.id) {
+        const start = moment.utc().toISOString();
+
         updateTask({
           taskId: task.id,
           body: {
             sectionId,
             dayId,
             payload: {
-              start: moment.utc().toISOString(),
+              start,
             },
           },
         });
@@ -59,7 +61,7 @@ export const useToggleActiveTask = () => {
           taskId: task.id,
           sectionId,
           dayId,
-          start: moment.utc().toISOString(),
+          start,
         } as ActiveTaskDto);
       } else {
         queryCache.setQueryData('activeTask', emptyActiveTask);

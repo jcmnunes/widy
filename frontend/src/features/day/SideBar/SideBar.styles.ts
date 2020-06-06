@@ -8,7 +8,7 @@ export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   overflow-y: auto;
   background: ${({ theme }) => theme.yellow050};
   position: fixed;
-  z-index: 20000;
+  z-index: 999;
   right: 0;
   transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : '448px'})`};
   transition: transform 0.2s ease;
