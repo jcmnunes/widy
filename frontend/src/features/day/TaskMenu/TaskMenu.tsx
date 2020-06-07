@@ -32,7 +32,7 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
 
   return (
     <>
-      <StyledTaskMenu onClick={e => e.stopPropagation()}>
+      <StyledTaskMenu>
         <Dropdown trigger={Trigger} placement="right">
           {canRegisterTime ? (
             <DropdownItem
