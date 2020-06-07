@@ -29,7 +29,9 @@ const fetchReport = async (_: string, dayId: string) => {
 };
 
 export const useReport = (dayId?: string) => {
-  return useQuery(dayId ? ['report', dayId] : null, fetchReport);
+  return useQuery(dayId ? ['report', dayId] : null, fetchReport, {
+    staleTime: 0,
+  });
 };
 
 export const timePerSection = ({ tasks }: ReportDto) => {

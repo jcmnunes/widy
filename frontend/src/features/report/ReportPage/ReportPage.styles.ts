@@ -21,6 +21,7 @@ export const StatsContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 48px 0;
+  position: relative;
 `;
 
 export const ChartsContainer = styled.div`
@@ -92,4 +93,18 @@ export const SpinnerText = styled.div`
   font-weight: 700;
   color: ${props => props.theme.neutral400};
   margin-bottom: 12px;
+`;
+
+export const ReportLoader = styled.div`
+  position: absolute;
+  top: -37px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const ReportLoaderText = styled.span`
+  font-size: 12px;
+  color: ${({ theme }) => theme.neutral300};
+  margin-left: 6px;
 `;

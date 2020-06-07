@@ -21,6 +21,8 @@ import {
   StyledReportPage,
   LoadingReport,
   SpinnerText,
+  ReportLoader,
+  ReportLoaderText,
 } from './ReportPage.styles';
 import {
   useReport,
@@ -34,7 +36,7 @@ interface Props {
 }
 
 export const ReportPage: React.FC<Props> = ({ dayId }) => {
-  const { data: report, status } = useReport(dayId);
+  const { data: report, status, isFetching } = useReport(dayId);
 
   const history = useHistory();
 
@@ -73,6 +75,12 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
         report && (
           <>
             <StatsContainer>
+              {isFetching && (
+                <ReportLoader>
+                  <Spinner size="small" />
+                  <ReportLoaderText>Updating...</ReportLoaderText>
+                </ReportLoader>
+              )}
               <Stat>
                 <StatValue>{formatTotalTime(report.totalTime)}</StatValue>
                 <StatLabel>Total time worked</StatLabel>
