@@ -6,14 +6,16 @@ export const StyledBoardHeader = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  position: sticky;
+  position: relative;
   z-index: 998;
   top: 0;
-  padding-top: 48px;
+  padding-top: 32px;
   background: white;
 
   @media (min-width: 800px) {
+    padding-top: 48px;
     align-items: center;
+    position: sticky;
   }
 `;
 
@@ -26,9 +28,12 @@ export const BoardTitleContainer = styled.div`
 export const BrandContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
 
   > * + * {
-    margin-left: 12px;
+    margin-left: 8px;
+    margin-top: 3px;
   }
 
   @media (min-width: 800px) {

@@ -23,6 +23,7 @@ import {
   SpinnerText,
   ReportLoader,
   ReportLoaderText,
+  ReportTitleContainer,
 } from './ReportPage.styles';
 import {
   useReport,
@@ -50,12 +51,12 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
   return (
     <StyledReportPage>
       <ActionsTop>
-        <div>
+        <ReportTitleContainer>
           <ReportTitle>Report</ReportTitle>
           {status === 'success' && report && (
             <ReportDescription>{formatDay(report.day)}</ReportDescription>
           )}
-        </div>
+        </ReportTitleContainer>
         <ActionsContainer>
           <IconButton
             icon="logout"
@@ -78,7 +79,7 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
               {isFetching && (
                 <ReportLoader>
                   <Spinner size="small" />
-                  <ReportLoaderText>Updating...</ReportLoaderText>
+                  <ReportLoaderText>Loading...</ReportLoaderText>
                 </ReportLoader>
               )}
               <Stat>

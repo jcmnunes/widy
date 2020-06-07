@@ -2,8 +2,12 @@ import styled from 'styled-components/macro';
 
 export const StyledReportPage = styled.div`
   flex: 1;
-  padding: 48px 32px;
   overflow-y: auto;
+  padding: 32px 16px;
+
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 48px 32px;
+  }
 `;
 
 export const ReportTitle = styled.h2`
@@ -107,4 +111,8 @@ export const ReportLoaderText = styled.span`
   font-size: 12px;
   color: ${({ theme }) => theme.neutral300};
   margin-left: 6px;
+`;
+
+export const ReportTitleContainer = styled.div`
+  margin-top: 8px;
 `;

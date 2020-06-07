@@ -6,8 +6,12 @@ export const StyledBoard = styled.div`
   height: 100vh;
   overflow-y: auto;
   background: white;
-  padding: 0 24px 24px;
+  padding: 0 16px 24px;
   min-width: 340px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0 24px 32px;
+  }
 
   @media (min-width: 800px) {
     padding: 0 32px 32px;

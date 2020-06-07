@@ -2,11 +2,26 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
+const menuBarWidth = '254px';
+
 export const StyledMenuBar = styled.div`
   background: ${props => props.theme.neutral050};
-  width: 254px;
-  height: 100%;
-  padding: 36px 24px 24px;
+  width: ${menuBarWidth};
+  padding: 60px 24px 24px;
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : `-${menuBarWidth}`})`};
+  transition: transform 0.2s ease;
+  box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.15), 0 3px 6px hsla(0, 0%, 0%, 0.1);
+
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
+    position: relative;
+    transform: translateX(0);
+    box-shadow: none;
+  }
 `;
 
 export const Brand = styled(Link)`
@@ -32,4 +47,15 @@ export const Links = styled.div`
 export const StyledLink = styled(({ ...other }) => <Link {...other} />)`
   font-weight: ${({ isActive }) => (isActive ? 700 : 400)};
   line-height: 28px;
+`;
+
+export const MenuBarCloseButton = styled.div`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: block;
+
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
+    display: none;
+  }
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useMedia from 'react-use/lib/useMedia';
 import { Button, Input, Checkbox } from '@binarycapsule/ui-capsules';
 import ScopesTable from './ScopesTable/ScopesTable';
 import { PageDescription, PageTitle } from '../Page.styles';
@@ -11,6 +12,7 @@ import {
 } from './Scopes.styles';
 import { useScopes, ScopeDto, useArchivedScopes } from '../../../day/api/useScopes';
 import { ScopeModal } from '../../../day/modals/ScopeModal/ScopeModal';
+import { PageWrapper } from '../../Settings.styles';
 
 const Scopes = () => {
   const [isScopeModalOpen, setIsScopeModalOpen] = useState(false);
@@ -21,6 +23,8 @@ const Scopes = () => {
   const { data: archivedScopes, status: archivedScopesStatus } = useArchivedScopes(
     showArchivedScopes,
   );
+
+  const isWide = useMedia('(min-width: 600px)');
 
   const filterScopes = (scopesToFilter: ScopeDto[]) => {
     return scopesToFilter.filter(({ name, shortCode }) => {
@@ -37,7 +41,7 @@ const Scopes = () => {
 
   return (
     <>
-      <div>
+      <PageWrapper>
         <PageTitle>Scopes</PageTitle>
         <PageDescription>Manage your task scopes below.</PageDescription>
         <ScopesPageWrapper>
@@ -46,7 +50,7 @@ const Scopes = () => {
               onClick={() => setIsScopeModalOpen(true)}
               appearance="primary"
               iconBefore="plus"
-              size="large"
+              size={isWide ? 'large' : 'medium'}
               disabled={scopesStatus === 'loading'}
             >
               Create new scope
@@ -56,7 +60,7 @@ const Scopes = () => {
                 value={filter}
                 onChange={({ target: { value } }) => setFilter(value)}
                 placeholder="Search scopes"
-                inputSize="large"
+                inputSize={isWide ? 'large' : 'medium'}
                 iconBefore="search"
                 disabled={scopesStatus === 'loading'}
               />
@@ -86,7 +90,7 @@ const Scopes = () => {
             )
           )}
         </ScopesPageWrapper>
-      </div>
+      </PageWrapper>
       {isScopeModalOpen && <ScopeModal closeModal={() => setIsScopeModalOpen(false)} />}
     </>
   );

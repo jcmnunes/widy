@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import useMedia from 'react-use/lib/useMedia';
 import { IconButton } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { UserMenu } from '../../../userMenu/UserMenu';
@@ -12,11 +13,13 @@ export const BoardTopActions: React.FC<Props> = () => {
   const { dayId } = useParams();
   const { days, status: getDaysStatus } = useDays();
 
+  const isWide = useMedia('(min-width: 450px)');
+
   return (
     <StyledBoardTopActions>
       {getDaysStatus === 'success' && days.length > 0 && (
         <IconButton
-          text="Report"
+          text={isWide ? 'Report' : ''}
           icon="survey"
           isRound
           hasBackground

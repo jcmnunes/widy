@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import moment from 'moment';
-import { Button } from '@binarycapsule/ui-capsules';
+import { Icon } from '@binarycapsule/ui-capsules';
 import { useDispatch } from 'react-redux';
 import { BoardTopActions } from '../BoardTopActions/BoardTopActions';
 import { BoardHeaderLoading } from './BoardHeader.loading';
@@ -23,6 +23,10 @@ interface Props {
 
 export const BoardHeader: React.FC<Props> = ({ status, day }) => {
   const dispatch = useDispatch();
+
+  const openDaysNav = useCallback(() => {
+    dispatch(daysNavSliceActions.openDaysNav());
+  }, [dispatch]);
 
   const renderBoardTitle = () => {
     if (!day) {
@@ -48,19 +52,17 @@ export const BoardHeader: React.FC<Props> = ({ status, day }) => {
       {status === 'loading' && <BoardHeaderLoading />}
       {status === 'success' && (
         <>
-          <BoardTitleContainer>
-            <BrandContainer>
-              <Brand />
-              <BoardHeaderMobileActions>
-                <Button
-                  appearance="minimal"
-                  iconBefore="chev_right"
-                  onClick={() => dispatch(daysNavSliceActions.openDaysNav())}
-                />
-              </BoardHeaderMobileActions>
-            </BrandContainer>
-            <BoardTitle>{renderBoardTitle()}</BoardTitle>
-          </BoardTitleContainer>
+          <button type="button" onClick={openDaysNav}>
+            <BoardTitleContainer>
+              <BrandContainer>
+                <Brand />
+                <BoardHeaderMobileActions>
+                  <Icon icon="chev_right" />
+                </BoardHeaderMobileActions>
+              </BrandContainer>
+              <BoardTitle>{renderBoardTitle()}</BoardTitle>
+            </BoardTitleContainer>
+          </button>
           <BoardTopActions />
         </>
       )}
