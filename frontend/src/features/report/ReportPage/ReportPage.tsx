@@ -21,6 +21,9 @@ import {
   StyledReportPage,
   LoadingReport,
   SpinnerText,
+  ReportLoader,
+  ReportLoaderText,
+  ReportTitleContainer,
 } from './ReportPage.styles';
 import {
   useReport,
@@ -34,7 +37,7 @@ interface Props {
 }
 
 export const ReportPage: React.FC<Props> = ({ dayId }) => {
-  const { data: report, status } = useReport(dayId);
+  const { data: report, status, isFetching } = useReport(dayId);
 
   const history = useHistory();
 
@@ -48,12 +51,12 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
   return (
     <StyledReportPage>
       <ActionsTop>
-        <div>
+        <ReportTitleContainer>
           <ReportTitle>Report</ReportTitle>
           {status === 'success' && report && (
             <ReportDescription>{formatDay(report.day)}</ReportDescription>
           )}
-        </div>
+        </ReportTitleContainer>
         <ActionsContainer>
           <IconButton
             icon="logout"
@@ -73,6 +76,12 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
         report && (
           <>
             <StatsContainer>
+              {isFetching && (
+                <ReportLoader>
+                  <Spinner size="small" />
+                  <ReportLoaderText>Loading...</ReportLoaderText>
+                </ReportLoader>
+              )}
               <Stat>
                 <StatValue>{formatTotalTime(report.totalTime)}</StatValue>
                 <StatLabel>Total time worked</StatLabel>

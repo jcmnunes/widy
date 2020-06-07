@@ -32,7 +32,7 @@ const getDayById = async (_: string, dayId: string) => {
 };
 
 export const useDay = (dayId?: string) => {
-  return useQuery(dayId ? ['days', dayId] : null, getDayById);
+  return useQuery(dayId ? ['day', dayId] : null, getDayById);
 };
 
 export const useSection = (dayId?: string, sectionId?: string): SectionDto | null => {

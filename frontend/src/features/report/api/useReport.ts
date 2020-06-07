@@ -6,7 +6,7 @@ export interface ReportTask {
   title: string;
   time: number;
   completed: boolean;
-  scope?: { id: string; name: string; shortCode: string };
+  scope?: { _id: string; name: string; shortCode: string };
   section: {
     id: string;
     title: string;
@@ -29,7 +29,9 @@ const fetchReport = async (_: string, dayId: string) => {
 };
 
 export const useReport = (dayId?: string) => {
-  return useQuery(dayId ? ['report', dayId] : null, fetchReport);
+  return useQuery(dayId ? ['report', dayId] : null, fetchReport, {
+    staleTime: 0,
+  });
 };
 
 export const timePerSection = ({ tasks }: ReportDto) => {
@@ -75,11 +77,11 @@ export const selectTasksTableData = ({ tasks }: ReportDto) => {
       if (!scope) {
         acc[0].tasks.push(task);
       } else {
-        const scopeIndex = acc.findIndex(({ id: scopeId }) => scopeId === scope.id);
+        const scopeIndex = acc.findIndex(({ id: scopeId }) => scopeId === scope._id);
 
         if (scopeIndex === -1) {
           acc.push({
-            id: scope.id,
+            id: scope._id,
             scopeTitle: `${scope.name} - ${scope.shortCode.toUpperCase()}`,
             tasks: [task],
           });

@@ -22,9 +22,9 @@ const scheduleTask = async ({ taskId, body }: ScheduleTaskVariables) => {
 export const useScheduleTask = () => {
   return useMutation(scheduleTask, {
     onMutate: ({ taskId, body: { dayId, sectionId } }) => {
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], currentDay => {
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
           const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -41,7 +41,7 @@ export const useScheduleTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['days', dayId], previousDay);
+      return () => queryCache.setQueryData(['day', dayId], previousDay);
     },
 
     onError: (_, __, rollback) => {
@@ -55,6 +55,6 @@ export const useScheduleTask = () => {
       });
     },
 
-    onSettled: (result, err, { body: { dayId } }) => queryCache.refetchQueries(['days', dayId]),
+    onSettled: (result, err, { body: { dayId } }) => queryCache.refetchQueries(['day', dayId]),
   });
 };

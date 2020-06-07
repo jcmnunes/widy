@@ -47,7 +47,7 @@ export const Day: React.FC<Props> = () => {
 
   return (
     <StyledDay>
-      <StatusBar />
+      <StatusBar status={activeTaskId ? 'working' : undefined} />
       <DaysNav />
       <Board dayId={dayId} />
       <SideBar />

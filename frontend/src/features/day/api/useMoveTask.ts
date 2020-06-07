@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router';
 import { queryCache, useMutation } from 'react-query';
 import produce from 'immer';
 import arrayMove from 'array-move';
+import cloneDeep from 'lodash/cloneDeep';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto } from './useDay';
 import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
@@ -14,12 +15,12 @@ interface MoveTaskBody {
   toSectionId: string;
   fromIndex: number;
   toIndex: number | null;
+  start?: string;
 }
 
 export interface MoveTaskVariables {
   taskId: string;
   body: MoveTaskBody;
-  isOptimistic?: boolean;
 }
 
 const moveTask = async ({ taskId, body }: MoveTaskVariables) => {
@@ -36,7 +37,7 @@ const updateCache = ({
   day,
   taskId,
   activeTaskId,
-  body: { fromSectionId, toSectionId, fromIndex, toIndex },
+  body: { fromSectionId, toSectionId, fromIndex, toIndex, start, dayId },
 }: UpdateCacheParams) => {
   if (day) {
     const fromSectionIndex = day.sections.findIndex(({ id }) => id === fromSectionId);
@@ -53,24 +54,44 @@ const updateCache = ({
       });
     }
 
-    // Drag to the Plan
-    if (day.sections[toSectionIndex].isPlan) {
-      // If the draggable is the active task ➜ stop it
-      if (activeTaskId === taskId) {
-        queryCache.setQueryData('activeTask', emptyActiveTask);
-      }
-    }
-
     const toSection = day.sections[toSectionIndex];
     const fromSection = day.sections[fromSectionIndex];
     const task = fromSection.tasks.find(({ id }) => id === taskId);
 
     if (!task) return day;
 
+    const newTask = cloneDeep(task);
+
+    // Drag to the Plan
+    if (day.sections[toSectionIndex].isPlan) {
+      // If the draggable is the active task ➜ stop it
+      if (activeTaskId === taskId) {
+        queryCache.setQueryData('activeTask', emptyActiveTask);
+      }
+
+      newTask.completed = false;
+      newTask.start = null;
+      newTask.time = 0;
+    }
+
+    // We are launching a task
+    if (start) {
+      newTask.start = start;
+
+      queryCache.setQueryData('activeTask', {
+        time: newTask.time,
+        title: newTask.title,
+        taskId: newTask.id,
+        sectionId: toSectionId,
+        dayId,
+        start,
+      } as ActiveTaskDto);
+    }
+
     const toIndexMod = toIndex === null ? toSection.tasks.length : toIndex;
 
     return produce(day, draftState => {
-      draftState.sections[toSectionIndex].tasks = arrayInsert(toSection.tasks, toIndexMod, task);
+      draftState.sections[toSectionIndex].tasks = arrayInsert(toSection.tasks, toIndexMod, newTask);
       draftState.sections[fromSectionIndex].tasks = arrayRemove(fromSection.tasks, fromIndex);
     });
   }
@@ -83,18 +104,16 @@ export const useMoveTask = () => {
   const { taskId: selectedTaskId } = useParams();
 
   return useMutation(moveTask, {
-    onMutate: ({ taskId, body, isOptimistic = true }) => {
-      if (!isOptimistic) return null;
+    onMutate: ({ taskId, body }) => {
+      const { dayId, start } = body;
 
-      const { dayId } = body;
-
-      queryCache.cancelQueries(['days', dayId]);
+      queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
       const previousActiveTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], day =>
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], day =>
         updateCache({
           day,
           taskId,
@@ -104,12 +123,12 @@ export const useMoveTask = () => {
       );
 
       // We are moving the currently selected task ➜ update the URL
-      if (selectedTaskId === taskId) {
+      if (selectedTaskId === taskId || start) {
         history.push(`/day/${body.dayId}/${body.toSectionId}/${taskId}`);
       }
 
       return () => {
-        queryCache.setQueryData(['days', dayId], previousDay);
+        queryCache.setQueryData(['day', dayId], previousDay);
         queryCache.setQueryData('activeTask', previousActiveTask);
       };
     },
@@ -125,22 +144,8 @@ export const useMoveTask = () => {
       });
     },
 
-    onSuccess: (_, { taskId, body, isOptimistic = true }) => {
-      if (isOptimistic) return;
-
-      const { dayId } = body;
-
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], day =>
-        updateCache({
-          day,
-          taskId,
-          body,
-        }),
-      );
-    },
-
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['days', dayId]);
+      queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
     },
   });

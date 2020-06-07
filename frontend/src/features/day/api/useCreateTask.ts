@@ -52,12 +52,12 @@ const createTask = async ({ dayId, sectionId, title, scope }: CreateTaskVariable
 export const useCreateTask = () => {
   return useMutation(createTask, {
     onMutate: ({ dayId, sectionId, title, scope }) => {
-      queryCache.cancelQueries(['days', dayId]);
+      queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], currentDay => {
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
 
@@ -74,11 +74,11 @@ export const useCreateTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['days', dayId], previousDay);
+      return () => queryCache.setQueryData(['day', dayId], previousDay);
     },
 
     onSuccess: (day, { dayId }) => {
-      queryCache.setQueryData(['days', dayId], day);
+      queryCache.setQueryData(['day', dayId], day);
     },
 
     onError: (err, newTodo, rollback) => {

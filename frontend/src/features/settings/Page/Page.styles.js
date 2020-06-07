@@ -2,15 +2,24 @@ import styled from 'styled-components/macro';
 
 export const StyledPage = styled.div`
   flex: 1;
-  padding: 48px 32px;
+  padding: 32px 16px;
   overflow-y: auto;
   position: relative;
+
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 48px 32px;
+  }
 `;
 
 export const ActionsTop = styled.div`
   position: absolute;
-  top: 48px;
-  right: 32px;
+  top: 32px;
+  right: 12px;
+
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    top: 48px;
+    right: 32px;
+  }
 `;
 
 export const PageTitle = styled.h2`
@@ -49,5 +58,20 @@ export const Actions = styled.div`
 
   > * {
     margin-left: 12px;
+  }
+`;
+
+export const MenuButton = styled.div`
+  position: absolute;
+  top: 32px;
+  left: 8px;
+
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    top: 48px;
+    left: 24px;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
+    display: none;
   }
 `;

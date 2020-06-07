@@ -2,13 +2,13 @@ import styled from 'styled-components/macro';
 
 export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   flex: 0.75;
-  padding: 32px;
+  padding: 48px 32px;
   width: 320px;
   height: 100vh;
   overflow-y: auto;
   background: ${({ theme }) => theme.yellow050};
   position: fixed;
-  z-index: 20000;
+  z-index: 999;
   right: 0;
   transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : '448px'})`};
   transition: transform 0.2s ease;
@@ -43,6 +43,10 @@ export const SidebarCloseButton = styled.div`
 
 export const SidebarSection = styled.div`
   margin: 12px 0 16px;
+
+  &:first-child {
+    margin-top: 0;
+  }
 `;
 
 export const SideBarEmptyState = styled.div`

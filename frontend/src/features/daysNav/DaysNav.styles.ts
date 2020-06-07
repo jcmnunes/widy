@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { StyledBrand } from './Brand/Brand.styles';
 
 const daysNavWidth = '254px';
 
@@ -21,6 +22,10 @@ export const StyledDaysNav = styled.div<{ isOpen?: boolean }>`
     transform: translateX(0);
     position: relative;
     box-shadow: none;
+  }
+
+  ${StyledBrand} {
+    margin-bottom: 24px;
   }
 `;
 
