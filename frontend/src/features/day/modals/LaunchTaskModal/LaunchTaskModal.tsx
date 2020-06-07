@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router';
+import moment from 'moment';
 import {
   Button,
   Modal,
@@ -12,7 +12,6 @@ import { Error, Radios } from './LaunchTaskModal.styles';
 import { SelectOption } from '../../../../typings/types';
 import { useDay, TaskDto } from '../../api/useDay';
 import { useMoveTask } from '../../api/useMoveTask';
-import { useToggleActiveTask } from '../../api/useToggleActiveTask';
 
 interface Props {
   sectionId: string;
@@ -33,11 +32,7 @@ export const LaunchTaskModal: React.FC<Props> = ({
   const [error, setError] = useState('');
 
   const { data: day } = useDay(dayId);
-
   const [moveTask, { status }] = useMoveTask();
-  const toggleActiveTask = useToggleActiveTask();
-
-  const history = useHistory();
 
   const sectionOptions = useMemo(() => {
     if (!day) return [];
@@ -70,30 +65,17 @@ export const LaunchTaskModal: React.FC<Props> = ({
     if (!checkedId) {
       setError('You need to select a section.');
     } else {
-      moveTask(
-        {
-          taskId: task.id,
-          body: {
-            dayId,
-            fromIndex: taskIndex,
-            fromSectionId: sectionId,
-            toSectionId: checkedId,
-            toIndex: null,
-          },
-          isOptimistic: false,
+      moveTask({
+        taskId: task.id,
+        body: {
+          dayId,
+          fromIndex: taskIndex,
+          fromSectionId: sectionId,
+          toSectionId: checkedId,
+          toIndex: null,
+          start: moment.utc().toISOString(),
         },
-        {
-          onSuccess() {
-            history.push(`/day/${dayId}/${checkedId}/${task.id}`);
-
-            toggleActiveTask({
-              dayId,
-              sectionId: checkedId,
-              task,
-            });
-          },
-        },
-      );
+      });
     }
   };
 

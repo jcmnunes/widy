@@ -23,10 +23,10 @@ const deleteTask = async ({ taskId, body }: DeleteTaskVariables) => {
 export const useDeleteTask = () => {
   return useMutation(deleteTask, {
     onMutate: ({ taskId, body: { dayId, sectionId } }) => {
-      queryCache.cancelQueries(['days', dayId]);
+      queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['days', dayId]);
+      const previousDay = queryCache.getQueryData(['day', dayId]);
       const activeTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
 
       // If the task is active ➜ stop it
@@ -34,7 +34,7 @@ export const useDeleteTask = () => {
         queryCache.setQueryData('activeTask', emptyActiveTask);
       }
 
-      queryCache.setQueryData<DayDto | undefined>(['days', dayId], currentDay => {
+      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
           const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -51,7 +51,7 @@ export const useDeleteTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['days', dayId], previousDay);
+      return () => queryCache.setQueryData(['day', dayId], previousDay);
     },
 
     onError: (_, __, rollback) => {
@@ -66,7 +66,7 @@ export const useDeleteTask = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['days', dayId]);
+      queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
     },
   });

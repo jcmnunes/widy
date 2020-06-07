@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components/macro';
-import MainBar from './MainBar/MainBar';
 import SideBar from './SideBar/SideBar';
 import { DaysNav } from '../daysNav/DaysNav';
 import { ReportPage } from './ReportPage/ReportPage';
@@ -19,7 +18,6 @@ const Report: React.FC<Props> = () => {
 
   return (
     <StyledReport>
-      <MainBar />
       <DaysNav />
       <ReportPage dayId={dayId} />
       <SideBar />

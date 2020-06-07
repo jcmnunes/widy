@@ -74,5 +74,5 @@ export const createDay = async (req: Request, res: Response) => {
   schedule.tasks = ([] as unknown) as Types.DocumentArray<Task>;
   await schedule.save();
 
-  res.json({ day: { id, day: savedDay }, message: '🥑' });
+  res.json({ id, day: savedDay });
 };

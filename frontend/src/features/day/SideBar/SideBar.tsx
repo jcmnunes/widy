@@ -48,13 +48,6 @@ export const SideBar: React.FC<Props> = () => {
 
   return (
     <StyledSidebar isOpen={isSidebarOpen}>
-      <SidebarCloseButton>
-        <Button
-          onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
-          appearance="minimal"
-          iconBefore="x"
-        />
-      </SidebarCloseButton>
       <SidebarSection>
         <div>{day ? moment(day.day).format('ddd DD MMM YYYY') : ''}</div>
       </SidebarSection>
@@ -96,6 +89,14 @@ export const SideBar: React.FC<Props> = () => {
         <Heading2>Notes</Heading2>
         {dayId && sectionId && <NotesEditor dayId={dayId} sectionId={sectionId} task={task} />}
       </SidebarSection>
+
+      <SidebarCloseButton>
+        <Button
+          onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
+          appearance="minimal"
+          iconBefore="x"
+        />
+      </SidebarCloseButton>
     </StyledSidebar>
   );
 };

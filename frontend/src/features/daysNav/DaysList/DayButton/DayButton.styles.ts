@@ -25,9 +25,9 @@ export const StyledDayButton = styled.button<{ isSelected: boolean }>`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ isToday: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 4px;
+  padding-top: ${({ isToday }) => isToday && '4px'};
 `;

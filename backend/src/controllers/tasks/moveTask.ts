@@ -16,6 +16,7 @@ interface Body {
   toSectionId: string;
   fromIndex: number;
   toIndex: number | null;
+  start?: string;
 }
 
 const validate = (params: Params, body: Body) => {
@@ -26,6 +27,7 @@ const validate = (params: Params, body: Body) => {
     toSectionId: Joi.string().required(),
     fromIndex: Joi.number().required(),
     toIndex: Joi.number().required().allow(null),
+    start: Joi.string().required().optional(),
   };
 
   return Joi.validate({ ...params, ...body }, schema);
@@ -40,6 +42,13 @@ interface Request extends AuthRequest {
  * Moves a task
  *
  * endpoint ➜ PUT /api/tasks/:id/move
+ *
+ * This endpoint has two edge cases at the moment.
+ * The first one is related to the value of the `toIndex` prop.
+ * When it is null the task is appended to the section.
+ *
+ * The second one is related to the optional `start` prop. This prop
+ * should be defined when launching a task.
  */
 export const moveTask = async (req: Request, res: Response) => {
   const { error } = validate(req.params, req.body);
@@ -47,7 +56,7 @@ export const moveTask = async (req: Request, res: Response) => {
 
   const {
     params: { id: taskId },
-    body: { dayId, fromSectionId, toSectionId, fromIndex, toIndex },
+    body: { dayId, fromSectionId, toSectionId, fromIndex, toIndex, start },
     userId,
   } = req;
 
@@ -75,7 +84,14 @@ export const moveTask = async (req: Request, res: Response) => {
     if (toSection.isPlan) {
       task.time = 0;
       task.start = null;
+      task.completed = false;
     }
+
+    // Launching a task
+    if (start) {
+      task.start = start;
+    }
+
     fromSection.tasks = remove(fromSection.tasks, fromIndex) as Types.DocumentArray<Task>;
 
     // If toIndex is not specified ➜ append the task

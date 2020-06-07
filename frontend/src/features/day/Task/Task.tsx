@@ -49,7 +49,6 @@ export const Task: React.FC<Props> = ({
           inputSize="large"
           checked={!!isCompleted}
           onChange={!isTemp ? onCompletedChange : () => {}}
-          onClick={e => e.stopPropagation()}
         />
       )}
       <TaskTitle isTemp={isTemp} isCompleted={isCompleted}>

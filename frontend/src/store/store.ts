@@ -10,7 +10,7 @@ import rootSaga from '../sagas';
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = composeWithDevTools({
-  actionsBlacklist: ['activeTask/activeTaskTick'],
+  actionsBlacklist: [],
 });
 
 const store = createStore(

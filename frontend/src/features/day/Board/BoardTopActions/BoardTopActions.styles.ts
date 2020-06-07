@@ -6,6 +6,12 @@ export const StyledBoardTopActions = styled.div`
   align-items: center;
 
   > * {
-    margin-left: 12px;
+    margin-left: 6px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    > * {
+      margin-left: 12px;
+    }
   }
 `;

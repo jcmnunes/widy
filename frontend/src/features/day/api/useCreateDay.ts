@@ -2,13 +2,12 @@ import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import { produce } from 'immer';
+import { GetDaysDto } from '../../daysNav/api/useDays';
 
 interface CreateDayDto {
-  message: string;
-  day: {
-    id: string;
-    day: string;
-  };
+  id: string;
+  day: string;
 }
 
 const createDay = async () => {
@@ -23,9 +22,18 @@ export const useCreateDay = () => {
   return useMutation(createDay, {
     onSuccess: data => {
       if (data && data.day) {
-        history.push(`/day/${data.day.id}`);
+        queryCache.setQueryData<GetDaysDto[] | undefined>('days', currentDaysCache => {
+          if (currentDaysCache) {
+            return produce(currentDaysCache, draftState => {
+              draftState[0].days.unshift(data);
+            });
+          }
+
+          return currentDaysCache;
+        });
+
+        history.push(`/day/${data.id}`);
       }
     },
-    onSettled: () => queryCache.refetchQueries('days'),
   });
 };
