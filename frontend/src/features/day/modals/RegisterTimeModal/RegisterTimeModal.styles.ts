@@ -35,3 +35,8 @@ export const H3 = styled.h3`
   margin-top: 12px;
   margin-bottom: 4px;
 `;
+
+export const StyledError = styled.div`
+  font-size: 12px;
+  color: ${({ theme }) => theme.red500};
+`;

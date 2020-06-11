@@ -1,11 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { IconButton, theme } from '@binarycapsule/ui-capsules';
 import { useActiveTask } from '../../api/useActiveTask';
 import { TaskDto } from '../../api/useDay';
-import { useToggleActiveTask } from '../../api/useToggleActiveTask';
 import { sidebarSliceActions } from '../../SideBar/SidebarSlice';
+import { useUpdateTask } from '../../api/useUpdateTask';
 
 export const colors = {
   active: [theme.yellow400, theme.yellow900, theme.yellow500, theme.yellow900],
@@ -20,7 +21,7 @@ interface Props {
 export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
   const { dayId } = useParams();
   const { status, data: activeTaskData } = useActiveTask();
-  const toggleActiveTask = useToggleActiveTask();
+  const [updateTask] = useUpdateTask();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -39,7 +40,24 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
       colors={isActive ? colors.active : undefined}
       icon={isActive ? 'stop' : 'play'}
       onClick={() => {
-        toggleActiveTask({ dayId, sectionId, task });
+        const payload = isActive
+          ? {
+              start: null,
+              time: task.time + moment.utc().diff(task.start, 'seconds'),
+            }
+          : {
+              start: moment.utc().toISOString(),
+            };
+
+        updateTask({
+          taskId: task.id,
+          body: {
+            sectionId,
+            dayId,
+            payload,
+          },
+        });
+
         if (!isActive) {
           history.push(`/day/${dayId}/${sectionId}/${task.id}`);
           dispatch(sidebarSliceActions.openSidebar());

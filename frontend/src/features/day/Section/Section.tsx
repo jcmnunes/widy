@@ -8,6 +8,7 @@ import {
 import { Button } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 import { Task } from '../Task/Task';
 import { SectionEmpty } from './Section.empty';
 import { SectionDto } from '../api/useDay';
@@ -19,7 +20,6 @@ import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
-import { useToggleActiveTask } from '../api/useToggleActiveTask';
 import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 
 interface Props {
@@ -36,7 +36,6 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
-  const toggleActiveTask = useToggleActiveTask();
 
   const dispatch = useDispatch();
 
@@ -71,21 +70,21 @@ export const Section: React.FC<Props> = ({ dayId, data: { id, isPlan, title, tas
                   isDragging={snapshot.isDragging}
                   onClick={() => onTaskClick(id, task.id)}
                   onCompletedChange={() => {
-                    if (task.id === activeTask?.taskId) {
-                      toggleActiveTask({
-                        dayId,
-                        sectionId: id,
-                        task,
-                      });
-                    }
+                    const payload = {
+                      completed: !task.completed,
+                      ...(task.id === activeTask?.taskId
+                        ? {
+                            start: null,
+                            time: task.time + moment.utc().diff(task.start, 'seconds'),
+                          }
+                        : {}),
+                    };
                     updateTask({
                       taskId: task.id,
                       body: {
                         dayId,
                         sectionId: id,
-                        payload: {
-                          completed: !task.completed,
-                        },
+                        payload,
                       },
                     });
                   }}

@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Task } from '../../models/Task';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
+import * as tasksService from '../../services/tasks.service';
 
 type Params = {
   id: string;
@@ -44,6 +45,11 @@ export const updateTask = async (req: Request, res: Response) => {
     body: { dayId, sectionId, payload },
     userId,
   } = req;
+
+  // We are starting a task... Stop the currently active task (if any)
+  if (payload.start) {
+    await tasksService.stopActiveTask({ userId });
+  }
 
   const day = await DayModel.findOne({ _id: dayId, belongsTo: userId });
   if (!day) return res.status(404).json({ error: 'Day not found' });

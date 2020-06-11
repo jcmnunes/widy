@@ -5,6 +5,7 @@ import { insert, move, remove } from '../../helpers/arrayHelpers';
 import { AuthRequest } from '../types';
 import { Task } from '../../models/Task';
 import { Types } from 'mongoose';
+import * as tasksService from '../../services/tasks.service';
 
 type Params = {
   id: string;
@@ -60,6 +61,11 @@ export const moveTask = async (req: Request, res: Response) => {
     userId,
   } = req;
 
+  // If launching a task ➜ stop the currently active task (if any)
+  if (start) {
+    await tasksService.stopActiveTask({ userId });
+  }
+
   const day = await DayModel.findOne({
     _id: dayId,
     belongsTo: userId,
@@ -90,6 +96,8 @@ export const moveTask = async (req: Request, res: Response) => {
     // Launching a task
     if (start) {
       task.start = start;
+
+      tasksService.stopActiveTask({ userId });
     }
 
     fromSection.tasks = remove(fromSection.tasks, fromIndex) as Types.DocumentArray<Task>;

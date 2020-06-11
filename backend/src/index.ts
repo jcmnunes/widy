@@ -8,6 +8,7 @@ import handleErrors from './middlewares/handleErrors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 const dev = process.env.NODE_ENV !== 'production';

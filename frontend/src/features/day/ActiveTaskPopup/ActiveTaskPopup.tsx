@@ -8,7 +8,6 @@ import { Heading2 } from '../../../components/Typography';
 import { useActiveTask } from '../api/useActiveTask';
 import { Task } from '../Task/Task';
 import { colors as playButtonColors } from '../Timer/TimerButton/TimerButton';
-import { useToggleActiveTask } from '../api/useToggleActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
 import { Time } from '../Timer/Time/Time';
 import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
@@ -16,57 +15,50 @@ import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
 interface Props {}
 
 export const ActiveTaskPopup: React.FC<Props> = () => {
-  const { data, status } = useActiveTask();
+  const { data: activeTask, status } = useActiveTask();
   const { dayId } = useParams();
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
-  const toggleActiveTask = useToggleActiveTask();
 
   useSelector(activeTaskTickSelector);
 
-  const stopTask = () => {
-    if (!data) return;
+  const shouldRender = !!(
+    status === 'success' &&
+    activeTask &&
+    activeTask.dayId !== dayId &&
+    activeTask.taskId
+  );
 
-    toggleActiveTask({
-      dayId: data.dayId,
-      sectionId: data.sectionId,
-      task: {
-        id: data.taskId,
-        title: data.title,
-        time: data.time,
-      },
-    });
-  };
-
-  const shouldRender = !!(status === 'success' && data && data.dayId !== dayId && data.taskId);
-
-  return shouldRender && data ? (
+  return shouldRender && activeTask ? (
     <StyledActiveTaskPopup>
       <ActiveTaskPopupHeader>
         <Heading2>Working on:</Heading2>
-        <Time time={data.time + moment().diff(data.start!, 'seconds')} size="sm" />
+        <Time time={activeTask.time + moment().diff(activeTask.start!, 'seconds')} size="sm" />
       </ActiveTaskPopupHeader>
       <Task
         isActive
-        dayId={data.dayId}
-        sectionId={data.sectionId}
-        task={{ id: data.taskId, title: data.title }}
-        onClick={() => history.push(`/day/${data.dayId}/${data.sectionId}/${data.taskId}`)}
+        dayId={activeTask.dayId}
+        sectionId={activeTask.sectionId}
+        task={{ id: activeTask.taskId, title: activeTask.title }}
+        onClick={() =>
+          history.push(`/day/${activeTask.dayId}/${activeTask.sectionId}/${activeTask.taskId}`)
+        }
         onCompletedChange={() => {
-          stopTask();
           updateTask({
-            taskId: data.taskId,
+            taskId: activeTask.taskId,
             body: {
-              dayId: data.dayId,
-              sectionId: data.sectionId,
+              dayId: activeTask.dayId,
+              sectionId: activeTask.sectionId,
               payload: {
                 completed: true,
+                start: null,
+                time: activeTask.time + moment.utc().diff(activeTask.start, 'seconds'),
               },
             },
           });
 
-          history.push(`/day/${data.dayId}/${data.sectionId}/${data.taskId}`);
+          history.push(`/day/${activeTask.dayId}/${activeTask.sectionId}/${activeTask.taskId}`);
         }}
       >
         <Tooltip placement="top" tooltip="Stop the task">
@@ -75,7 +67,17 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
             colors={playButtonColors.active}
             onClick={e => {
               e.stopPropagation();
-              stopTask();
+              updateTask({
+                taskId: activeTask.taskId,
+                body: {
+                  dayId: activeTask.dayId,
+                  sectionId: activeTask.sectionId,
+                  payload: {
+                    start: null,
+                    time: activeTask.time + moment.utc().diff(activeTask.start, 'seconds'),
+                  },
+                },
+              });
             }}
           />
         </Tooltip>
