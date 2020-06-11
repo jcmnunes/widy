@@ -38,7 +38,7 @@ export const useUpdateTask = () => {
       queryCache.cancelQueries('activeTask');
 
       const previousDay = queryCache.getQueryData(['day', dayId]) as DayDto;
-      const previousActiveTask = queryCache.getQueryData('activeTask');
+      const previousActiveTask = queryCache.getQueryData('activeTask') as ActiveTaskDto;
       const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
 
       queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
@@ -66,6 +66,13 @@ export const useUpdateTask = () => {
             // We are stopping a task
             if (payload.time) {
               queryCache.setQueryData('activeTask', emptyActiveTask);
+            }
+
+            if (payload.title) {
+              queryCache.setQueryData('activeTask', {
+                ...previousActiveTask,
+                title: payload.title,
+              });
             }
 
             return produce(currentDay, draftState => {
