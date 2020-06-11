@@ -4,6 +4,7 @@ import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto, TaskDto } from './useDay';
 import { ScopeDto } from './useScopes';
+import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
 
 interface UpdateTaskPayload {
   title: string;
@@ -36,10 +37,9 @@ export const useUpdateTask = () => {
       queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
 
-      const previousDay = queryCache.getQueryData(['day', dayId]);
-      const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
-
+      const previousDay = queryCache.getQueryData(['day', dayId]) as DayDto;
       const previousActiveTask = queryCache.getQueryData('activeTask');
+      const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
 
       queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
@@ -50,6 +50,23 @@ export const useUpdateTask = () => {
 
           if (sectionIndex > -1 && taskIndex > -1) {
             const task = currentDay.sections[sectionIndex].tasks[taskIndex];
+
+            // We are starting a task
+            if (payload.start) {
+              queryCache.setQueryData('activeTask', {
+                time: task.time,
+                title: task.title,
+                taskId: task.id,
+                sectionId,
+                dayId,
+                start: payload.start,
+              } as ActiveTaskDto);
+            }
+
+            // We are stopping a task
+            if (payload.time) {
+              queryCache.setQueryData('activeTask', emptyActiveTask);
+            }
 
             return produce(currentDay, draftState => {
               const scope =
