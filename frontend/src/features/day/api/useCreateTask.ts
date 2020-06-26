@@ -4,6 +4,7 @@ import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto, TaskDto } from './useDay';
 import { ScopeDto } from './useScopes';
+import { ScheduleDto } from './useSchedule';
 
 interface CreateTaskDto {
   title: string;
@@ -45,7 +46,7 @@ const createTask = async ({ dayId, sectionId, title, scope }: CreateTaskVariable
       scope: scope ? scope.id : null,
     },
   };
-  const { data } = await axios.post<TaskDto>('/api/tasks', body);
+  const { data } = await axios.post<{ day: DayDto; schedule: ScheduleDto }>('/api/tasks', body);
   return data;
 };
 
@@ -54,31 +55,56 @@ export const useCreateTask = () => {
     onMutate: ({ dayId, sectionId, title, scope }) => {
       queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
+      queryCache.cancelQueries('schedule');
 
       const previousDay = queryCache.getQueryData(['day', dayId]);
+      const previousActiveTask = queryCache.getQueryData('activeTask');
+      const previousSchedule = queryCache.getQueryData('schedule');
 
-      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
-        if (currentDay) {
-          const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
+      const isSchedule = sectionId === 'schedule';
 
-          if (sectionIndex > -1) {
-            return produce(currentDay, draftState => {
-              draftState.sections[sectionIndex].tasks.push({
+      if (isSchedule) {
+        queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+          if (currentSchedule) {
+            return produce(currentSchedule, draftState => {
+              draftState.tasks.push({
                 ...getNewTask(title, scope),
                 id: `temp__${Date.now().toString()}`,
               });
             });
           }
-        }
 
-        return currentDay;
-      });
+          return currentSchedule;
+        });
+      } else {
+        queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+          if (currentDay) {
+            const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
 
-      return () => queryCache.setQueryData(['day', dayId], previousDay);
+            if (sectionIndex > -1) {
+              return produce(currentDay, draftState => {
+                draftState.sections[sectionIndex].tasks.push({
+                  ...getNewTask(title, scope),
+                  id: `temp__${Date.now().toString()}`,
+                });
+              });
+            }
+          }
+
+          return currentDay;
+        });
+      }
+
+      return () => {
+        queryCache.setQueryData(['day', dayId], previousDay);
+        queryCache.setQueryData('activeTask', previousActiveTask);
+        queryCache.setQueryData('schedule', previousSchedule);
+      };
     },
 
-    onSuccess: (day, { dayId }) => {
+    onSuccess: ({ day, schedule }, { dayId }) => {
       queryCache.setQueryData(['day', dayId], day);
+      queryCache.setQueryData('schedule', schedule);
     },
 
     onError: (err, newTodo, rollback) => {

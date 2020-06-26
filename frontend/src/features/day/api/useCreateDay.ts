@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { produce } from 'immer';
 import { GetDaysDto } from '../../daysNav/api/useDays';
+import { ScheduleDto } from './useSchedule';
 
 interface CreateDayDto {
   id: string;
@@ -30,6 +31,16 @@ export const useCreateDay = () => {
           }
 
           return currentDaysCache;
+        });
+
+        queryCache.setQueryData<ScheduleDto | undefined>('schedule', schedule => {
+          if (schedule) {
+            return produce(schedule, draftState => {
+              draftState.tasks = [];
+            });
+          }
+
+          return schedule;
         });
 
         history.push(`/day/${data.id}`);

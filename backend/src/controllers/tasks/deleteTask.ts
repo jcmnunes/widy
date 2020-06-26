@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { Response } from 'express';
 import { DayModel } from '../../models/Day';
 import { AuthRequest } from '../types';
+import { ScheduleModel } from '../../models/Schedule';
 
 type Params = {
   id: string;
@@ -47,6 +48,24 @@ export const deleteTask = async (req: Request, res: Response) => {
     belongsTo: userId,
   });
   if (!day) return res.status(404).json({ error: 'Day not found' });
+
+  if (sectionId === 'schedule') {
+    const schedule = await ScheduleModel.findOne({
+      owner: req.userId,
+    });
+
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
+
+    const task = schedule.tasks.id(taskId);
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+
+    task.remove();
+    await schedule.save();
+
+    res.json(task);
+  }
 
   const section = day.sections.id(sectionId);
   if (!section) return res.status(404).json({ error: 'Section not found' });
