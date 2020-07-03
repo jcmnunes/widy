@@ -23,7 +23,7 @@ export const getScopes = async (req: Request, res: Response) => {
   const scopes = await ScopeModel.find({
     owner: req.userId,
     isArchived: isArchived === '1',
-  });
+  }).sort({ createdAt: -1 });
 
   res.json(scopes);
 };
