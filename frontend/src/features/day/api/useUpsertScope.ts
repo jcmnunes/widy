@@ -42,7 +42,7 @@ export const useUpsertScope = () => {
         }
 
         return produce(scopes, draftState => {
-          draftState.push(data);
+          draftState.unshift(data);
         });
       });
     },

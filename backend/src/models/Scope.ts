@@ -26,7 +26,11 @@ export const scopeSchema = new Schema(
       ref: 'User',
     },
   },
-  { collation: { locale: 'en_US', strength: 1 } }, // Case insensitive search
+  {
+    // Case insensitive search
+    collation: { locale: 'en_US', strength: 1 },
+    timestamps: true,
+  },
 );
 
 // The MongoDBErrorHandler plugin gives us a better 'unique' error
