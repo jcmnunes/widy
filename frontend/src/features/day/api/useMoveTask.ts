@@ -8,6 +8,7 @@ import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto } from './useDay';
 import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
 import { arrayInsert, arrayRemove } from '../../helpers';
+import { ScheduleDto } from './useSchedule';
 
 interface MoveTaskBody {
   dayId: string;
@@ -20,6 +21,7 @@ interface MoveTaskBody {
 
 export interface MoveTaskVariables {
   taskId: string;
+  previousSchedule?: ScheduleDto;
   body: MoveTaskBody;
 }
 
@@ -36,9 +38,26 @@ interface UpdateCacheParams extends MoveTaskVariables {
 const updateCache = ({
   day,
   taskId,
+  previousSchedule,
   activeTaskId,
   body: { fromSectionId, toSectionId, fromIndex, toIndex, start, dayId },
 }: UpdateCacheParams) => {
+  if (fromSectionId === 'schedule' && toSectionId === 'schedule') {
+    queryCache.setQueryData<ScheduleDto | undefined>('schedule', schedule => {
+      if (schedule) {
+        const newScheduleTasks = arrayMove(schedule.tasks, fromIndex, toIndex!);
+
+        return produce(schedule, draftState => {
+          draftState.tasks = newScheduleTasks;
+        });
+      }
+
+      return schedule;
+    });
+
+    return day;
+  }
+
   if (day) {
     const fromSectionIndex = day.sections.findIndex(({ id }) => id === fromSectionId);
     const toSectionIndex = day.sections.findIndex(({ id }) => id === toSectionId);
@@ -54,16 +73,17 @@ const updateCache = ({
       });
     }
 
-    const toSection = day.sections[toSectionIndex];
-    const fromSection = day.sections[fromSectionIndex];
-    const task = fromSection.tasks.find(({ id }) => id === taskId);
+    const toSection = toSectionId === 'schedule' ? previousSchedule : day.sections[toSectionIndex];
+    const fromSection =
+      fromSectionId === 'schedule' ? previousSchedule : day.sections[fromSectionIndex];
+    const task = fromSection ? fromSection.tasks.find(({ id }) => id === taskId) : null;
 
     if (!task) return day;
 
     const newTask = cloneDeep(task);
 
-    // Drag to the Plan
-    if (day.sections[toSectionIndex].isPlan) {
+    // Drag to the Plan or Schedule
+    if (day.sections[toSectionIndex]?.isPlan || toSectionId === 'schedule') {
       // If the draggable is the active task ➜ stop it
       if (activeTaskId === taskId) {
         queryCache.setQueryData('activeTask', emptyActiveTask);
@@ -72,6 +92,34 @@ const updateCache = ({
       newTask.completed = false;
       newTask.start = null;
       newTask.time = 0;
+    }
+
+    if (toSectionId === 'schedule') {
+      queryCache.setQueryData<ScheduleDto | undefined>('schedule', schedule => {
+        if (schedule) {
+          const newScheduleTasks = arrayInsert(schedule.tasks, toIndex!, newTask);
+
+          return produce(schedule, draftState => {
+            draftState.tasks = newScheduleTasks;
+          });
+        }
+
+        return schedule;
+      });
+    }
+
+    if (fromSectionId === 'schedule') {
+      queryCache.setQueryData<ScheduleDto | undefined>('schedule', schedule => {
+        if (schedule) {
+          const newScheduleTasks = arrayRemove(schedule.tasks, fromIndex);
+
+          return produce(schedule, draftState => {
+            draftState.tasks = newScheduleTasks;
+          });
+        }
+
+        return schedule;
+      });
     }
 
     // We are launching a task
@@ -88,11 +136,29 @@ const updateCache = ({
       } as ActiveTaskDto);
     }
 
-    const toIndexMod = toIndex === null ? toSection.tasks.length : toIndex;
+    let toIndexMod: number;
+    if (toSection) {
+      toIndexMod = toIndex === null ? toSection.tasks.length : toIndex;
+    } else {
+      return day;
+    }
+
+    if (!fromSection) {
+      return day;
+    }
 
     return produce(day, draftState => {
-      draftState.sections[toSectionIndex].tasks = arrayInsert(toSection.tasks, toIndexMod, newTask);
-      draftState.sections[fromSectionIndex].tasks = arrayRemove(fromSection.tasks, fromIndex);
+      if (toSectionIndex > -1) {
+        draftState.sections[toSectionIndex].tasks = arrayInsert(
+          toSection.tasks,
+          toIndexMod,
+          newTask,
+        );
+      }
+
+      if (fromSectionIndex > -1) {
+        draftState.sections[fromSectionIndex].tasks = arrayRemove(fromSection.tasks, fromIndex);
+      }
     });
   }
 
@@ -109,15 +175,18 @@ export const useMoveTask = () => {
 
       queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
+      queryCache.cancelQueries('schedule');
 
       const previousDay = queryCache.getQueryData(['day', dayId]);
       const previousActiveTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
+      const previousSchedule = queryCache.getQueryData<ScheduleDto>('schedule');
 
       queryCache.setQueryData<DayDto | undefined>(['day', dayId], day =>
         updateCache({
           day,
           taskId,
           body,
+          previousSchedule,
           activeTaskId: previousActiveTask?.taskId,
         }),
       );
@@ -130,6 +199,7 @@ export const useMoveTask = () => {
       return () => {
         queryCache.setQueryData(['day', dayId], previousDay);
         queryCache.setQueryData('activeTask', previousActiveTask);
+        queryCache.setQueryData('schedule', previousSchedule);
       };
     },
 
@@ -147,6 +217,7 @@ export const useMoveTask = () => {
     onSettled: (result, err, { body: { dayId } }) => {
       queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
+      queryCache.refetchQueries('schedule');
     },
   });
 };

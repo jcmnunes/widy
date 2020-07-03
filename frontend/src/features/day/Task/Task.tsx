@@ -8,6 +8,7 @@ interface Props {
   dayId: string;
   sectionId: string;
   isPlan?: boolean;
+  isSchedule?: boolean;
   isTemp?: boolean;
   isSelected?: boolean;
   isActive?: boolean;
@@ -21,6 +22,7 @@ interface Props {
 
 export const Task: React.FC<Props> = ({
   isPlan,
+  isSchedule,
   isTemp = false,
   isSelected,
   isActive,
@@ -36,13 +38,14 @@ export const Task: React.FC<Props> = ({
   return (
     <StyledTask
       isPlan={isPlan}
+      isSchedule={isSchedule}
       isSelected={isSelected}
       isActive={isActive}
       isCompleted={isCompleted}
       isDragging={isDragging}
       onClick={!isTemp ? onClick : () => {}}
     >
-      {isPlan ? (
+      {isPlan || isSchedule ? (
         <StyledIconRightThickArrow primaryColor={isTemp ? theme.neutral300 : theme.neutral700} />
       ) : (
         <Checkbox

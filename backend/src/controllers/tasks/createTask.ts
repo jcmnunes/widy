@@ -3,6 +3,7 @@ import { DayModel } from '../../models/Day';
 import { TaskModel } from '../../models/Task';
 import { AuthRequest } from '../types';
 import { Response } from 'express';
+import { ScheduleModel } from '../../models/Schedule';
 
 interface Body {
   dayId: string;
@@ -66,20 +67,36 @@ export const createTask = async (req: Request, res: Response) => {
     belongsTo: userId,
   });
 
-  if (!day) return res.status(404).json({ error: 'Day not found' });
+  const schedule = await ScheduleModel.findOne({
+    owner: req.userId,
+  });
 
-  const section = day.sections.id(sectionId);
-  if (!section) return res.status(404).json({ error: 'Section not found' });
+  if (!day) return res.status(404).json({ error: 'Day not found' });
+  if (!schedule) {
+    return res.status(404).json({ error: 'Schedule not found' });
+  }
 
   const task = new TaskModel(newTask);
-  section.tasks.push(task);
 
-  await day.save();
+  if (sectionId === 'schedule') {
+    schedule.tasks.push(task);
+    await schedule.save();
+  } else {
+    const section = day.sections.id(sectionId);
+    if (!section) return res.status(404).json({ error: 'Section not found' });
+
+    section.tasks.push(task);
+    await day.save();
+  }
 
   const savedDay = await DayModel.findOne({
     _id: dayId,
     belongsTo: userId,
   }).populate('sections.tasks.scope');
 
-  res.json(savedDay);
+  const savedSchedule = await ScheduleModel.findOne({
+    owner: userId,
+  }).populate('tasks.scope');
+
+  res.json({ day: savedDay, schedule: savedSchedule });
 };

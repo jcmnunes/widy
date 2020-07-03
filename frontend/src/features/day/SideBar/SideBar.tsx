@@ -21,21 +21,31 @@ import { sidebarSliceActions } from './SidebarSlice';
 import { isSidebarOpenSelector } from './SideBar.selectors';
 import { NotesEditor } from '../NotesEditor/NotesEditor';
 import { IllustrationTodoList } from '../../../illustrations/IllustrationTodoList';
+import { useSchedule } from '../api/useSchedule';
+import { AddToPlan } from '../AddToPlan/AddToPlan';
 
 interface Props {}
 
 export const SideBar: React.FC<Props> = () => {
   const { dayId, sectionId, taskId } = useParams();
   const { data: day } = useDay(dayId);
+  const { data: schedule } = useSchedule();
   const section = useSection(dayId, sectionId);
-  const task = useTask(dayId, sectionId, taskId);
+  const dayTask = useTask(dayId, sectionId, taskId);
   const scopesOptions = useScopesOptions();
   const [updateTask] = useUpdateTask();
 
   const isSidebarOpen = useSelector(isSidebarOpenSelector);
   const dispatch = useDispatch();
 
-  if (!section || !task) {
+  const scheduleTask =
+    schedule && schedule.tasks ? schedule.tasks.find(({ id }) => taskId === id) : undefined;
+
+  const isSchedule = sectionId === 'schedule';
+
+  const task = isSchedule ? scheduleTask : dayTask;
+
+  if (!task) {
     return (
       <StyledSidebar>
         <SideBarEmptyState>
@@ -83,7 +93,11 @@ export const SideBar: React.FC<Props> = () => {
       </SidebarSection>
       <SidebarSection>
         <Heading2>Timer</Heading2>
-        <Timer section={section} task={task} />
+        {isSchedule ? (
+          <AddToPlan task={task} isButton />
+        ) : (
+          !!section && <Timer section={section} task={task} />
+        )}
       </SidebarSection>
       <SidebarSection>
         <Heading2>Notes</Heading2>

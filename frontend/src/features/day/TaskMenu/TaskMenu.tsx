@@ -26,9 +26,10 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
   const [showRenameTaskModal, setShowRenameTaskModal] = useState(false);
   const [showRegisterTimeModal, setShowRegisterTimeModal] = useState(false);
 
+  const isSchedule = sectionId === 'schedule';
   const isActiveTask = task.start !== null;
-  const canRegisterTime = !(isPlan || isActiveTask || task.completed);
-  const canScheduleTask = !(isActiveTask || task.completed || task.time > 0);
+  const canRegisterTime = !(isPlan || isSchedule || isActiveTask || task.completed);
+  const canScheduleTask = !(isSchedule || isActiveTask || task.completed || task.time > 0);
 
   return (
     <>

@@ -4,6 +4,7 @@ import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto, TaskDto } from './useDay';
 import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
+import { ScheduleDto } from './useSchedule';
 
 interface DeleteTaskBody {
   dayId: string;
@@ -25,33 +26,55 @@ export const useDeleteTask = () => {
     onMutate: ({ taskId, body: { dayId, sectionId } }) => {
       queryCache.cancelQueries(['day', dayId]);
       queryCache.cancelQueries('activeTask');
+      queryCache.cancelQueries('schedule');
 
       const previousDay = queryCache.getQueryData(['day', dayId]);
-      const activeTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
+      const previousActiveTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
+      const previousSchedule = queryCache.getQueryData('schedule') as ScheduleDto;
 
       // If the task is active ➜ stop it
-      if (activeTask && taskId === activeTask.taskId) {
+      if (previousActiveTask && taskId === previousActiveTask.taskId) {
         queryCache.setQueryData('activeTask', emptyActiveTask);
       }
 
-      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
-        if (currentDay) {
-          const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
-          const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
-            ({ id }) => id === taskId,
-          );
+      if (sectionId === 'schedule') {
+        queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+          if (currentSchedule) {
+            const taskIndex = currentSchedule.tasks.findIndex(({ id }) => id === taskId);
 
-          if (sectionIndex > -1 && taskIndex > -1) {
-            return produce(currentDay, draftState => {
-              draftState.sections[sectionIndex].tasks.splice(taskIndex!, 1);
-            });
+            if (taskIndex > -1) {
+              return produce(currentSchedule, draftState => {
+                draftState.tasks.splice(taskIndex!, 1);
+              });
+            }
           }
-        }
 
-        return currentDay;
-      });
+          return currentSchedule;
+        });
+      } else {
+        queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+          if (currentDay) {
+            const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
+            const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
+              ({ id }) => id === taskId,
+            );
 
-      return () => queryCache.setQueryData(['day', dayId], previousDay);
+            if (sectionIndex > -1 && taskIndex > -1) {
+              return produce(currentDay, draftState => {
+                draftState.sections[sectionIndex].tasks.splice(taskIndex!, 1);
+              });
+            }
+          }
+
+          return currentDay;
+        });
+      }
+
+      return () => {
+        queryCache.setQueryData(['day', dayId], previousDay);
+        queryCache.setQueryData('activeTask', previousActiveTask);
+        queryCache.setQueryData('schedule', previousSchedule);
+      };
     },
 
     onError: (_, __, rollback) => {
@@ -68,6 +91,7 @@ export const useDeleteTask = () => {
     onSettled: (result, err, { body: { dayId } }) => {
       queryCache.refetchQueries(['day', dayId]);
       queryCache.refetchQueries('activeTask');
+      queryCache.refetchQueries('schedule');
     },
   });
 };

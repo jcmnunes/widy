@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
 import { isLoadingSelector as isLogoutLoadingSelector } from '../auth/Logout/Logout.selectors';
 import { logoutRequest } from '../auth/Logout/Logout.actions';
+import { dayStateActions } from '../day/dayState/dayStateSlice';
 
 export const UserMenu = () => {
   const { dayId } = useParams();
@@ -12,11 +13,16 @@ export const UserMenu = () => {
 
   const isLogoutLoading = useSelector(isLogoutLoadingSelector);
 
+  const showSchedule = () => {
+    dispatch(dayStateActions.showSchedule());
+  };
+
   return (
     <Dropdown
       placement="right"
       trigger={<IconButton hasBackground hasChev icon="user_circle" isRound />}
     >
+      <DropdownItem text="Schedule" icon="schedule" handleAction={showSchedule} />
       <DropdownItem
         text="Settings"
         icon="settings"

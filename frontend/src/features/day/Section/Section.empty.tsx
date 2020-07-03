@@ -26,21 +26,30 @@ const StyledSectionEmpty = styled.button<{
 
 interface Props {
   isPlan: boolean;
+  isSchedule: boolean;
   isDraggingOver: boolean;
   title: string;
   onClick(): void;
 }
 
-export const SectionEmpty: React.FC<Props> = ({ isPlan, isDraggingOver, title, onClick }) => {
+export const SectionEmpty: React.FC<Props> = ({
+  isPlan,
+  isSchedule,
+  isDraggingOver,
+  title,
+  onClick,
+}) => {
   return (
     <StyledSectionEmpty isDraggingOver={isDraggingOver} onClick={onClick}>
       {isPlan && <span>No tasks in Plan.</span>}
+      {isSchedule && <span>No scheduled tasks.</span>}
 
       {!isPlan &&
+        !isSchedule &&
         (isDraggingOver ? (
           <span>Add task to section &quot;{title}&quot;</span>
         ) : (
-          <span>No tasks in section &quot;{title}&quot;</span>
+          <span>No tasks &quot;{title}&quot;</span>
         ))}
     </StyledSectionEmpty>
   );
