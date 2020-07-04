@@ -26,6 +26,7 @@ import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
+import { usePlanAll } from '../api/usePlanAll';
 import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 import { dayStateActions } from '../dayState/dayStateSlice';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
@@ -47,6 +48,7 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
+  const [planAll] = usePlanAll();
 
   const dispatch = useDispatch();
 
@@ -148,7 +150,20 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
           {isSchedule && (
             <SectionHeaderActions>
               {hasTasks && (
-                <Button appearance="minimal" iconBefore="plus_c">
+                <Button
+                  appearance="minimal"
+                  iconBefore="plus_c"
+                  onClick={() => {
+                    planAll({
+                      body: {
+                        dayId,
+                      },
+                    });
+                    if (selectedSectionId === 'schedule') {
+                      history.push(`/day/${dayId}`);
+                    }
+                  }}
+                >
                   Add all to Plan
                 </Button>
               )}
