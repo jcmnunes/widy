@@ -47,7 +47,7 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
       contentLabel="schedule-task-dialog"
       actions={actions}
       title="Schedule task?"
-      message=" Are you sure you want to schedule this task?"
+      message="Are you sure you want to schedule this task?"
     />
   );
 };
