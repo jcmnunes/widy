@@ -9,7 +9,7 @@ import {
 } from '@binarycapsule/ui-capsules';
 import useMedia from 'react-use/lib/useMedia';
 import { formatTotalTime } from '../../../../helpers/timeHelpers';
-import { ScopeRow, TaskRow } from './TasksTable.styles';
+import { ScopeRow, TaskRow, IconTableCell } from './TasksTable.styles';
 import { ReportTask } from '../../api/useReport';
 
 interface Props {
@@ -45,9 +45,9 @@ export const TasksTable: React.FC<Props> = ({ data }) => {
                   <TaskRow key={id}>
                     <TableCell>{title}</TableCell>
                     {isWide && (
-                      <TableCell textAlign="center">
-                        {completed ? <Icon icon="check" /> : ''}
-                      </TableCell>
+                      <IconTableCell textAlign="center">
+                        {completed ? <Icon icon="check" size="18px" /> : ''}
+                      </IconTableCell>
                     )}
                     <TableCell noWrap>{formatTotalTime(time)}</TableCell>
                   </TaskRow>

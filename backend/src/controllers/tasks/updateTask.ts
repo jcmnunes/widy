@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { Task } from '../../models/Task';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
+import * as tasksService from '../../services/tasks.service';
+import { ScheduleModel } from '../../models/Schedule';
 
 type Params = {
   id: string;
@@ -45,17 +47,40 @@ export const updateTask = async (req: Request, res: Response) => {
     userId,
   } = req;
 
+  // We are starting a task... Stop the currently active task (if any)
+  if (payload.start) {
+    await tasksService.stopActiveTask({ userId });
+  }
+
   const day = await DayModel.findOne({ _id: dayId, belongsTo: userId });
   if (!day) return res.status(404).json({ error: 'Day not found' });
 
-  const section = day.sections.id(sectionId);
-  if (!section) return res.status(404).json({ error: 'Section not found' });
+  if (sectionId === 'schedule') {
+    const schedule = await ScheduleModel.findOne({
+      owner: req.userId,
+    });
 
-  const task = section.tasks.id(taskId);
-  if (!task) return res.status(404).json({ error: 'Task not found' });
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
 
-  task.set(payload);
-  await day.save();
+    const task = schedule.tasks.id(taskId);
+    if (!task) return res.status(404).json({ error: 'Task not found' });
 
-  res.json(task);
+    task.set(payload);
+    await schedule.save();
+
+    res.json(task);
+  } else {
+    const section = day.sections.id(sectionId);
+    if (!section) return res.status(404).json({ error: 'Section not found' });
+
+    const task = section.tasks.id(taskId);
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+
+    task.set(payload);
+    await day.save();
+
+    res.json(task);
+  }
 };

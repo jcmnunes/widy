@@ -12,6 +12,7 @@ import { Error, Radios } from './LaunchTaskModal.styles';
 import { SelectOption } from '../../../../typings/types';
 import { useDay, TaskDto } from '../../api/useDay';
 import { useMoveTask } from '../../api/useMoveTask';
+import { sectionTitleMap } from '../../Section/Section.constants';
 
 interface Props {
   sectionId: string;
@@ -43,7 +44,7 @@ export const LaunchTaskModal: React.FC<Props> = ({
         ...acc,
         {
           value: section.id,
-          label: section.title,
+          label: sectionTitleMap[section.title as keyof typeof sectionTitleMap],
         },
       ];
     }, [] as SelectOption<string>[]);

@@ -8,6 +8,7 @@ import handleErrors from './middlewares/handleErrors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -30,6 +31,7 @@ import days from './routes/days';
 import tasks from './routes/tasks';
 import scopes from './routes/scopes';
 import report from './routes/report';
+import schedule from './routes/schedule';
 
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -67,6 +69,7 @@ app.use('/api/days', days);
 app.use('/api/tasks', tasks);
 app.use('/api/scopes', scopes);
 app.use('/api/report', report);
+app.use('/api/schedule', schedule);
 
 if (!dev) {
   app.use(express.static(process.env.STATIC_DIR!));

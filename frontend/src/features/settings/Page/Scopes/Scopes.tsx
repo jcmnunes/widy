@@ -85,9 +85,8 @@ const Scopes = () => {
             <ScopesTableLoading />
           ) : (
             showArchivedScopes &&
-            archivedScopesStatus === 'success' && (
-              <ScopesTable isArchived scopes={filterScopes(archivedScopes!)} />
-            )
+            archivedScopesStatus === 'success' &&
+            archivedScopes && <ScopesTable isArchived scopes={filterScopes(archivedScopes)} />
           )}
         </ScopesPageWrapper>
       </PageWrapper>

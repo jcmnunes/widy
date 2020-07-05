@@ -17,11 +17,15 @@ export const useArchiveScope = () => {
         return scopes.filter(({ id }) => id !== data.id);
       });
 
-      queryCache.setQueryData<ScopeDto[] | undefined>(['archivedScopes', true], scopes => {
-        if (!scopes) return scopes;
+      const archivedScopesQuery = queryCache.getQuery(['archivedScopes', true]);
 
-        return [...scopes, data];
-      });
+      if (archivedScopesQuery) {
+        queryCache.setQueryData<ScopeDto[] | undefined>(['archivedScopes', true], scopes => {
+          if (!scopes) return scopes;
+
+          return [...scopes, data];
+        });
+      }
     },
 
     onError: (err, newTodo, rollback) => {

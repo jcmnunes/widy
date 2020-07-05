@@ -10,13 +10,14 @@ import { StatusBar } from '../../components/StatusBar/StatusBar';
 import { ActiveTaskPopup } from './ActiveTaskPopup/ActiveTaskPopup';
 import { activeTaskActions } from './activeTask/activeTaskSlice';
 import { useActiveTask } from './api/useActiveTask';
+import { dayStateActions } from './dayState/dayStateSlice';
 
 let timer: number | undefined;
 
 interface Props {}
 
 export const Day: React.FC<Props> = () => {
-  const { dayId } = useParams();
+  const { dayId, sectionId: selectedSectionId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -30,6 +31,12 @@ export const Day: React.FC<Props> = () => {
       history.replace(`/day/${days[0].id}`);
     }
   }, [dayId, days, history]);
+
+  useEffect(() => {
+    if (selectedSectionId === 'schedule') {
+      dispatch(dayStateActions.showSchedule());
+    }
+  }, [selectedSectionId, dispatch]);
 
   // Start active task ticking
   useEffect(() => {

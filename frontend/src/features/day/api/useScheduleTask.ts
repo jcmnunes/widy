@@ -3,6 +3,7 @@ import { queryCache, useMutation } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
 import { DayDto, TaskDto } from './useDay';
+import { ScheduleDto } from './useSchedule';
 
 interface ScheduleTaskBody {
   dayId: string;
@@ -23,6 +24,7 @@ export const useScheduleTask = () => {
   return useMutation(scheduleTask, {
     onMutate: ({ taskId, body: { dayId, sectionId } }) => {
       const previousDay = queryCache.getQueryData(['day', dayId]);
+      const previousSchedule = queryCache.getQueryData('schedule');
 
       queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
@@ -32,6 +34,18 @@ export const useScheduleTask = () => {
           );
 
           if (sectionIndex > -1 && taskIndex > -1) {
+            const task = currentDay.sections[sectionIndex].tasks[taskIndex];
+
+            queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+              if (currentSchedule) {
+                return produce(currentSchedule, draftState => {
+                  draftState.tasks.push(task);
+                });
+              }
+
+              return currentSchedule;
+            });
+
             return produce(currentDay, draftState => {
               draftState.sections[sectionIndex].tasks.splice(taskIndex!, 1);
             });
@@ -41,7 +55,10 @@ export const useScheduleTask = () => {
         return currentDay;
       });
 
-      return () => queryCache.setQueryData(['day', dayId], previousDay);
+      return () => {
+        queryCache.setQueryData(['day', dayId], previousDay);
+        queryCache.setQueryData('schedule', previousSchedule);
+      };
     },
 
     onError: (_, __, rollback) => {
@@ -55,6 +72,9 @@ export const useScheduleTask = () => {
       });
     },
 
-    onSettled: (result, err, { body: { dayId } }) => queryCache.refetchQueries(['day', dayId]),
+    onSettled: (result, err, { body: { dayId } }) => {
+      queryCache.refetchQueries(['day', dayId]);
+      queryCache.refetchQueries('schedule');
+    },
   });
 };

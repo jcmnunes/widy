@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components/macro';
 import { Button, Icon } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
@@ -39,6 +40,8 @@ interface Props {
 
 // TODO ➜ Improve error handling
 export const BoardError: React.FC<Props> = ({ error }) => {
+  const history = useHistory();
+
   const status = error?.response?.status;
 
   return (
@@ -52,11 +55,9 @@ export const BoardError: React.FC<Props> = ({ error }) => {
         {status === 404 ? 'Day not found' : 'Oops, something went wrong...'}
       </ErrorText>
 
-      {status !== 404 && (
-        <Button appearance="minimal" iconBefore="refresh" onClick={document.location.reload}>
-          Refresh the page
-        </Button>
-      )}
+      <Button appearance="minimal" iconBefore="refresh" onClick={() => history.push('/day')}>
+        Refresh the page
+      </Button>
     </StyledBoardError>
   );
 };

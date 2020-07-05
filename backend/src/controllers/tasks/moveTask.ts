@@ -5,6 +5,9 @@ import { insert, move, remove } from '../../helpers/arrayHelpers';
 import { AuthRequest } from '../types';
 import { Task } from '../../models/Task';
 import { Types } from 'mongoose';
+import * as tasksService from '../../services/tasks.service';
+import { ScheduleModel } from '../../models/Schedule';
+import { Section } from '../../models/Section';
 
 type Params = {
   id: string;
@@ -60,28 +63,101 @@ export const moveTask = async (req: Request, res: Response) => {
     userId,
   } = req;
 
-  const day = await DayModel.findOne({
-    _id: dayId,
-    belongsTo: userId,
-  });
-  if (!day) return res.status(404).json({ error: 'Day not found' });
-
-  const fromSection = day.sections.id(fromSectionId);
-  if (!fromSection) return res.status(404).json({ error: 'Source Section not found' });
-
-  const toSection = day.sections.id(toSectionId);
-  if (!toSection) return res.status(404).json({ error: 'Destination Section not found' });
-
-  const task = fromSection.tasks.id(taskId);
-  if (!task) return res.status(404).json({ error: 'No task found' });
-
-  if (fromSectionId === toSectionId) {
-    if (toIndex !== null) {
-      fromSection.tasks = move(fromSection.tasks, fromIndex, toIndex) as Types.DocumentArray<Task>;
+  // Move inside schedule
+  if (fromSectionId === 'schedule' && toSectionId === 'schedule') {
+    const schedule = await ScheduleModel.findOne({
+      owner: req.userId,
+    });
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
     }
-  } else {
-    // Moving a task to the plan resets the time to zero
-    if (toSection.isPlan) {
+
+    if (toIndex !== null) {
+      schedule.tasks = move(schedule.tasks, fromIndex, toIndex) as Types.DocumentArray<Task>;
+    }
+
+    await schedule.save();
+    return res.json({ message: '🥑' });
+  }
+
+  // Move without considering Schedule
+  if (fromSectionId !== 'schedule' && toSectionId !== 'schedule') {
+    const day = await DayModel.findOne({
+      _id: dayId,
+      belongsTo: userId,
+    });
+    if (!day) return res.status(404).json({ error: 'Day not found' });
+
+    const fromSection = day.sections.id(fromSectionId);
+    if (!fromSection) return res.status(404).json({ error: 'Source Section not found' });
+
+    const toSection = day.sections.id(toSectionId);
+    if (!toSection) return res.status(404).json({ error: 'Destination Section not found' });
+
+    const task = fromSection.tasks.id(taskId);
+    if (!task) return res.status(404).json({ error: 'No task found' });
+
+    if (fromSectionId === toSectionId) {
+      if (toIndex !== null) {
+        fromSection.tasks = move(fromSection.tasks, fromIndex, toIndex) as Types.DocumentArray<
+          Task
+        >;
+      }
+    } else {
+      // Moving a task to the plan resets the time to zero
+      if (toSection.isPlan) {
+        task.time = 0;
+        task.start = null;
+        task.completed = false;
+      }
+
+      // Launching a task
+      if (start) {
+        task.start = start;
+
+        tasksService.stopActiveTask({ userId });
+      }
+
+      fromSection.tasks = remove(fromSection.tasks, fromIndex) as Types.DocumentArray<Task>;
+
+      // If toIndex is not specified ➜ append the task
+      if (toIndex === null) {
+        toSection.tasks = [...toSection.tasks, task] as Types.DocumentArray<Task>;
+      } else {
+        toSection.tasks = insert(toSection.tasks, toIndex, task) as Types.DocumentArray<Task>;
+      }
+    }
+
+    await day.save();
+    res.json({ message: '🥑' });
+  }
+
+  if (fromSectionId === 'schedule' || toSectionId === 'schedule') {
+    const schedule = await ScheduleModel.findOne({
+      owner: req.userId,
+    });
+    if (!schedule) {
+      return res.status(404).json({ error: 'Schedule not found' });
+    }
+
+    const day = await DayModel.findOne({
+      _id: dayId,
+      belongsTo: userId,
+    });
+    if (!day) return res.status(404).json({ error: 'Day not found' });
+
+    const fromSection = fromSectionId === 'schedule' ? schedule : day.sections.id(fromSectionId);
+    if (!fromSection) return res.status(404).json({ error: 'Source Section not found' });
+
+    const toSection = toSectionId === 'schedule' ? schedule : day.sections.id(toSectionId);
+    if (!toSection) return res.status(404).json({ error: 'Destination Section not found' });
+
+    const task =
+      fromSectionId === 'schedule' ? schedule.tasks.id(taskId) : fromSection.tasks.id(taskId);
+    if (!task) return res.status(404).json({ error: 'No task found' });
+
+    // Moving a task to the plan or schedule resets the time to zero
+    if ((toSection as Section).isPlan || toSectionId === 'schedule') {
       task.time = 0;
       task.start = null;
       task.completed = false;
@@ -90,6 +166,8 @@ export const moveTask = async (req: Request, res: Response) => {
     // Launching a task
     if (start) {
       task.start = start;
+
+      tasksService.stopActiveTask({ userId });
     }
 
     fromSection.tasks = remove(fromSection.tasks, fromIndex) as Types.DocumentArray<Task>;
@@ -100,8 +178,10 @@ export const moveTask = async (req: Request, res: Response) => {
     } else {
       toSection.tasks = insert(toSection.tasks, toIndex, task) as Types.DocumentArray<Task>;
     }
+
+    await day.save();
+    await schedule.save();
   }
 
-  await day.save();
-  res.json({ message: '🥑' });
+  return res.json({ message: '🥑' });
 };

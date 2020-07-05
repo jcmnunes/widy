@@ -1,5 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
+import { queryCache } from 'react-query';
+import { produce } from 'immer';
 import {
   Button,
   Input,
@@ -41,6 +43,14 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
         { name, shortCode, id: scope?.id },
         {
           onSuccess(newScope) {
+            queryCache.setQueryData<ScopeDto[] | undefined>('scopes', scopes => {
+              if (!scopes) return scopes;
+
+              return produce(scopes, draftState => {
+                draftState.unshift(newScope);
+              });
+            });
+
             onUpsertScope &&
               onUpsertScope({
                 value: newScope.id,
