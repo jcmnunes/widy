@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { TableRow } from '@binarycapsule/ui-capsules';
+import { TableCell, TableRow } from '@binarycapsule/ui-capsules';
 
 export const ScopeRow = styled(TableRow)`
   background: ${props => props.theme.neutral100} !important;
@@ -12,5 +12,12 @@ export const TaskRow = styled(TableRow)`
 
   > td:first-child {
     padding-left: 32px;
+  }
+`;
+
+export const IconTableCell = styled(TableCell)`
+  svg {
+    margin-top: 3px;
+    margin-bottom: -3px;
   }
 `;
