@@ -6,6 +6,8 @@ import { DayModel } from '../../models/Day';
 import { Task } from '../../models/Task';
 import { Types } from 'mongoose';
 
+type Params = { to: 'plan' | 'schedule' };
+
 interface Body {
   dayId: string;
 }
@@ -19,19 +21,21 @@ const validate = (body: Body) => {
 };
 
 interface Request extends AuthRequest {
+  params: Params;
   body: Body;
 }
 
 /**
- * Add all schedule tasks to the plan
+ * Add all plan tasks to the schedule or all schedule tasks to the plan
  *
- * endpoint ➜ POST /api/schedule/planAll
+ * endpoint ➜ POST /api/schedule/move/:to
  */
-export const planAll = async (req: Request, res: Response) => {
+export const moveAll = async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
   const {
+    params: { to },
     body: { dayId },
     userId,
   } = req;
@@ -52,10 +56,15 @@ export const planAll = async (req: Request, res: Response) => {
   const plan = day.sections[0];
   if (!plan) return res.status(404).json({ error: 'Plan not found' });
 
-  plan.tasks = [...plan.tasks, ...schedule.tasks] as Types.DocumentArray<Task>;
+  if (to === 'plan') {
+    plan.tasks = [...plan.tasks, ...schedule.tasks] as Types.DocumentArray<Task>;
+    schedule.tasks = ([] as unknown) as Types.DocumentArray<Task>;
+  }
 
-  // Remove all tasks in the schedule
-  schedule.tasks = ([] as unknown) as Types.DocumentArray<Task>;
+  if (to === 'schedule') {
+    schedule.tasks = [...schedule.tasks, ...plan.tasks] as Types.DocumentArray<Task>;
+    plan.tasks = ([] as unknown) as Types.DocumentArray<Task>;
+  }
 
   await schedule.save();
   await day.save();

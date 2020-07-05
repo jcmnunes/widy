@@ -1,2 +1,2 @@
 export { getSchedule } from './getSchedule';
-export { planAll } from './planAll';
+export { moveAll } from './moveAll';

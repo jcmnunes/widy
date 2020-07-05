@@ -26,7 +26,7 @@ import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
 import { useActiveTask } from '../api/useActiveTask';
 import { useUpdateTask } from '../api/useUpdateTask';
-import { usePlanAll } from '../api/usePlanAll';
+import { useMoveAll } from '../api/useMoveAll';
 import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 import { dayStateActions } from '../dayState/dayStateSlice';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
@@ -48,7 +48,7 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
-  const [planAll] = usePlanAll();
+  const [moveAll] = useMoveAll();
 
   const dispatch = useDispatch();
 
@@ -154,7 +154,8 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
                   appearance="minimal"
                   iconBefore="plus_c"
                   onClick={() => {
-                    planAll({
+                    moveAll({
+                      to: 'plan',
                       body: {
                         dayId,
                       },
@@ -173,7 +174,9 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
             </SectionHeaderActions>
           )}
 
-          {isPlan && <SectionHeaderActions>{hasTasks && <PlanMenu />}</SectionHeaderActions>}
+          {isPlan && (
+            <SectionHeaderActions>{hasTasks && <PlanMenu planId={id} />}</SectionHeaderActions>
+          )}
         </SectionHeader>
         <Droppable droppableId={id}>{hasTasks ? renderSection : renderEmptySection}</Droppable>
 
