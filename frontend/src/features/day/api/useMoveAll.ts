@@ -82,9 +82,9 @@ export const useMoveAll = () => {
       });
     },
 
-    onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.invalidateQueries(['day', dayId]);
-      queryCache.invalidateQueries('schedule');
-    },
+    // onSettled: (result, err, { body: { dayId } }) => {
+    //   queryCache.invalidateQueries(['day', dayId]);
+    //   queryCache.invalidateQueries('schedule');
+    // },
   });
 };

@@ -150,10 +150,10 @@ export const useUpdateTask = () => {
       });
     },
 
-    onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.invalidateQueries(['day', dayId]);
-      queryCache.invalidateQueries('activeTask');
-      queryCache.invalidateQueries('schedule');
-    },
+    // onSettled: (result, err, { body: { dayId } }) => {
+    //   queryCache.invalidateQueries(['day', dayId]);
+    //   queryCache.invalidateQueries('activeTask');
+    //   queryCache.invalidateQueries('schedule');
+    // },
   });
 };
