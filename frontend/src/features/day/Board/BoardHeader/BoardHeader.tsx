@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import moment from 'moment';
 import { Icon } from '@binarycapsule/ui-capsules';
 import { useDispatch } from 'react-redux';
+import { QueryStatus } from 'react-query';
 import { BoardTopActions } from '../BoardTopActions/BoardTopActions';
 import { BoardHeaderLoading } from './BoardHeader.loading';
 import {
@@ -17,7 +18,7 @@ import { Brand } from '../../../daysNav/Brand/Brand';
 import { daysNavSliceActions } from '../../../daysNav/DaysNavSlice';
 
 interface Props {
-  status: 'loading' | 'error' | 'success';
+  status: QueryStatus;
   day?: DayDto;
 }
 

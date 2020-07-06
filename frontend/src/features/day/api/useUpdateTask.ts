@@ -151,9 +151,9 @@ export const useUpdateTask = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['day', dayId]);
-      queryCache.refetchQueries('activeTask');
-      queryCache.refetchQueries('schedule');
+      queryCache.invalidateQueries(['day', dayId]);
+      queryCache.invalidateQueries('activeTask');
+      queryCache.invalidateQueries('schedule');
     },
   });
 };

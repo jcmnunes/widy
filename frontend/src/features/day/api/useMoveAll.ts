@@ -83,8 +83,8 @@ export const useMoveAll = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['day', dayId]);
-      queryCache.refetchQueries('schedule');
+      queryCache.invalidateQueries(['day', dayId]);
+      queryCache.invalidateQueries('schedule');
     },
   });
 };
