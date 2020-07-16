@@ -27,6 +27,7 @@ export const useDays = () => {
 };
 
 export const extractDays = (data: GetDaysDto[]): DayDto[] => {
+  if (!data) return [];
   const nestedDays = data.map(({ days }) => days);
   return nestedDays.flat();
 };

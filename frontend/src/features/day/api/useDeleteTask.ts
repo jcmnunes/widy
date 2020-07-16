@@ -88,10 +88,10 @@ export const useDeleteTask = () => {
       });
     },
 
-    onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.refetchQueries(['day', dayId]);
-      queryCache.refetchQueries('activeTask');
-      queryCache.refetchQueries('schedule');
-    },
+    // onSettled: (result, err, { body: { dayId } }) => {
+    //   queryCache.invalidateQueries(['day', dayId]);
+    //   queryCache.invalidateQueries('activeTask');
+    //   queryCache.invalidateQueries('schedule');
+    // },
   });
 };
