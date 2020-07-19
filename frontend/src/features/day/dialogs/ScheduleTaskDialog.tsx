@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog, DialogAction } from '@binarycapsule/ui-capsules';
+import { useHistory, useParams } from 'react-router';
 import { ScheduleTaskVariables, useScheduleTask } from '../api/useScheduleTask';
 
 interface Props {
@@ -15,6 +16,9 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
   taskId,
   onRequestClose,
 }) => {
+  const { taskId: selectedTaskId } = useParams();
+  const history = useHistory();
+
   const [scheduleTask] = useScheduleTask();
 
   const scheduleTaskAction = () => {
@@ -23,6 +27,10 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
       body: { dayId, sectionId },
     };
     onRequestClose();
+
+    if (selectedTaskId === taskId) {
+      history.push(`/day/${dayId}`);
+    }
 
     return scheduleTask(scheduleTaskVariables);
   };

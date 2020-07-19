@@ -1,5 +1,4 @@
 import React, { FocusEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, ModalBody, ModalTitle, Select } from '@binarycapsule/ui-capsules';
@@ -21,11 +20,13 @@ const validationSchema = Yup.object().shape({
 });
 
 interface Props {
+  taskId: string;
+  sectionId: string;
+  dayId: string;
   closeModal(): void;
 }
 
-export const RegisterTimeModal: React.FC<Props> = ({ closeModal }) => {
-  const { taskId, sectionId, dayId } = useParams();
+export const RegisterTimeModal: React.FC<Props> = ({ taskId, sectionId, dayId, closeModal }) => {
   const [suggestion, setSuggestion] = useState<SuggestionOption | null>(null);
 
   const [updateTask] = useUpdateTask();
