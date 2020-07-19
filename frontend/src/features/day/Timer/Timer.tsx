@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Button } from '@binarycapsule/ui-capsules';
+import { useParams } from 'react-router';
 import { TimerButton } from './TimerButton/TimerButton';
 import { Time } from './Time/Time';
 import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const Timer: React.FC<Props> = ({ task, section }) => {
+  const { dayId } = useParams();
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const { data: activeTaskData } = useActiveTask();
@@ -54,7 +56,12 @@ export const Timer: React.FC<Props> = ({ task, section }) => {
       </StyledTimer>
 
       {isRegisterModalOpen && (
-        <RegisterTimeModal closeModal={() => setIsRegisterModalOpen(false)} />
+        <RegisterTimeModal
+          taskId={task.id}
+          sectionId={section.id}
+          dayId={dayId}
+          closeModal={() => setIsRegisterModalOpen(false)}
+        />
       )}
     </>
   );

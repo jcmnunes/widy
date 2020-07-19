@@ -90,7 +90,12 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
       )}
 
       {showRegisterTimeModal && (
-        <RegisterTimeModal closeModal={() => setShowRegisterTimeModal(false)} />
+        <RegisterTimeModal
+          taskId={task.id}
+          sectionId={sectionId}
+          dayId={dayId}
+          closeModal={() => setShowRegisterTimeModal(false)}
+        />
       )}
     </>
   );
