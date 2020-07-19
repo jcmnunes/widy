@@ -87,6 +87,8 @@ export const StyledTask = styled.div<StyledTaskProps>`
   flex-direction: row;
   border: ${props =>
     props.isPlan || props.isSchedule ? 'none' : `1px solid ${getColors(props).border}`};
+  border-bottom: ${({ isPlan, isSchedule, theme }) =>
+    (isPlan || isSchedule) && `1px solid ${theme.neutral100}`};
   border-radius: ${({ isPlan, isSchedule }) => (isPlan || isSchedule ? 0 : '4px')};
   background-color: ${props => getColors(props).background};
   padding: 8px;
@@ -96,7 +98,6 @@ export const StyledTask = styled.div<StyledTaskProps>`
   cursor: pointer;
   ${({ isActive }) => isActive && isActiveMixin};
 
-  ${StyledScopeCode},
   ${ActionsContainer} {
     display: ${({ isPlan, isSchedule, isSelected }) =>
       (isPlan || isSchedule) && !isSelected && 'none'};
