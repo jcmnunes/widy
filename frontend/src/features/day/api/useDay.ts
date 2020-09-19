@@ -26,13 +26,13 @@ export interface DayDto {
   sections: SectionDto[];
 }
 
-const getDayById = async (_: string, dayId: string) => {
+const getDayById = async (_: string, dayId?: string) => {
   const { data } = await axios.get<DayDto>(`/api/days/${dayId}`);
   return data;
 };
 
 export const useDay = (dayId?: string) => {
-  return useQuery(dayId ? ['day', dayId] : null, getDayById);
+  return useQuery(['day', dayId], getDayById, { enabled: dayId });
 };
 
 export const useSection = (dayId?: string, sectionId?: string): SectionDto | null => {

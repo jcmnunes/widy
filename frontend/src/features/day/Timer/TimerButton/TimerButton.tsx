@@ -21,7 +21,7 @@ interface Props {
 export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
   const { dayId } = useParams();
   const { status, data: activeTaskData } = useActiveTask();
-  const [updateTask] = useUpdateTask();
+  const [updateTask, { isLoading }] = useUpdateTask();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -40,6 +40,11 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
       colors={isActive ? colors.active : undefined}
       icon={isActive ? 'stop' : 'play'}
       onClick={() => {
+        // Debounce to prevent simultaneous requests
+        if (isLoading) {
+          return;
+        }
+
         const payload = isActive
           ? {
               start: null,

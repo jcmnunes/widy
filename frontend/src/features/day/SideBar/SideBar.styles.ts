@@ -11,8 +11,9 @@ export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   z-index: 999;
   right: 0;
   transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : '448px'})`};
-  transition: transform 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0, 0.52, 0, 1);
   box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.15), 0 3px 6px hsla(0, 0%, 0%, 0.1);
+  border-left: 1px solid ${({ theme }) => theme.yellow075};
 
   @media (min-width: ${props => props.theme.breakpoints.mobile}) {
     width: 448px;

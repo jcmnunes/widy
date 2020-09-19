@@ -13,7 +13,7 @@ import { LoadMoreDays } from '../DaysNav.styles';
 interface Props {
   days: DayDto[];
   canFetchMore?: boolean;
-  isFetchingMore: boolean;
+  isFetchingMore: false | 'previous' | 'next';
   fetchMore(): void;
 }
 
@@ -46,7 +46,7 @@ export const DaysList: React.FC<Props> = ({ days, canFetchMore, isFetchingMore, 
             onClick={() => fetchMore()}
             appearance="minimal"
             size="small"
-            isLoading={isFetchingMore}
+            isLoading={!!isFetchingMore}
           >
             Load more days
           </Button>

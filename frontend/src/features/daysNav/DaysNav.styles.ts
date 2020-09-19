@@ -15,8 +15,9 @@ export const StyledDaysNav = styled.div<{ isOpen?: boolean }>`
   left: 0;
   z-index: 20000;
   transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : `-${daysNavWidth}`})`};
-  transition: transform 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0, 0.52, 0, 1);
   box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.15), 0 3px 6px hsla(0, 0%, 0%, 0.1);
+  border-right: 1px solid ${({ theme }) => theme.neutral075};
 
   @media (min-width: 800px) {
     transform: translateX(0);
