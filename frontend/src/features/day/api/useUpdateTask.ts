@@ -98,9 +98,12 @@ export const useUpdateTask = () => {
                 } as ActiveTaskDto);
               }
 
-              // We are stopping a task
+              // We are editing task time
               if (payload.time) {
-                queryCache.setQueryData('activeTask', emptyActiveTask);
+                // We are stopping the active task
+                if (previousActiveTask.taskId === taskId) {
+                  queryCache.setQueryData('activeTask', emptyActiveTask);
+                }
               }
 
               if (payload.title) {
