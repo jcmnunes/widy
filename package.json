@@ -18,6 +18,12 @@
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
     "build": "npm run build:frontend && npm run build:backend",
+    "heroku-prebuild": "npm run install-dependencies",
+    "heroku-postbuild": "npm run build",
     "semantic-release": "npx semantic-release"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
