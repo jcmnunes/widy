@@ -129,7 +129,7 @@ export const moveTask = async (req: Request, res: Response) => {
     }
 
     await day.save();
-    res.json({ message: '🥑' });
+    return res.json({ message: '🥑' });
   }
 
   if (fromSectionId === 'schedule' || toSectionId === 'schedule') {
