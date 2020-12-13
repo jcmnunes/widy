@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@binarycapsule/editor": "^1.1.1",
-    "@binarycapsule/ui-capsules": "^4.0.0",
+    "@binarycapsule/ui-capsules": "^4.0.1",
     "@emotion/react": "^11.1.2",
     "@emotion/styled": "^11.0.0",
     "@nivo/core": "^0.67.0",

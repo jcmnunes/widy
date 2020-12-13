@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon, Menu, MenuItem } from '@binarycapsule/ui-capsules';
+import { Button, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logoutRequest } from '../../features/auth/Logout/Logout.actions';
@@ -24,12 +24,12 @@ const UserDropdown = () => {
     >
       <MenuItem
         text="Settings"
-        leftAddon={<Icon icon="adjustments" size="18px" />}
+        leftIcon="adjustments"
         onClick={() => history.push('/settings/account')}
       />
       <MenuItem
         text="Log out"
-        leftAddon={<Icon icon="login" size="18px" />}
+        leftIcon="login"
         onClick={() => dispatch(logoutRequest())}
         closeOnAction={false}
       />

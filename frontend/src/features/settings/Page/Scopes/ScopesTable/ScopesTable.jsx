@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, MenuItem } from '@binarycapsule/ui-capsules';
+import { MenuItem } from '@binarycapsule/ui-capsules';
 import ScopeCode from '../../../../../components/ScopeCode/ScopeCode';
 import DotsMenu from '../../../../../components/DotsMenu/DotsMenu';
 import EmptyScopesTable from '../EmptyScopesTable/EmptyScopesTable';
@@ -12,8 +12,8 @@ import { ScopeModal } from '../../../../day/modals/ScopeModal/ScopeModal';
 const ScopesTable = ({ isArchived, scopes }) => {
   const [selectedScope, setSelectedScope] = useState(null);
 
-  const [archiveScope] = useArchiveScope();
-  const [unarchiveScope] = useUnarchiveScope();
+  const [archiveScope, { isLoading: archiveScopeLoading }] = useArchiveScope();
+  const [unarchiveScope, { isLoading: unarchiveScopeLoading }] = useUnarchiveScope();
 
   if (scopes.length === 0) {
     return (
@@ -29,15 +29,12 @@ const ScopesTable = ({ isArchived, scopes }) => {
             <ScopeCode scopeCode={scope.shortCode} onClick={() => setSelectedScope(scope)} />
             <ScopeName onClick={() => setSelectedScope(scope)}>{scope.name}</ScopeName>
             <DotsMenu>
-              <MenuItem
-                text="Edit"
-                leftAddon={<Icon icon="pencil" size="18px" />}
-                onClick={() => setSelectedScope(scope)}
-              />
+              <MenuItem text="Edit" leftIcon="pencil" onClick={() => setSelectedScope(scope)} />
 
               <MenuItem
                 text={isArchived ? 'Unarchive' : 'Archive'}
-                leftAddon={<Icon icon={isArchived ? 'arrow_up' : 'archive'} size="18px" />}
+                leftIcon={isArchived ? 'arrow_up' : 'archive'}
+                isLoading={archiveScopeLoading || unarchiveScopeLoading}
                 onClick={() => {
                   isArchived ? unarchiveScope(scope.id) : archiveScope(scope.id);
                 }}
@@ -47,6 +44,7 @@ const ScopesTable = ({ isArchived, scopes }) => {
           </Row>
         ))}
       </StyledScopesTable>
+
       {!!selectedScope && (
         <ScopeModal scope={selectedScope} closeModal={() => setSelectedScope(null)} />
       )}

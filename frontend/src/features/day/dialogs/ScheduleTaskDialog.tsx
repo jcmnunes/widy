@@ -1,6 +1,5 @@
 import React from 'react';
-import { Dialog } from '@binarycapsule/ui-capsules';
-import { DialogAction } from '@binarycapsule/ui-capsules/dist/Dialog/Dialog';
+import { Action, Dialog } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
 import { ScheduleTaskVariables, useScheduleTask } from '../api/useScheduleTask';
 import { DayRouteParams } from '../dayTypes';
@@ -38,16 +37,16 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
     return scheduleTask(scheduleTaskVariables);
   };
 
-  const actions: DialogAction[] = [
+  const actions: Action[] = [
     {
-      name: 'Cancel',
-      appearance: 'neutral',
-      action: onRequestClose,
+      text: 'Cancel',
+      variant: 'neutral',
+      onClick: onRequestClose,
     },
     {
-      name: 'Schedule',
-      appearance: 'primary',
-      action: scheduleTaskAction,
+      text: 'Schedule',
+      variant: 'primary',
+      onClick: scheduleTaskAction,
     },
   ];
 

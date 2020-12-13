@@ -1,17 +1,18 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, Icon, Menu, MenuItem } from '@binarycapsule/ui-capsules';
+import { Button, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { logoutRequest } from '../auth/Logout/Logout.actions';
 import { dayStateActions } from '../day/dayState/dayStateSlice';
 import { DayRouteParams } from '../day/dayTypes';
+import { isLoadingSelector as isLogoutLoadingSelector } from '../auth/Logout/Logout.selectors';
 
 export const UserMenu = () => {
   const { dayId } = useParams<DayRouteParams>();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // const isLogoutLoading = useSelector(isLogoutLoadingSelector);
+  const isLogoutLoading = useSelector(isLogoutLoadingSelector);
 
   const showSchedule = () => {
     dispatch(dayStateActions.showSchedule());
@@ -29,22 +30,19 @@ export const UserMenu = () => {
         />
       }
     >
-      <MenuItem
-        text="Schedule"
-        leftAddon={<Icon icon="calendar" size="18px" />}
-        onClick={showSchedule}
-      />
+      <MenuItem text="Schedule" leftIcon="calendar" onClick={showSchedule} />
 
       <MenuItem
         text="Settings"
-        leftAddon={<Icon icon="cog" size="18px" />}
+        leftIcon="cog"
         onClick={() => history.push(`/settings/account${dayId ? `/${dayId}` : ''}`)}
       />
 
       <MenuItem
         text="Log out"
-        leftAddon={<Icon icon="logout" size="18px" />}
+        leftIcon="logout"
         onClick={() => dispatch(logoutRequest())}
+        isLoading={isLogoutLoading}
         closeOnAction={false}
       />
     </Menu>

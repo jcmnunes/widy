@@ -8,10 +8,6 @@ export const ActionsTop = styled.div`
   display: flex;
   flex-direction: column;
 
-  > * + * {
-    margin-top: 8px;
-  }
-
   @media (min-width: 600px) {
     flex-direction: row;
     align-items: center;

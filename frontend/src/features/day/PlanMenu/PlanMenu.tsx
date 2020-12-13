@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, IconButton, Menu, MenuItem } from '@binarycapsule/ui-capsules';
+import { IconButton, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
 import { useMoveAll } from '../api/useMoveAll';
 import { DayRouteParams } from '../dayTypes';
@@ -21,7 +21,7 @@ export const PlanMenu: React.FC<Props> = ({ planId }) => {
     <>
       <Menu trigger={Trigger} placement="right">
         <MenuItem
-          leftAddon={<Icon icon="calendar" size="18px" />}
+          leftIcon="calendar"
           onClick={() => {
             moveAll({
               to: 'schedule',

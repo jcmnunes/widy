@@ -38,25 +38,21 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
           {canRegisterTime ? (
             <MenuItem
               text="Register Time"
-              leftAddon={<Icon icon="clock" size="18px" />}
+              leftIcon="clock"
               onClick={() => setShowRegisterTimeModal(true)}
             />
           ) : null}
-          <MenuItem
-            text="Rename"
-            leftAddon={<Icon icon="pencil" size="18px" />}
-            onClick={() => setShowRenameTaskModal(true)}
-          />
+          <MenuItem text="Rename" leftIcon="pencil" onClick={() => setShowRenameTaskModal(true)} />
           {canScheduleTask ? (
             <MenuItem
               text="Schedule"
-              leftAddon={<Icon icon="calendar" size="18px" />}
+              leftIcon="calendar"
               onClick={() => setShowScheduleTaskDialog(true)}
             />
           ) : null}
           <MenuItem
             text="Delete"
-            leftAddon={<Icon icon="trash" size="18px" color="red.500" />}
+            leftAddon={<Icon icon="trash" color="error.500" size="18px" />}
             onClick={() => setShowDeleteTaskDialog(true)}
           />
         </Menu>

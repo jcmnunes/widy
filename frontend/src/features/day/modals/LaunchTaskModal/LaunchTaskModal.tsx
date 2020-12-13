@@ -83,7 +83,7 @@ export const LaunchTaskModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Launch task">
+    <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Launch task" size="small">
       <ModalHeader>Choose a section:</ModalHeader>
 
       <ModalCloseButton onClick={onRequestClose} />
