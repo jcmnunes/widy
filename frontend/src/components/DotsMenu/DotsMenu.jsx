@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-import { Dropdown, IconButton } from '@binarycapsule/ui-capsules';
+import styled from '@emotion/styled/macro';
+import { IconButton, Menu } from '@binarycapsule/ui-capsules';
 
 export const Control = styled.div`
   width: 25px;
@@ -11,16 +11,19 @@ export const Control = styled.div`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: ${props => props.theme.neutral100};
+    background-color: ${props => props.theme.colors.neutral['100']};
   }
 `;
 
 const DotsMenu = ({ children }) => {
   return (
     <Control>
-      <Dropdown trigger={<IconButton icon="dots_h" />} placement="right">
+      <Menu
+        trigger={<IconButton icon="dots_h" variant="ghost" variantColor="neutral" size="small" />}
+        placement="right"
+      >
         {children}
-      </Dropdown>
+      </Menu>
     </Control>
   );
 };

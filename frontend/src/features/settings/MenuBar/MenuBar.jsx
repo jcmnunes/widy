@@ -27,10 +27,12 @@ const MenuBar = () => {
   return (
     <StyledMenuBar isOpen={isOpen}>
       <Brand to="/">
-        <IconWidy size={30} yesterdayColor={theme.blue600} />
-        <IconWidyText size={60} textColor={theme.blue600} />
+        <IconWidy size={30} yesterdayColor={theme.colors.blue['600']} />
+        <IconWidyText size={60} textColor={theme.colors.blue['600']} />
       </Brand>
+
       <Heading1>Settings</Heading1>
+
       <Links>
         <StyledLink to={getRoute('account')} isActive={pageId === 'account'}>
           Account

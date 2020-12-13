@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledBoardHeader = styled.div`
   display: flex;
@@ -57,7 +57,8 @@ export const ActionsRow = styled.div`
 `;
 
 export const LargeText = styled.span`
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 500;
 `;
 
 export const BoardHeaderMobileActions = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { theme } from '@binarycapsule/ui-capsules';
 
 const StyledBadge = styled.span`
@@ -10,7 +10,7 @@ const StyledBadge = styled.span`
   background: ${({ background }) => background};
   color: ${({ color }) => color};
   height: 12px;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
   text-transform: uppercase;
   padding: 0 4px;
@@ -23,8 +23,8 @@ const Badge = ({ color, background, children }) => (
 );
 
 Badge.defaultProps = {
-  color: theme.blue050,
-  background: theme.blue600,
+  color: theme.colors.blue['50'],
+  background: theme.colors.blue['600'],
 };
 
 Badge.propTypes = {

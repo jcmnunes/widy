@@ -1,9 +1,9 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 const Heading1 = styled.h1`
-  font-weight: bold;
-  font-size: 16px;
-  color: ${props => props.theme.neutral700};
+  font-weight: 600;
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['700']};
   text-transform: uppercase;
 `;
 

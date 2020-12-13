@@ -9,6 +9,7 @@ import { DayDto } from './useDay';
 import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
 import { arrayInsert, arrayRemove } from '../../helpers';
 import { ScheduleDto } from './useSchedule';
+import { DayRouteParams } from '../dayTypes';
 
 interface MoveTaskBody {
   dayId: string;
@@ -167,7 +168,7 @@ const updateCache = ({
 
 export const useMoveTask = () => {
   const history = useHistory();
-  const { taskId: selectedTaskId } = useParams();
+  const { taskId: selectedTaskId } = useParams<DayRouteParams>();
 
   return useMutation(moveTask, {
     onMutate: ({ taskId, body }) => {

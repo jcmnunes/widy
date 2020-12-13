@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { PageSpinner, theme } from '@binarycapsule/ui-capsules';
+import { Splash, theme } from '@binarycapsule/ui-capsules';
 import NoInternet from './components/NoInternet/NoInternet';
 import Routes from './router/routes';
 import { version } from '../package.json';
@@ -24,9 +24,9 @@ class App extends Component {
     return (
       <div data-version={version}>
         {loading ? (
-          <PageSpinner>
-            <IconWidyText size={125} textColor={theme.blue600} />
-          </PageSpinner>
+          <Splash variant="splash">
+            <IconWidyText size={125} textColor={theme.colors.blue['600']} />
+          </Splash>
         ) : (
           <Routes />
         )}

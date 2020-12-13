@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { Link } from 'react-router-dom';
 
 const menuBarWidth = '254px';
 
 export const StyledMenuBar = styled.div`
-  background: ${props => props.theme.neutral050};
+  background: ${props => props.theme.colors.neutral['50']};
   width: ${menuBarWidth};
   padding: 60px 24px 24px;
   height: 100vh;
@@ -17,7 +17,7 @@ export const StyledMenuBar = styled.div`
   transition: transform 0.2s ease;
   box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.15), 0 3px 6px hsla(0, 0%, 0%, 0.1);
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.md}) {
     position: relative;
     transform: translateX(0);
     box-shadow: none;
@@ -55,7 +55,7 @@ export const MenuBarCloseButton = styled.div`
   top: 12px;
   display: block;
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.md}) {
     display: none;
   }
 `;

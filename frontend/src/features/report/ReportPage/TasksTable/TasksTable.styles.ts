@@ -1,9 +1,9 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { TableCell, TableRow } from '@binarycapsule/ui-capsules';
 
 export const ScopeRow = styled(TableRow)`
-  background: ${props => props.theme.neutral100} !important;
-  color: ${props => props.theme.neutral600};
+  background: ${props => props.theme.colors.neutral['100']} !important;
+  color: ${props => props.theme.colors.neutral['600']};
   font-weight: 700;
 `;
 

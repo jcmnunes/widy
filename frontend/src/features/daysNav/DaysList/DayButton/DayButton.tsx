@@ -1,6 +1,6 @@
 import React from 'react';
-import { IllustratedIcon } from '@binarycapsule/ui-capsules';
-import { StyledDayButton, Content } from './DayButton.styles';
+import { Icon } from '@binarycapsule/ui-capsules';
+import { Content, StyledDayButton } from './DayButton.styles';
 import Badge from '../../../../components/Badge/Badge';
 
 interface Props {
@@ -16,7 +16,8 @@ export const DayButton: React.FC<Props> = ({ isSelected, isToday, onClick, child
         {isToday && <Badge>Today</Badge>}
         <span>{children}</span>
       </Content>
-      <IllustratedIcon icon="chev_right" />
+
+      <Icon icon="chev_right" size="16px" />
     </StyledDayButton>
   );
 };

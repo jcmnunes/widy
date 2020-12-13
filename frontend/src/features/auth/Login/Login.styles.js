@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const FormContainer = styled.div`
   position: relative;
@@ -16,8 +16,9 @@ export const StyledForm = styled.form`
 `;
 
 export const Title = styled.h1`
-  font-size: 30px;
-  color: ${props => props.theme.neutral700};
+  font-size: 24px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.neutral['700']};
   margin-bottom: 32px;
 `;
 
@@ -30,5 +31,6 @@ export const Footer = styled.div`
 export const InputField = styled.label`
   display: block;
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 500;
 `;

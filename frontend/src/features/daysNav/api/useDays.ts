@@ -17,17 +17,19 @@ const getDays = async (_: string, page = 1) => {
 };
 
 export const useDays = () => {
-  const exports = useInfiniteQuery<GetDaysDto, string, number | undefined>('days', getDays, {
+  const queryInfo = useInfiniteQuery<GetDaysDto, string>('days', getDays, {
     getFetchMore: lastPage => lastPage.nextPage || false,
   });
 
-  const days = extractDays(exports.data);
+  const days = extractDays(queryInfo.data);
 
-  return { ...exports, days };
+  return { ...queryInfo, days };
 };
 
-export const extractDays = (data: GetDaysDto[]): DayDto[] => {
+export const extractDays = (data?: GetDaysDto[]): DayDto[] => {
   if (!data) return [];
+
   const nestedDays = data.map(({ days }) => days);
+
   return nestedDays.flat();
 };

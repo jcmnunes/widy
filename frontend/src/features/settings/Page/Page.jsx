@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
-import { Button, IconButton } from '@binarycapsule/ui-capsules';
+import { Button } from '@binarycapsule/ui-capsules';
 import Account from './Account/Account';
 import ChangePassword from './ChangePassword/ChangePassword';
 import Scopes from './Scopes/Scopes';
@@ -21,12 +21,15 @@ const Page = () => {
   return (
     <StyledPage>
       <ActionsTop>
-        <IconButton
-          icon="logout"
-          isRound
+        <Button
+          variant="ghost"
+          variantColor="neutral"
+          leftIcon="logout"
+          iconVariant="outline"
           onClick={() => history.push(`/day${dayId ? `/${dayId}` : ''}`)}
-          text="Exit Settings"
-        />
+        >
+          Exit Settings
+        </Button>
       </ActionsTop>
       <Switch>
         <Route path="/settings/account">

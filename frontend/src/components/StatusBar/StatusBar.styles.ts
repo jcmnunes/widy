@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledStatusBar = styled.div<{ color: string }>`
   background: ${({ color }) => color};
@@ -6,7 +6,7 @@ export const StyledStatusBar = styled.div<{ color: string }>`
   flex-shrink: 0;
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsLegacy.mobile}) {
     display: block;
   }
 `;

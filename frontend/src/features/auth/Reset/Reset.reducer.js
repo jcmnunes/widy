@@ -5,7 +5,7 @@ const initialState = {
   error: '',
 };
 
-export default (state = initialState, action) => {
+export const resetReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_REQUEST:
       return { ...state, loading: true };

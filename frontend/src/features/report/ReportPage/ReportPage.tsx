@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IconButton, Spinner } from '@binarycapsule/ui-capsules';
+import { Button, Spinner } from '@binarycapsule/ui-capsules';
 import TaskPerSectionChart from './TaskPerSectionChart/TaskPerSectionChart';
 import UserDropdown from '../../../components/UserDropdown/UserDropdown';
 import { formatTotalTime } from '../../../helpers/timeHelpers';
@@ -12,23 +12,23 @@ import {
   ChartsContainer,
   EmptyStateContainer,
   EmptyStateText,
+  LoadingReport,
   ReportDescription,
+  ReportLoader,
+  ReportLoaderText,
   ReportTitle,
+  ReportTitleContainer,
+  SpinnerText,
   Stat,
   StatLabel,
   StatsContainer,
   StatValue,
   StyledReportPage,
-  LoadingReport,
-  SpinnerText,
-  ReportLoader,
-  ReportLoaderText,
-  ReportTitleContainer,
 } from './ReportPage.styles';
 import {
-  useReport,
   selectTasksTableData,
   selectTimePerSectionPieChartData,
+  useReport,
 } from '../api/useReport';
 import { IllustrationBoss } from '../../../illustrations/IllustrationBoss';
 
@@ -58,19 +58,24 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
           )}
         </ReportTitleContainer>
         <ActionsContainer>
-          <IconButton
-            icon="logout"
-            isRound
+          <Button
+            leftIcon="logout"
+            variant="ghost"
+            variantColor="neutral"
+            iconVariant="outline"
             onClick={() => history.push(`/day/${dayId}`)}
-            text="Exit Report"
-          />
+          >
+            Exit Report
+          </Button>
+
           <UserDropdown />
         </ActionsContainer>
       </ActionsTop>
+
       {status === 'loading' ? (
         <LoadingReport>
           <SpinnerText>Getting report...</SpinnerText>
-          <Spinner appearance="dark" size="large" />
+          <Spinner variantColor="neutral" size="large" />
         </LoadingReport>
       ) : (
         report && (
@@ -78,7 +83,7 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
             <StatsContainer>
               {isFetching && (
                 <ReportLoader>
-                  <Spinner size="small" />
+                  <Spinner size="small" variantColor="neutral" />
                   <ReportLoaderText>Loading...</ReportLoaderText>
                 </ReportLoader>
               )}

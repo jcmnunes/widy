@@ -1,25 +1,28 @@
 import React from 'react';
-import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
+import { IconButton, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
 import { useMoveAll } from '../api/useMoveAll';
+import { DayRouteParams } from '../dayTypes';
 
-const Trigger = <IconButton hasBackground icon="dots_h" onClick={() => {}} />;
+const Trigger = (
+  <IconButton icon="dots_h" variant="ghost" variantColor="neutral" onClick={() => {}} />
+);
 
 interface Props {
   planId: string;
 }
 
 export const PlanMenu: React.FC<Props> = ({ planId }) => {
-  const { dayId: selectedDayId, sectionId: selectedSectionId } = useParams();
+  const { dayId: selectedDayId, sectionId: selectedSectionId } = useParams<DayRouteParams>();
   const [moveAll] = useMoveAll();
   const history = useHistory();
 
   return (
     <>
-      <Dropdown trigger={Trigger} placement="right">
-        <DropdownItem
-          icon="schedule"
-          handleAction={() => {
+      <Menu trigger={Trigger} placement="right">
+        <MenuItem
+          leftIcon="calendar"
+          onClick={() => {
             moveAll({
               to: 'schedule',
               body: {
@@ -34,7 +37,7 @@ export const PlanMenu: React.FC<Props> = ({ planId }) => {
           text="Schedule all tasks"
         />
         <></>
-      </Dropdown>
+      </Menu>
     </>
   );
 };

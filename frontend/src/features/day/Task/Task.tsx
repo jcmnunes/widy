@@ -46,10 +46,16 @@ export const Task: React.FC<Props> = ({
       onClick={!isTemp ? onClick : () => {}}
     >
       {isPlan || isSchedule ? (
-        <StyledIconRightThickArrow primaryColor={isTemp ? theme.neutral300 : theme.neutral700} />
+        <StyledIconRightThickArrow
+          size={24}
+          withCircle={false}
+          primaryColor={isTemp ? theme.colors.neutral['300'] : theme.colors.neutral['700']}
+          secondaryColor={theme.colors.neutral['300']}
+        />
       ) : (
         <Checkbox
-          inputSize="large"
+          size="large"
+          variantColor="neutral"
           checked={!!isCompleted}
           onChange={!isTemp ? onCompletedChange : () => {}}
         />

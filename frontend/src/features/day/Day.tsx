@@ -11,19 +11,23 @@ import { ActiveTaskPopup } from './ActiveTaskPopup/ActiveTaskPopup';
 import { activeTaskActions } from './activeTask/activeTaskSlice';
 import { useActiveTask } from './api/useActiveTask';
 import { dayStateActions } from './dayState/dayStateSlice';
+import { DayRouteParams } from './dayTypes';
 
 let timer: number | undefined;
 
 interface Props {}
 
 export const Day: React.FC<Props> = () => {
-  const { dayId, sectionId: selectedSectionId } = useParams();
+  const { dayId, sectionId: selectedSectionId } = useParams<DayRouteParams>();
+
   const history = useHistory();
+
   const dispatch = useDispatch();
 
   const { days } = useDays();
 
   const { data: activeTaskData } = useActiveTask();
+
   const activeTaskId = activeTaskData ? activeTaskData.taskId : null;
 
   useEffect(() => {
@@ -55,9 +59,13 @@ export const Day: React.FC<Props> = () => {
   return (
     <StyledDay>
       <StatusBar status={activeTaskId ? 'working' : undefined} />
+
       <DaysNav />
+
       <Board dayId={dayId} />
+
       <SideBar />
+
       <ActiveTaskPopup />
     </StyledDay>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { DropdownItem } from '@binarycapsule/ui-capsules';
+import { MenuItem } from '@binarycapsule/ui-capsules';
 import ScopeCode from '../../../../../components/ScopeCode/ScopeCode';
 import DotsMenu from '../../../../../components/DotsMenu/DotsMenu';
 import EmptyScopesTable from '../EmptyScopesTable/EmptyScopesTable';
@@ -12,8 +12,8 @@ import { ScopeModal } from '../../../../day/modals/ScopeModal/ScopeModal';
 const ScopesTable = ({ isArchived, scopes }) => {
   const [selectedScope, setSelectedScope] = useState(null);
 
-  const [archiveScope, { status: archiveScopeStatus }] = useArchiveScope();
-  const [unarchiveScope, { status: unarchiveScopeStatus }] = useUnarchiveScope();
+  const [archiveScope, { isLoading: archiveScopeLoading }] = useArchiveScope();
+  const [unarchiveScope, { isLoading: unarchiveScopeLoading }] = useUnarchiveScope();
 
   if (scopes.length === 0) {
     return (
@@ -29,12 +29,13 @@ const ScopesTable = ({ isArchived, scopes }) => {
             <ScopeCode scopeCode={scope.shortCode} onClick={() => setSelectedScope(scope)} />
             <ScopeName onClick={() => setSelectedScope(scope)}>{scope.name}</ScopeName>
             <DotsMenu>
-              <DropdownItem text="Edit" icon="edit" handleAction={() => setSelectedScope(scope)} />
-              <DropdownItem
+              <MenuItem text="Edit" leftIcon="pencil" onClick={() => setSelectedScope(scope)} />
+
+              <MenuItem
                 text={isArchived ? 'Unarchive' : 'Archive'}
-                icon={isArchived ? 'unarchive' : 'archive'}
-                isLoading={archiveScopeStatus === 'loading' || unarchiveScopeStatus === 'loading'}
-                handleAction={() => {
+                leftIcon={isArchived ? 'arrow_up' : 'archive'}
+                isLoading={archiveScopeLoading || unarchiveScopeLoading}
+                onClick={() => {
                   isArchived ? unarchiveScope(scope.id) : archiveScope(scope.id);
                 }}
                 closeOnAction={false}
@@ -43,6 +44,7 @@ const ScopesTable = ({ isArchived, scopes }) => {
           </Row>
         ))}
       </StyledScopesTable>
+
       {!!selectedScope && (
         <ScopeModal scope={selectedScope} closeModal={() => setSelectedScope(null)} />
       )}

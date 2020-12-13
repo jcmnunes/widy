@@ -3,9 +3,9 @@ import { theme } from '@binarycapsule/ui-capsules';
 import { StyledStatusBar } from './StatusBar.styles';
 
 const colors = {
-  working: theme.yellow400,
-  inBreak: theme.blue200,
-  idle: theme.neutral400,
+  working: theme.colors.yellow['400'],
+  inBreak: theme.colors.blue['200'],
+  idle: theme.colors.neutral['400'],
 };
 
 interface Props {

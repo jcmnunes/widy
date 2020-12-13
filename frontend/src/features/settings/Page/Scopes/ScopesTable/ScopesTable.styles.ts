@@ -1,14 +1,14 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledScopesTable = styled.div`
-  border: 1px solid ${props => props.theme.neutral200};
+  border: 1px solid ${props => props.theme.colors.neutral['200']};
   border-radius: 4px;
   margin-top: 24px;
 `;
 
 export const ScopeName = styled.span`
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   flex: 1;
   margin: 0 12px;
   white-space: nowrap;
@@ -23,6 +23,7 @@ export const Row = styled.div`
   height: 48px;
   padding: 0 24px;
   cursor: pointer;
+  justify-content: space-between;
 
   &:first-child {
     border-top-left-radius: 4px;
@@ -39,6 +40,6 @@ export const Row = styled.div`
   }
 
   &:nth-child(even) {
-    background: ${props => props.theme.neutral050};
+    background: ${props => props.theme.colors.neutral['50']};
   }
 `;

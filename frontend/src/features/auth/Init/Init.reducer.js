@@ -10,7 +10,7 @@ const initialState = {
   },
 };
 
-export default (state = initialState, action) => {
+export const initReducer = (state = initialState, action) => {
   switch (action.type) {
     case INIT_REQUEST:
       return { ...state, loading: true };

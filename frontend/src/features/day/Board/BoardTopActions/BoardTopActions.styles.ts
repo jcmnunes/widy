@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledBoardTopActions = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ export const StyledBoardTopActions = styled.div`
     margin-left: 6px;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsLegacy.mobile}) {
     > * {
       margin-left: 12px;
     }

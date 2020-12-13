@@ -1,17 +1,17 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import MarkdownLogo from './MarkdownLogo';
 
 const Wrapper = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: ${props => props.theme.neutral400};
+  color: ${props => props.theme.colors.neutral['400']};
   font-size: 13px;
   margin-left: 8px;
 
   &:hover {
-    color: ${props => props.theme.neutral700};
+    color: ${props => props.theme.colors.neutral['700']};
   }
 `;
 

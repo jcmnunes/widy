@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledPage = styled.div`
   flex: 1;
@@ -6,7 +6,7 @@ export const StyledPage = styled.div`
   overflow-y: auto;
   position: relative;
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.mobile}) {
     padding: 48px 32px;
   }
 `;
@@ -16,7 +16,7 @@ export const ActionsTop = styled.div`
   top: 32px;
   right: 12px;
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.mobile}) {
     top: 48px;
     right: 32px;
   }
@@ -28,9 +28,9 @@ export const PageTitle = styled.h2`
 `;
 
 export const PageDescription = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  color: ${props => props.theme.neutral300};
+  color: ${props => props.theme.colors.neutral['300']};
 `;
 
 export const StyledForm = styled.form`
@@ -66,12 +66,12 @@ export const MenuButton = styled.div`
   top: 32px;
   left: 8px;
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.mobile}) {
     top: 48px;
     left: 24px;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.md}) {
     display: none;
   }
 `;

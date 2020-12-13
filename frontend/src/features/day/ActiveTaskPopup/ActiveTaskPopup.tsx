@@ -1,22 +1,27 @@
 import React from 'react';
 import moment from 'moment';
-import { IconButton, Tooltip } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon, Tooltip } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ActiveTaskPopupHeader, StyledActiveTaskPopup } from './ActiveTaskPopup.styles';
 import { Heading2 } from '../../../components/Typography';
 import { useActiveTask } from '../api/useActiveTask';
 import { Task } from '../Task/Task';
-import { colors as playButtonColors } from '../Timer/TimerButton/TimerButton';
 import { useUpdateTask } from '../api/useUpdateTask';
 import { Time } from '../Timer/Time/Time';
 import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
+import { DayRouteParams } from '../dayTypes';
+import { useTheme } from '@emotion/react';
 
 interface Props {}
 
 export const ActiveTaskPopup: React.FC<Props> = () => {
+  const theme = useTheme();
+
   const { data: activeTask, status } = useActiveTask();
-  const { dayId } = useParams();
+
+  const { dayId } = useParams<DayRouteParams>();
+
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
@@ -62,11 +67,11 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
         }}
       >
         <Tooltip placement="top" tooltip="Stop the task">
-          <IconButton
+          <IllustratedIcon
             icon="stop"
-            colors={playButtonColors.active}
             onClick={e => {
               e.stopPropagation();
+
               updateTask({
                 taskId: activeTask.taskId,
                 body: {
@@ -79,6 +84,10 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
                 },
               });
             }}
+            primaryColor={theme.colors.yellow['400']}
+            primaryColorHover={theme.colors.yellow['500']}
+            secondaryColor={theme.colors.yellow['900']}
+            secondaryColorHover={theme.colors.yellow['900']}
           />
         </Tooltip>
       </Task>

@@ -1,20 +1,20 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { IllustratedIcon, theme } from '@binarycapsule/ui-capsules';
 
 const StyledSideBar = styled.div`
-  background: ${props => props.theme.yellow050};
+  background: ${props => props.theme.colors.yellow['50']};
   flex: 0.5;
   display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 
-  @media (min-width: ${props => props.theme.breakpoints.xl}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.xl}) {
     display: flex;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.xxl}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.xxl}) {
     flex: 1;
   }
 `;
@@ -27,8 +27,8 @@ const SideBar: React.FC<Props> = () => {
       <IllustratedIcon
         icon="pie"
         size="128px"
-        primaryColor={theme.yellow100}
-        secondaryColor={theme.yellow100}
+        primaryColor={theme.colors.yellow['100']}
+        secondaryColor={theme.colors.yellow['100']}
       />
     </StyledSideBar>
   );

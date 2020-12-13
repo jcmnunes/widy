@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/jcmnunes/widy-frontend/master/src/images/logo_full.png" width="200px" height="100px">
+<img src="https://raw.githubusercontent.com/jcmnunes/widy/master/frontend/src/images/logo_full.png" width="200px" height="100px">
 
 # Widy - What I did yesterday
 

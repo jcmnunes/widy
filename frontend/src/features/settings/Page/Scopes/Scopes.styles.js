@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const ScopesPageWrapper = styled.div`
   margin-top: 32px;
@@ -7,10 +7,6 @@ export const ScopesPageWrapper = styled.div`
 export const ActionsTop = styled.div`
   display: flex;
   flex-direction: column;
-
-  > * + * {
-    margin-top: 8px;
-  }
 
   @media (min-width: 600px) {
     flex-direction: row;

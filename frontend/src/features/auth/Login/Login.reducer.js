@@ -5,7 +5,7 @@ const initialState = {
   error: '',
 };
 
-export default (state = initialState, action) => {
+export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return { ...state, loading: true };

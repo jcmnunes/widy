@@ -1,12 +1,12 @@
 import { Input, Modal, ModalFooter } from '@binarycapsule/ui-capsules';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const Label = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 16px;
-  color: ${props => props.theme.neutral500};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['500']};
 
   span {
     margin: 0 12px 0 6px;
@@ -38,5 +38,5 @@ export const H3 = styled.h3`
 
 export const StyledError = styled.div`
   font-size: 12px;
-  color: ${({ theme }) => theme.red500};
+  color: ${({ theme }) => theme.colors.error['500']};
 `;
