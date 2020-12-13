@@ -4,13 +4,14 @@ import {
   Button,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalFooter,
-  ModalTitle,
+  ModalHeader,
   Radio,
 } from '@binarycapsule/ui-capsules';
 import { Error, Radios } from './LaunchTaskModal.styles';
 import { SelectOption } from '../../../../typings/types';
-import { useDay, TaskDto } from '../../api/useDay';
+import { TaskDto, useDay } from '../../api/useDay';
 import { useMoveTask } from '../../api/useMoveTask';
 import { sectionTitleMap } from '../../Section/Section.constants';
 
@@ -33,7 +34,8 @@ export const LaunchTaskModal: React.FC<Props> = ({
   const [error, setError] = useState('');
 
   const { data: day } = useDay(dayId);
-  const [moveTask, { status }] = useMoveTask();
+
+  const [moveTask] = useMoveTask();
 
   const sectionOptions = useMemo(() => {
     if (!day) return [];
@@ -81,31 +83,36 @@ export const LaunchTaskModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal isOpen onRequestClose={onRequestClose} width="500px" contentLabel="Modal - Launch task">
+    <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Launch task" size="small">
+      <ModalHeader>Choose a section:</ModalHeader>
+
+      <ModalCloseButton onClick={onRequestClose} />
+
       <form onSubmit={handleSubmit}>
         <ModalBody>
-          <ModalTitle>Choose a section:</ModalTitle>
           <Radios>
             {sectionOptions.map(({ value, label }) => (
               <Radio
-                appearance="primary"
+                variantColor="primary"
                 key={value}
                 value={value}
                 onChange={handleOnChange}
                 checked={value === checkedId}
-                inputSize="large"
+                size="large"
               >
                 {label}
               </Radio>
             ))}
           </Radios>
+
           {!!error && <Error>{error}</Error>}
         </ModalBody>
+
         <ModalFooter>
-          <Button appearance="secondary" size="large" onClick={onRequestClose}>
+          <Button variant="ghost" variantColor="neutral" size="large" onClick={onRequestClose}>
             Cancel
           </Button>
-          <Button type="submit" appearance="primary" size="large" isLoading={status === 'loading'}>
+          <Button type="submit" size="large">
             Launch task
           </Button>
         </ModalFooter>

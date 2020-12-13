@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   flex: 0.75;
@@ -6,26 +6,26 @@ export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   width: 320px;
   height: 100vh;
   overflow-y: auto;
-  background: ${({ theme }) => theme.yellow050};
+  background: ${({ theme }) => theme.colors.yellow['50']};
   position: fixed;
   z-index: 999;
   right: 0;
   transform: ${({ isOpen }) => `translateX(${isOpen ? 0 : '448px'})`};
   transition: transform 0.2s cubic-bezier(0, 0.52, 0, 1);
   box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.15), 0 3px 6px hsla(0, 0%, 0%, 0.1);
-  border-left: 1px solid ${({ theme }) => theme.yellow075};
+  border-left: 1px solid ${({ theme }) => theme.colors.yellow['100']};
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.mobile}) {
     width: 448px;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.xl}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.xl}) {
     position: relative;
     transform: translateX(0);
     box-shadow: none;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.xxl}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.xxl}) {
     flex: 1;
     padding: 48px;
   }
@@ -37,7 +37,7 @@ export const SidebarCloseButton = styled.div`
   top: 12px;
   display: block;
 
-  @media (min-width: ${props => props.theme.breakpoints.xl}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.xl}) {
     display: none;
   }
 `;
@@ -58,7 +58,7 @@ export const SideBarEmptyState = styled.div`
 `;
 
 export const SideBarEmptyStateText = styled.h2`
-  font-size: 16px;
-  color: ${props => props.theme.neutral300};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['300']};
   margin-top: 24px;
 `;

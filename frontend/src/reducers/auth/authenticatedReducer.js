@@ -5,7 +5,7 @@ import { INIT_FAILURE, INIT_SUCCESS } from '../../features/auth/Init/Init.types'
 
 const initialState = false;
 
-export default (state = initialState, action) => {
+export const authenticatedReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return true;

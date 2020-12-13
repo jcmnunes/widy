@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import moment from 'moment';
-import { Button } from '@binarycapsule/ui-capsules';
+import { IconButton, Toaster } from '@binarycapsule/ui-capsules';
 import { useDispatch, useSelector } from 'react-redux';
 import { Brand } from './Brand/Brand';
 import { DaysNavCloseButton, StyledDaysNav } from './DaysNav.styles';
@@ -29,12 +29,25 @@ export const DaysNav: React.FC<Props> = () => {
   return (
     <StyledDaysNav isOpen={isDaysNavOpen}>
       <DaysNavCloseButton>
-        <Button onClick={closeDaysNav} appearance="minimal" iconBefore="x" />
+        <IconButton
+          onClick={() => {
+            Toaster.success({ title: 'Title test', message: 'Lorem ipsum dolor sit' });
+            closeDaysNav();
+          }}
+          variant="ghost"
+          variantColor="neutral"
+          icon="x"
+        />
       </DaysNavCloseButton>
+
       <Brand />
+
       <DaysNavHeader isTodayCreated={isTodayCreated} />
+
       {status === 'loading' && <DaysNavLoading />}
+
       {status === 'error' && <DaysNavError />}
+
       {status === 'success' && !!days && (
         <DaysList
           days={days}

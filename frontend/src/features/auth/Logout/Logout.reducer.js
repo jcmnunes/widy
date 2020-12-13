@@ -5,7 +5,7 @@ const initialState = {
   error: '',
 };
 
-export default (state = initialState, action) => {
+export const logoutReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGOUT_REQUEST:
       return { ...state, loading: true };

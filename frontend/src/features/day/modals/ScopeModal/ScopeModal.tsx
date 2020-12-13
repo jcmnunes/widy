@@ -3,19 +3,20 @@ import * as Yup from 'yup';
 import { queryCache } from 'react-query';
 import { produce } from 'immer';
 import {
+  Alert,
   Button,
   Input,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalFooter,
-  ModalTitle,
-  Message,
+  ModalHeader,
 } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import { ScopeDto, ScopeOption } from '../../api/useScopes';
 import { useUpsertScope } from '../../api/useUpsertScope';
-import { InputField, ShortCodeLabel, ShortCodeWrapper, ShortCodeHelper } from './ScopeModal.styles';
+import { InputField, ShortCodeHelper, ShortCodeLabel, ShortCodeWrapper } from './ScopeModal.styles';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Please enter the scope's name"),
@@ -65,18 +66,21 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
   });
 
   return (
-    <Modal isOpen onRequestClose={closeModal} contentLabel="Create scope modal" width="384px">
+    <Modal isOpen onRequestClose={closeModal} contentLabel="Create scope modal" size="small">
+      <ModalHeader>{scope ? 'Edit scope' : 'Create new scope'}</ModalHeader>
+
+      <ModalCloseButton onClick={closeModal} />
+
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <ModalTitle>{scope ? 'Edit scope' : 'Create new scope'}</ModalTitle>
           {status === 'error' && upsertScopeError && (
-            <>
-              <Message appearance="error">
-                {upsertScopeError?.response?.data?.error || 'Something went wrong'}
-              </Message>
-              <div style={{ marginBottom: 12 }} />
-            </>
+            <Alert
+              variant="error"
+              message={upsertScopeError?.response?.data?.error || 'Something went wrong'}
+              mb="12"
+            />
           )}
+
           <InputField>
             Name
             <Input
@@ -89,6 +93,7 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
               error={formik.errors.name && formik.touched.name ? formik.errors.name : ''}
             />
           </InputField>
+
           <InputField>
             <ShortCodeLabel>Short Code</ShortCodeLabel>
             <ShortCodeHelper>Choose a short code to identify this scope.</ShortCodeHelper>
@@ -116,16 +121,12 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
             </ShortCodeWrapper>
           </InputField>
         </ModalBody>
+
         <ModalFooter>
-          <Button
-            appearance="secondary"
-            size="large"
-            onClick={closeModal}
-            isDisabled={status === 'loading'}
-          >
+          <Button variant="ghost" variantColor="neutral" size="large" onClick={closeModal}>
             Cancel
           </Button>
-          <Button type="submit" appearance="primary" size="large" isLoading={status === 'loading'}>
+          <Button type="submit" size="large">
             {scope ? 'Save Changes' : 'Create Scope'}
           </Button>
         </ModalFooter>

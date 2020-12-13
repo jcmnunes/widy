@@ -1,36 +1,37 @@
-import styled, { css } from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { Theme } from '@binarycapsule/ui-capsules/dist/types';
 import { IconRightThickArrow } from '../../../icons/Icons';
 import { StyledScopeCode } from './ScopeCode/ScopeCode.styles';
+import { css } from '@emotion/react';
 
 const getColors = (props: StyledTaskProps & { theme: Theme }) => {
   const colors = {
-    border: props.theme.neutral200,
+    border: props.theme.colors.neutral['200'],
     background: 'white',
   };
 
   if (props.isCompleted) {
-    colors.border = props.theme.neutral100;
-    colors.background = props.theme.neutral025;
+    colors.border = props.theme.colors.neutral['100'];
+    colors.background = props.theme.colors.neutral['50'];
   }
 
   if (props.isSelected) {
-    colors.border = props.theme.yellow500;
+    colors.border = props.theme.colors.yellow['500'];
     // eslint-disable-next-line no-nested-ternary
     colors.background = props.isSchedule
       ? '#F2EBFE'
       : props.isPlan
-      ? props.theme.neutral075
-      : props.theme.yellow050;
+      ? props.theme.colors.neutral['100']
+      : props.theme.colors.yellow['50'];
   }
 
   if (props.isDragging) {
-    colors.background = props.theme.blue050;
-    colors.border = props.theme.blue050;
+    colors.background = props.theme.colors.blue['50'];
+    colors.border = props.theme.colors.blue['50'];
   }
 
   if (props.isTemp) {
-    colors.background = props.theme.neutral050;
+    colors.background = props.theme.colors.neutral['50'];
   }
 
   return colors;
@@ -39,9 +40,9 @@ const getColors = (props: StyledTaskProps & { theme: Theme }) => {
 const getBackgroundColor = (props: StyledTaskProps & { theme: Theme }) => {
   if (props.isPlan) {
     if (props.isSelected) {
-      return props.theme.neutral075;
+      return props.theme.colors.neutral['100'];
     }
-    return props.theme.neutral050;
+    return props.theme.colors.neutral['50'];
   }
 
   if (props.isSchedule) {
@@ -52,14 +53,14 @@ const getBackgroundColor = (props: StyledTaskProps & { theme: Theme }) => {
   }
 
   if (props.isSelected) {
-    return props.theme.yellow075;
+    return props.theme.colors.yellow['100'];
   }
-  return props.theme.neutral025;
+  return props.theme.colors.neutral['50'];
 };
 
-const isActiveMixin = css`
-  border-color: ${({ theme }) => theme.yellow700};
-  box-shadow: 0 0 0 4px ${({ theme }) => theme.yellow200};
+const isActiveMixin = (props: { theme: Theme }) => css`
+  border-color: ${props.theme.colors.yellow['700']};
+  box-shadow: 0 0 0 4px ${props.theme.colors.yellow['200']};
 `;
 
 export const ActionsContainer = styled.div`
@@ -88,13 +89,15 @@ export const StyledTask = styled.div<StyledTaskProps>`
   border: ${props =>
     props.isPlan || props.isSchedule ? 'none' : `1px solid ${getColors(props).border}`};
   border-bottom: ${({ isPlan, isSchedule, theme }) =>
-    (isPlan || isSchedule) && `1px solid ${theme.neutral100}`};
+    (isPlan || isSchedule) && `1px solid ${theme.colors.neutral['100']}`};
   border-radius: ${({ isPlan, isSchedule }) => (isPlan || isSchedule ? 0 : '4px')};
   background-color: ${props => getColors(props).background};
   padding: 8px;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 500;
   margin: ${({ isPlan, isSchedule }) => (isPlan || isSchedule ? 0 : '4px 0')};
-  color: ${({ isCompleted, theme }) => (isCompleted ? theme.neutral300 : theme.neutral700)};
+  color: ${({ isCompleted, theme }) =>
+    isCompleted ? theme.colors.neutral['300'] : theme.colors.neutral['700']};
   cursor: pointer;
   ${({ isActive }) => isActive && isActiveMixin};
 
@@ -122,9 +125,9 @@ export const TaskTitle = styled.span<{ isTemp: boolean; isCompleted?: boolean }>
   margin-right: 16px;
   text-align: left;
   color: ${({ theme, isTemp, isCompleted }) =>
-    isTemp || isCompleted ? theme.neutral300 : theme.neutral700};
+    isTemp || isCompleted ? theme.colors.neutral['300'] : theme.colors.neutral['700']};
 `;
 
-export const StyledIconRightThickArrow = styled(IconRightThickArrow)`
+export const StyledIconRightThickArrow = styled(IconRightThickArrow)<{ primaryColor: string }>`
   flex-shrink: 0;
 `;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useMedia from 'react-use/lib/useMedia';
-import { Button, Input, Checkbox } from '@binarycapsule/ui-capsules';
+import { Button, Checkbox, Input } from '@binarycapsule/ui-capsules';
 import ScopesTable from './ScopesTable/ScopesTable';
 import { PageDescription, PageTitle } from '../Page.styles';
 import { ScopesTableLoading } from './ScopesTable/ScopesTable.loading';
@@ -10,7 +10,7 @@ import {
   ScopesSearch,
   ShowArchiveScopesToggle,
 } from './Scopes.styles';
-import { useScopes, ScopeDto, useArchivedScopes } from '../../../day/api/useScopes';
+import { ScopeDto, useArchivedScopes, useScopes } from '../../../day/api/useScopes';
 import { ScopeModal } from '../../../day/modals/ScopeModal/ScopeModal';
 import { PageWrapper } from '../../Settings.styles';
 
@@ -48,8 +48,7 @@ const Scopes = () => {
           <ActionsTop>
             <Button
               onClick={() => setIsScopeModalOpen(true)}
-              appearance="primary"
-              iconBefore="plus"
+              leftIcon="plus"
               size={isWide ? 'large' : 'medium'}
               disabled={scopesStatus === 'loading'}
             >
@@ -60,8 +59,8 @@ const Scopes = () => {
                 value={filter}
                 onChange={({ target: { value } }) => setFilter(value)}
                 placeholder="Search scopes"
-                inputSize={isWide ? 'large' : 'medium'}
-                iconBefore="search"
+                size={isWide ? 'large' : 'medium'}
+                leftIcon="search"
                 disabled={scopesStatus === 'loading'}
               />
             </ScopesSearch>
@@ -73,7 +72,7 @@ const Scopes = () => {
           )}
           <ShowArchiveScopesToggle>
             <Checkbox
-              appearance="primary"
+              variantColor="primary"
               checked={showArchivedScopes}
               onChange={() => setShowArchivedScopes(!showArchivedScopes)}
               isDisabled={scopesStatus === 'loading'}

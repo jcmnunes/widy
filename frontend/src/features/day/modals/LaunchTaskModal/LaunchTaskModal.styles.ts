@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const Radios = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const Radios = styled.div`
 `;
 
 export const Error = styled.div`
-  color: ${props => props.theme.red400};
+  color: ${props => props.theme.colors.error['400']};
   font-size: 14px;
   padding: 6px;
 `;

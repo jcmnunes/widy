@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components/macro';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -7,21 +6,14 @@ import {
   Input,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalFooter,
-  ModalTitle,
+  ModalHeader,
+  Text,
 } from '@binarycapsule/ui-capsules';
 import { useCreateTask } from '../../api/useCreateTask';
 import { useScopesOptions } from '../../api/useScopes';
 import { ScopeSelect } from '../../ScopeSelect/ScopeSelect';
-import { Heading2 } from '../../../../components/Typography';
-
-const Section = styled.div`
-  margin-bottom: 24px;
-`;
-
-const FormHeading = styled(Heading2)`
-  margin-bottom: 4px;
-`;
 
 interface ScopeOption {
   value: string;
@@ -71,23 +63,30 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
 
   return (
     <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Add a new task">
+      <ModalHeader>What will you be working on?</ModalHeader>
+
+      <ModalCloseButton onClick={onRequestClose} />
+
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <Section>
-            <ModalTitle>What will you be working on?</ModalTitle>
-            <Input
-              name="title"
-              type="text"
-              value={formik.values.title}
-              placeholder="Task name"
-              onChange={formik.handleChange}
-              inputSize="large"
-              autoFocus
-              error={formik.errors.title}
-            />
-          </Section>
+          <Text color="neutral.700" fontWeight={600} fontSize="body" mb="4">
+            What will you be working on?
+          </Text>
 
-          <FormHeading>Task scope</FormHeading>
+          <Input
+            name="title"
+            type="text"
+            value={formik.values.title}
+            placeholder="Task name"
+            onChange={formik.handleChange}
+            size="large"
+            autoFocus
+            error={formik.errors.title}
+          />
+
+          <Text color="neutral.700" fontWeight={600} fontSize="body" mt="24" mb="4">
+            Task scope
+          </Text>
           <ScopeSelect
             value={formik.values.scope}
             options={scopesOptions}
@@ -95,12 +94,13 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
             isInsideModal
           />
         </ModalBody>
+
         <ModalFooter>
-          <Button appearance="secondary" size="large" onClick={onRequestClose}>
+          <Button variant="ghost" variantColor="neutral" size="large" onClick={onRequestClose}>
             Cancel
           </Button>
-          <Button type="submit" isLoading={false} appearance="primary" size="large">
-            Add task
+          <Button type="submit" size="large">
+            Add Task
           </Button>
         </ModalFooter>
       </form>

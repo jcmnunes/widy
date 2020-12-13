@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledTime = styled.span`
   display: flex;
@@ -9,12 +9,12 @@ export const StyledTime = styled.span`
 
 export const Values = styled.span<{ size: 'sm' | 'md' }>`
   display: inline-block;
-  font-size: ${({ size }) => (size === 'sm' ? '16px' : '22px')};
+  font-size: ${({ size }) => (size === 'sm' ? '14px' : '20px')};
   margin-right: ${({ size }) => (size === 'sm' ? '2px' : '4px')};
 `;
 
 export const Units = styled.span<{ size: 'sm' | 'md' }>`
   display: inline-block;
-  font-size: ${({ size }) => (size === 'sm' ? '12px' : '14px')};
+  font-size: ${({ size }) => (size === 'sm' ? '10px' : '12px')};
   margin-right: ${({ size }) => (size === 'sm' ? '4px' : '8px')};
 `;

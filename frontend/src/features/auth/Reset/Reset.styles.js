@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const Container = styled.div`
   position: absolute;
@@ -10,29 +10,32 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${props => props.theme.neutral050};
+  background: ${props => props.theme.colors.neutral['50']};
 `;
 
 export const StyledForm = styled.form`
   width: 480px;
   background: white;
   border-radius: 12px;
-  border: 2px solid ${props => props.theme.neutral300};
+  border: 2px solid ${props => props.theme.colors.neutral['300']};
   padding: 48px;
   margin-top: 48px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Title = styled.h1`
-  font-size: 30px;
+  font-size: 24px;
+  font-weight: 500;
   text-align: center;
   width: 100%;
-  color: ${props => props.theme.neutral700};
+  color: ${props => props.theme.colors.neutral['700']};
   margin-bottom: 24px;
 `;
 
 export const Helper = styled.p`
-  font-size: 18px;
-  color: ${props => props.theme.neutral400};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['400']};
   width: 90%;
   text-align: center;
   margin: 0 auto 24px;
@@ -47,5 +50,6 @@ export const Footer = styled.div`
 export const InputField = styled.label`
   margin-bottom: 16px;
   display: block;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 500;
 `;

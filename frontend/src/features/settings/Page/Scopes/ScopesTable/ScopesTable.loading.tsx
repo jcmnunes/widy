@@ -1,16 +1,16 @@
 import React from 'react';
-import { LoadingMask } from '@binarycapsule/ui-capsules';
+import { Skeleton } from '@binarycapsule/ui-capsules';
 import times from 'lodash/times';
 import { Row, StyledScopesTable } from './ScopesTable.styles';
 
-interface Props {}
-
-export const ScopesTableLoading: React.FC<Props> = () => {
+export const ScopesTableLoading: React.FC = () => {
   return (
     <StyledScopesTable>
-      {times(10).map(el => (
-        <Row key={el}>
-          <LoadingMask height="12px" width="300px" />
+      {times(10).map(key => (
+        <Row key={key}>
+          <Skeleton height="12px" width="300px" circular />
+
+          <Skeleton width="24px" height="24px" />
         </Row>
       ))}
     </StyledScopesTable>

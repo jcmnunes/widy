@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { Button } from '@binarycapsule/ui-capsules';
+import { IconButton } from '@binarycapsule/ui-capsules';
 import { useParams } from 'react-router';
 import { TimerButton } from './TimerButton/TimerButton';
 import { Time } from './Time/Time';
@@ -11,6 +11,7 @@ import { SectionDto, TaskDto } from '../api/useDay';
 import { StyledTimer } from './Timer.styles';
 import { RegisterTimeModal } from '../modals/RegisterTimeModal/RegisterTimeModal';
 import { Launcher } from '../Launcher/Launcher';
+import { DayRouteParams } from '../dayTypes';
 
 interface Props {
   task: TaskDto;
@@ -18,10 +19,12 @@ interface Props {
 }
 
 export const Timer: React.FC<Props> = ({ task, section }) => {
-  const { dayId } = useParams();
+  const { dayId } = useParams<DayRouteParams>();
+
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const { data: activeTaskData } = useActiveTask();
+
   useSelector(activeTaskTickSelector);
 
   const isTaskActive = activeTaskData?.taskId === task.id;
@@ -36,6 +39,7 @@ export const Timer: React.FC<Props> = ({ task, section }) => {
         ) : (
           <>
             {!task.completed && <TimerButton task={task} sectionId={section.id} size="48px" />}
+
             <Time
               time={
                 isTaskActive && task.start
@@ -45,9 +49,10 @@ export const Timer: React.FC<Props> = ({ task, section }) => {
             />
 
             {!isTaskActive && (
-              <Button
-                appearance="minimal"
-                iconBefore="pencil"
+              <IconButton
+                variant="ghost"
+                variantColor="neutral"
+                icon="pencil"
                 onClick={() => setIsRegisterModalOpen(true)}
               />
             )}

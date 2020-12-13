@@ -62,9 +62,11 @@ export const Board: React.FC<Props> = ({ dayId }) => {
       ) : (
         <>
           {(getDayStatus === 'loading' || getActiveTaskStatus === 'loading') && <BoardLoading />}
+
           {(getDayStatus === 'error' || getActiveTaskStatus === 'error') && (
             <BoardError error={dayError as AxiosError} />
           )}
+
           <DragDropContext onDragEnd={handleDragEnd}>
             {hasData && day && (
               <>

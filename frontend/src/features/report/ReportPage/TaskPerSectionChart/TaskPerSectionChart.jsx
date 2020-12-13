@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { theme } from '@binarycapsule/ui-capsules';
 import { ResponsivePie } from '@nivo/pie';
 import { formatTotalTime } from '../../../../helpers/timeHelpers';
+import { useTheme } from '@emotion/react';
 
 const TaskPerSectionChart = ({ data }) => {
+  const theme = useTheme();
+
   return (
     <ResponsivePie
       data={data}
       innerRadius={0.5}
-      colors={[theme.blue100, theme.blue200]}
+      colors={[theme.colors.blue['100'], theme.colors.blue['200']]}
       margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
       borderWidth={1}
       borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
       cornerRadius={3}
       padAngle={3}
       enableRadialLabels
-      radialLabelsTextColor={theme.neutral600}
-      radialLabelsLinkColor={theme.blue300}
+      radialLabelsTextColor={theme.colors.neutral['600']}
+      radialLabelsLinkColor={theme.colors.blue['300']}
       radialLabel={d => (
         <>
           <tspan x="0" dy="-0.6em" style={{ fontFamily: 'Source Sans Pro', fontSize: 14 }}>
@@ -33,7 +35,7 @@ const TaskPerSectionChart = ({ data }) => {
         </>
       )}
       isInteractive={false}
-      enableSlicesLabels={false}
+      enableSliceLabels={false}
       defs={[
         {
           id: 'dots',

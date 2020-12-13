@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 const StyledSectionEmpty = styled.button<{
   isDraggingOver: boolean;
@@ -9,18 +9,19 @@ const StyledSectionEmpty = styled.button<{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ theme }) => theme.neutral100};
+  border: 1px solid ${({ theme }) => theme.colors.neutral['100']};
   border-radius: 4px;
   height: 96px;
-  background-color: ${({ isDraggingOver, theme }) => (isDraggingOver ? theme.neutral050 : 'white')};
+  background-color: ${({ isDraggingOver, theme }) =>
+    isDraggingOver ? theme.colors.neutral['50'] : 'white'};
   transition: background-color 0.2s ease;
-  font-size: 16px;
-  color: ${props => props.theme.neutral300};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['300']};
   cursor: pointer;
   width: 100%;
 
   &:hover {
-    background: ${props => props.theme.neutral050};
+    background: ${props => props.theme.colors.neutral['50']};
   }
 `;
 

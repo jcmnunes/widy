@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
-import { isLoadingSelector as isLogoutLoadingSelector } from '../auth/Logout/Logout.selectors';
+import { Button, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { logoutRequest } from '../auth/Logout/Logout.actions';
 import { dayStateActions } from '../day/dayState/dayStateSlice';
+import { DayRouteParams } from '../day/dayTypes';
+import { isLoadingSelector as isLogoutLoadingSelector } from '../auth/Logout/Logout.selectors';
 
 export const UserMenu = () => {
-  const { dayId } = useParams();
+  const { dayId } = useParams<DayRouteParams>();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -18,23 +19,32 @@ export const UserMenu = () => {
   };
 
   return (
-    <Dropdown
+    <Menu
       placement="right"
-      trigger={<IconButton hasBackground hasChev icon="user_circle" isRound />}
+      trigger={
+        <Button
+          leftIcon="user_circle"
+          rightIcon="chev_down"
+          variant="ghost"
+          variantColor="neutral"
+        />
+      }
     >
-      <DropdownItem text="Schedule" icon="schedule" handleAction={showSchedule} />
-      <DropdownItem
+      <MenuItem text="Schedule" leftIcon="calendar" onClick={showSchedule} />
+
+      <MenuItem
         text="Settings"
-        icon="settings"
-        handleAction={() => history.push(`/settings/account${dayId ? `/${dayId}` : ''}`)}
+        leftIcon="cog"
+        onClick={() => history.push(`/settings/account${dayId ? `/${dayId}` : ''}`)}
       />
-      <DropdownItem
+
+      <MenuItem
         text="Log out"
-        icon="logout"
-        handleAction={() => dispatch(logoutRequest())}
+        leftIcon="logout"
+        onClick={() => dispatch(logoutRequest())}
         isLoading={isLogoutLoading}
         closeOnAction={false}
       />
-    </Dropdown>
+    </Menu>
   );
 };

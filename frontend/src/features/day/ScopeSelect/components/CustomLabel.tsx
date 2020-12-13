@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 const StyledLabel = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const StyledLabel = styled.div`
 
 const Code = styled.span`
   text-transform: uppercase;
-  color: ${props => props.theme.neutral300};
+  color: ${props => props.theme.colors.neutral['300']};
 `;
 
 const Name = styled.div`
