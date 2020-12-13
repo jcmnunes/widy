@@ -1,8 +1,14 @@
 import React, { FocusEvent, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, ModalBody, ModalTitle, Select } from '@binarycapsule/ui-capsules';
-import { suggestionsOptions, SuggestionOption } from './RegisterTimeModal.constants';
+import {
+  Button,
+  ModalBody,
+  ModalCloseButton,
+  ModalHeader,
+  Select,
+} from '@binarycapsule/ui-capsules';
+import { SuggestionOption, suggestionsOptions } from './RegisterTimeModal.constants';
 import {
   H3,
   Inputs,
@@ -83,13 +89,16 @@ export const RegisterTimeModal: React.FC<Props> = ({ taskId, sectionId, dayId, c
   return (
     <StyledModal
       isOpen
-      width="400px"
+      size="small"
       onRequestClose={closeModal}
       contentLabel="Modal - Register task time"
     >
+      <ModalHeader>Insert new task time:</ModalHeader>
+
+      <ModalCloseButton onClick={closeModal} />
+
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <ModalTitle>Insert new task time:</ModalTitle>
           <Inputs>
             <Label>
               <StyledInput
@@ -101,6 +110,7 @@ export const RegisterTimeModal: React.FC<Props> = ({ taskId, sectionId, dayId, c
               />
               <span>h</span>
             </Label>
+
             <Label>
               <StyledInput
                 value={formik.values.minutes}
@@ -125,11 +135,12 @@ export const RegisterTimeModal: React.FC<Props> = ({ taskId, sectionId, dayId, c
             value={suggestion}
           />
         </ModalBody>
+
         <StyledModalFooter>
-          <Button appearance="secondary" size="large" onClick={closeModal}>
+          <Button variant="ghost" variantColor="neutral" size="large" onClick={closeModal}>
             Cancel
           </Button>
-          <Button type="submit" appearance="primary" size="large">
+          <Button type="submit" size="large">
             Register time
           </Button>
         </StyledModalFooter>

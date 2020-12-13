@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dialog, DialogAction } from '@binarycapsule/ui-capsules';
+import { Dialog } from '@binarycapsule/ui-capsules';
+import { DialogAction } from '@binarycapsule/ui-capsules/dist/Dialog/Dialog';
 import { useHistory, useParams } from 'react-router';
 import { ScheduleTaskVariables, useScheduleTask } from '../api/useScheduleTask';
+import { DayRouteParams } from '../dayTypes';
 
 interface Props {
   dayId: string;
@@ -16,7 +18,8 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
   taskId,
   onRequestClose,
 }) => {
-  const { taskId: selectedTaskId } = useParams();
+  const { taskId: selectedTaskId } = useParams<DayRouteParams>();
+
   const history = useHistory();
 
   const [scheduleTask] = useScheduleTask();
@@ -38,7 +41,7 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
   const actions: DialogAction[] = [
     {
       name: 'Cancel',
-      appearance: 'secondary',
+      appearance: 'neutral',
       action: onRequestClose,
     },
     {
@@ -52,7 +55,7 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
     <Dialog
       isOpen
       onRequestClose={onRequestClose}
-      contentLabel="schedule-task-dialog"
+      contentLabel="Schedule task dialog"
       actions={actions}
       title="Schedule task?"
       message="Are you sure you want to schedule this task?"

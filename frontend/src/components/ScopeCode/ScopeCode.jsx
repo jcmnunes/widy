@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 const StyledScopeCode = styled.span`
   display: inline-block;
   text-transform: uppercase;
-  color: ${props => props.theme.neutral300};
-  font-size: 16px;
+  color: ${props => props.theme.colors.neutral['300']};
+  font-size: 14px;
 `;
 
 const ScopeCode = ({ scopeCode, ...other }) =>

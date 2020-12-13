@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from '@binarycapsule/ui-capsules';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 const ErrorText = styled.div`
-  color: ${({ theme }) => theme.red700};
+  color: ${({ theme }) => theme.colors.red['700']};
   font-size: 13px;
   display: flex;
   flex-direction: row;

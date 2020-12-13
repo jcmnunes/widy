@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Message, Input, Button } from '@binarycapsule/ui-capsules';
+import { Alert, Button, Input } from '@binarycapsule/ui-capsules';
 import Link from '../../../components/Link/Link';
 import LogoComponent from '../Logo/Logo.component';
 import { Container, Footer, Helper, InputField, StyledForm, Title } from './Reset.styles';
@@ -85,14 +85,18 @@ class Reset extends Component {
     return (
       <Container>
         <LogoComponent />
+
         <StyledForm onSubmit={this.handleSubmit}>
           <Title>Reset your password</Title>
+
           <Helper>Choose a new password for your account.</Helper>
+
           {error.length > 0 && (
-            <Message appearance="error" style={{ marginBottom: 24 }}>
+            <Alert variant="error" mb="24">
               {error}
-            </Message>
+            </Alert>
           )}
+
           <InputField>
             New password:
             <Input

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import MenuBar from './MenuBar/MenuBar';
 import Page from './Page/Page';
 import SideBar from './SideBar/SideBar';

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Button, IconButton, theme, Tooltip } from '@binarycapsule/ui-capsules';
+import { Button, IllustratedIcon, Tooltip } from '@binarycapsule/ui-capsules';
 import { useParams } from 'react-router';
 import { LaunchTaskModal } from '../modals/LaunchTaskModal/LaunchTaskModal';
 import { TaskDto } from '../api/useDay';
-
-const colors = [theme.neutral200, theme.neutral400, theme.blue100, theme.blue500];
+import { DayRouteParams } from '../dayTypes';
+import { useTheme } from '@emotion/react';
 
 interface Props {
   sectionId: string;
@@ -15,7 +15,10 @@ interface Props {
 }
 
 export const Launcher: React.FC<Props> = ({ size, sectionId, task, taskIndex, isButton }) => {
-  const { dayId } = useParams();
+  const theme = useTheme();
+
+  const { dayId } = useParams<DayRouteParams>();
+
   const [showLaunchTaskModal, setShowLaunchTaskModal] = useState(false);
 
   if (!dayId) return null;
@@ -25,18 +28,22 @@ export const Launcher: React.FC<Props> = ({ size, sectionId, task, taskIndex, is
       <Tooltip tooltip="Start working on this task" delayShow={1000}>
         {isButton ? (
           <Button
-            appearance="minimal"
-            iconBefore="rocket"
+            leftIcon="rocket"
+            variant="ghost"
+            variantColor="neutral"
             onClick={() => setShowLaunchTaskModal(true)}
           >
             Launch task
           </Button>
         ) : (
-          <IconButton
-            colors={colors}
+          <IllustratedIcon
             icon="launch"
             onClick={() => setShowLaunchTaskModal(true)}
             size={size}
+            primaryColor={theme.colors.neutral['200']}
+            primaryColorHover={theme.colors.blue['100']}
+            secondaryColor={theme.colors.neutral['400']}
+            secondaryColorHover={theme.colors.blue['500']}
           />
         )}
       </Tooltip>

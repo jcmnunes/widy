@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { Button, Icon } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
 import { Brand } from '../../daysNav/Brand/Brand';
@@ -19,7 +19,7 @@ const StyledBoardError = styled.div`
 `;
 
 const ErrorText = styled.div`
-  color: ${({ theme }) => theme.red700};
+  color: ${({ theme }) => theme.colors.error['700']};
   font-size: 18px;
   display: flex;
   flex-direction: row;
@@ -55,7 +55,12 @@ export const BoardError: React.FC<Props> = ({ error }) => {
         {status === 404 ? 'Day not found' : 'Oops, something went wrong...'}
       </ErrorText>
 
-      <Button appearance="minimal" iconBefore="refresh" onClick={() => history.push('/day')}>
+      <Button
+        variant="ghost"
+        variantColor="neutral"
+        leftIcon="refresh"
+        onClick={() => history.push('/day')}
+      >
         Refresh the page
       </Button>
     </StyledBoardError>

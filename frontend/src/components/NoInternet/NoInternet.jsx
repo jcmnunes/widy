@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { IllustratedIcon, Modal, ModalBody, theme } from '@binarycapsule/ui-capsules';
 import { Offline } from 'react-detect-offline';
 
@@ -12,13 +12,13 @@ const Content = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  color: ${props => props.theme.neutral600};
+  color: ${props => props.theme.colors.neutral['600']};
   text-align: center;
 `;
 
 const SubTitle = styled.h2`
-  font-size: 16px;
-  color: ${props => props.theme.neutral400};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['400']};
   text-align: center;
   margin-top: 12px;
   line-height: 20px;
@@ -31,8 +31,8 @@ const NoInternet = () => (
         <Content>
           <IllustratedIcon
             icon="wifi_off"
-            primaryColor={theme.neutral300}
-            secondaryColor={theme.red500}
+            primaryColor={theme.colors.neutral['300']}
+            secondaryColor={theme.colors.red['500']}
             size="138px"
           />
           <Title>No internet connection</Title>

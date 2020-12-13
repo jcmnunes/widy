@@ -44,8 +44,16 @@ export const ScopeSelect: React.FC<Props> = ({ value, options, isInsideModal, on
         menuPortalTarget={isInsideModal ? document.body : undefined}
         filterOption={filterScopes}
       />
-      <Button onClick={() => setIsScopesModalOpen(true)} appearance="none" size="small">
-        + Create new scope
+
+      <Button
+        leftIcon="plus"
+        size="small"
+        variant="ghost"
+        variantColor="neutral"
+        onClick={() => setIsScopesModalOpen(true)}
+        mt="4"
+      >
+        Create new scope
       </Button>
 
       {isScopesModalOpen && (

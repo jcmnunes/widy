@@ -11,7 +11,7 @@ const initialState = {
   error: '',
 };
 
-export default (state = initialState, action) => {
+export const forgotReducer = (state = initialState, action) => {
   switch (action.type) {
     case FORGOT_REQUEST:
       return { ...state, loading: true };

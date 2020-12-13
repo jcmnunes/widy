@@ -6,8 +6,9 @@ import {
   Input,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalFooter,
-  ModalTitle,
+  ModalHeader,
 } from '@binarycapsule/ui-capsules';
 import { TaskDto } from '../../api/useDay';
 import { useUpdateTask } from '../../api/useUpdateTask';
@@ -52,24 +53,28 @@ export const RenameTaskModal: React.FC<Props> = ({ dayId, sectionId, task, onReq
 
   return (
     <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Rename a task">
+      <ModalHeader>Rename the task</ModalHeader>
+
+      <ModalCloseButton onClick={onRequestClose} />
+
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <ModalTitle>Rename the task</ModalTitle>
           <Input
             name="title"
             type="text"
             value={formik.values.title}
             onChange={formik.handleChange}
-            inputSize="large"
+            size="large"
             autoFocus
             error={formik.errors.title}
           />
         </ModalBody>
+
         <ModalFooter>
-          <Button appearance="secondary" size="large" onClick={onRequestClose}>
+          <Button variant="ghost" variantColor="neutral" size="large" onClick={onRequestClose}>
             Cancel
           </Button>
-          <Button type="submit" appearance="primary" size="large">
+          <Button type="submit" size="large">
             Rename task
           </Button>
         </ModalFooter>

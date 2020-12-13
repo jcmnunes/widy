@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledBoard = styled.div`
   flex: 1;
@@ -9,7 +9,7 @@ export const StyledBoard = styled.div`
   padding: 0 16px 24px;
   min-width: 340px;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsLegacy.mobile}) {
     padding: 0 24px 32px;
   }
 
@@ -17,7 +17,7 @@ export const StyledBoard = styled.div`
     padding: 0 32px 32px;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsLegacy.md}) {
     padding: 0 48px 48px;
   }
 `;

@@ -5,7 +5,7 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
-import { Button, Tooltip } from '@binarycapsule/ui-capsules';
+import { Button, IconButton, Tooltip } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -16,10 +16,10 @@ import { AddTaskModal } from '../modals/AddTaskModal/AddTaskModal';
 import { TimerButton } from '../Timer/TimerButton/TimerButton';
 import {
   SectionHeader,
+  SectionHeaderActions,
   SectionWithTasks,
   StyledSection,
   TasksContainer,
-  SectionHeaderActions,
 } from './Section.styles';
 import { Heading2 } from '../../../components/Typography';
 import { TaskMenu } from '../TaskMenu/TaskMenu';
@@ -32,6 +32,7 @@ import { dayStateActions } from '../dayState/dayStateSlice';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
 import { PlanMenu } from '../PlanMenu/PlanMenu';
 import { sectionTitleMap } from './Section.constants';
+import { DayRouteParams } from '../dayTypes';
 
 interface Props {
   dayId: string;
@@ -40,14 +41,17 @@ interface Props {
 
 export const Section: React.FC<Props> = ({ dayId, data: section }) => {
   const { id, isPlan, title, tasks } = section;
+
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
   const { data: activeTask } = useActiveTask();
 
-  const { taskId: selectedTaskId, sectionId: selectedSectionId } = useParams();
+  const { taskId: selectedTaskId, sectionId: selectedSectionId } = useParams<DayRouteParams>();
+
   const history = useHistory();
 
   const [updateTask] = useUpdateTask();
+
   const [moveAll] = useMoveAll();
 
   const dispatch = useDispatch();
@@ -114,8 +118,11 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
                   }}
                 >
                   {isPlan && <Launcher sectionId={id} task={task} taskIndex={index} />}
+
                   {isSchedule && <AddToPlan task={task} />}
+
                   {!isPlan && !isSchedule && <TimerButton task={task} sectionId={id} />}
+
                   <TaskMenu dayId={dayId} sectionId={id} task={task} isPlan={isPlan} />
                 </Task>
               </TasksContainer>
@@ -151,8 +158,10 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
             <SectionHeaderActions>
               {hasTasks && (
                 <Button
-                  appearance="minimal"
-                  iconBefore="plus_c"
+                  variant="ghost"
+                  variantColor="neutral"
+                  leftIcon="plus_c"
+                  iconVariant="outline"
                   onClick={() => {
                     moveAll({
                       to: 'plan',
@@ -169,7 +178,12 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
                 </Button>
               )}
               <Tooltip tooltip="Hide Schedule" delayShow={1000}>
-                <Button appearance="minimal" iconBefore="x" onClick={hideSchedule} />
+                <IconButton
+                  variant="ghost"
+                  variantColor="neutral"
+                  icon="x"
+                  onClick={hideSchedule}
+                />
               </Tooltip>
             </SectionHeaderActions>
           )}
@@ -181,10 +195,11 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
         <Droppable droppableId={id}>{hasTasks ? renderSection : renderEmptySection}</Droppable>
 
         <Button
-          appearance="minimal"
-          iconBefore="plus"
+          variant="ghost"
+          variantColor="neutral"
+          leftIcon="plus"
           onClick={() => setIsAddTaskModalOpen(true)}
-          style={{ marginTop: 8 }}
+          mt="8"
         >
           {/* eslint-disable-next-line no-nested-ternary */}
           {isSchedule ? 'Add to Schedule' : isPlan ? 'Add to Plan' : 'Add task'}

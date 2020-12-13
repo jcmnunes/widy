@@ -15,12 +15,12 @@ export const DaysNavHeader: React.FC<Props> = ({ isTodayCreated, showAddDayButto
   return (
     <StyledDaysNavHeader>
       <Heading1>Days</Heading1>
+
       {showAddDayButton && (
         <Button
-          appearance="primary"
-          iconBefore="plus"
+          leftIcon="plus"
           isLoading={status === 'loading'}
-          isDisabled={status === 'loading' || isTodayCreated}
+          disabled={status === 'loading' || isTodayCreated}
           onClick={() => createDay()}
         >
           Add Day

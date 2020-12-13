@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, DropdownItem, IconButton } from '@binarycapsule/ui-capsules';
+import { Icon, IllustratedIcon, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { StyledTaskMenu, StyledTrigger } from './TaskMenu.styles';
 import { DeleteTaskDialog } from '../dialogs/DeleteTaskDialog';
 import { ScheduleTaskDialog } from '../dialogs/ScheduleTaskDialog';
@@ -9,7 +9,7 @@ import { RegisterTimeModal } from '../modals/RegisterTimeModal/RegisterTimeModal
 
 const Trigger = (
   <StyledTrigger>
-    <IconButton icon="dots_h" />
+    <IllustratedIcon icon="dots_h" onClick={() => {}} />
   </StyledTrigger>
 );
 
@@ -34,32 +34,32 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
   return (
     <>
       <StyledTaskMenu>
-        <Dropdown trigger={Trigger} placement="right">
+        <Menu trigger={Trigger} placement="right">
           {canRegisterTime ? (
-            <DropdownItem
+            <MenuItem
               text="Register Time"
-              icon="time"
-              handleAction={() => setShowRegisterTimeModal(true)}
+              leftAddon={<Icon icon="clock" size="18px" />}
+              onClick={() => setShowRegisterTimeModal(true)}
             />
           ) : null}
-          <DropdownItem
+          <MenuItem
             text="Rename"
-            icon="edit"
-            handleAction={() => setShowRenameTaskModal(true)}
+            leftAddon={<Icon icon="pencil" size="18px" />}
+            onClick={() => setShowRenameTaskModal(true)}
           />
           {canScheduleTask ? (
-            <DropdownItem
+            <MenuItem
               text="Schedule"
-              icon="schedule"
-              handleAction={() => setShowScheduleTaskDialog(true)}
+              leftAddon={<Icon icon="calendar" size="18px" />}
+              onClick={() => setShowScheduleTaskDialog(true)}
             />
           ) : null}
-          <DropdownItem
+          <MenuItem
             text="Delete"
-            icon="trash"
-            handleAction={() => setShowDeleteTaskDialog(true)}
+            leftAddon={<Icon icon="trash" size="18px" color="red.500" />}
+            onClick={() => setShowDeleteTaskDialog(true)}
           />
-        </Dropdown>
+        </Menu>
       </StyledTaskMenu>
 
       {showDeleteTaskDialog && (

@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const LogoWrapper = styled.div`
   display: none;
@@ -14,9 +14,9 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: ${props => props.theme.neutral050};
+  background: ${props => props.theme.colors.neutral['50']};
 
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+  @media (max-width: ${props => props.theme.breakpointsLegacy.lg}) {
     flex-direction: column;
 
     ${LogoWrapper} {
@@ -28,13 +28,13 @@ export const Container = styled.div`
 export const StyledCard = styled.div`
   width: 1000px;
   height: 640px;
-  background: ${props => props.theme.neutral050};
-  border: 2px solid ${props => props.theme.neutral300};
+  background: ${props => props.theme.colors.neutral['50']};
+  border: 2px solid ${props => props.theme.colors.neutral['300']};
   border-radius: 12px;
   display: flex;
   position: relative;
 
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+  @media (max-width: ${props => props.theme.breakpointsLegacy.lg}) {
     max-width: 480px;
     height: auto;
     margin-top: 48px;
@@ -47,10 +47,10 @@ export const Form = styled.div`
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
   background: white;
-  border-left: 2px solid ${props => props.theme.neutral300};
+  border-left: 2px solid ${props => props.theme.colors.neutral['300']};
   padding: 64px;
 
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+  @media (max-width: ${props => props.theme.breakpointsLegacy.lg}) {
     border-left: none;
     border-radius: 12px;
   }

@@ -9,18 +9,22 @@ import { isToday } from '../../../helpers/dates';
 import { DayDto } from '../api/useDays';
 import { daysNavSliceActions } from '../DaysNavSlice';
 import { LoadMoreDays } from '../DaysNav.styles';
+import { DayRouteParams } from '../../day/dayTypes';
 
 interface Props {
   days: DayDto[];
   canFetchMore?: boolean;
-  isFetchingMore: false | 'previous' | 'next';
+  isFetchingMore?: false | 'previous' | 'next';
   fetchMore(): void;
 }
 
 export const DaysList: React.FC<Props> = ({ days, canFetchMore, isFetchingMore, fetchMore }) => {
-  const { dayId } = useParams();
+  const { dayId } = useParams<DayRouteParams>();
+
   const history = useHistory();
+
   const dispatch = useDispatch();
+
   const reportMatch = useRouteMatch('/report/:dayId');
 
   const onDayClick = (id: string) => {
@@ -43,10 +47,11 @@ export const DaysList: React.FC<Props> = ({ days, canFetchMore, isFetchingMore, 
       {canFetchMore && (
         <LoadMoreDays>
           <Button
-            onClick={() => fetchMore()}
-            appearance="minimal"
+            variant="ghost"
+            variantColor="neutral"
             size="small"
             isLoading={!!isFetchingMore}
+            onClick={() => fetchMore()}
           >
             Load more days
           </Button>

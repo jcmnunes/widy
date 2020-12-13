@@ -1,13 +1,16 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledDayButton = styled.button<{ isSelected: boolean }>`
   height: 42px;
   border-radius: 4px;
   border: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.blue700}` : `1px solid ${theme.neutral100}`};
-  background: ${({ isSelected, theme }) => (isSelected ? theme.blue050 : 'white')};
-  font-size: 14px;
-  color: ${props => props.theme.neutral700};
+    isSelected
+      ? `1px solid ${theme.colors.blue['700']}`
+      : `1px solid ${theme.colors.neutral['100']}`};
+  background: ${({ isSelected, theme }) => (isSelected ? theme.colors.blue['50'] : 'white')};
+  font-size: 13px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.neutral['700']};
   padding: 0 8px 0 16px;
   display: flex;
   align-items: center;
@@ -16,12 +19,12 @@ export const StyledDayButton = styled.button<{ isSelected: boolean }>`
   flex-shrink: 0;
 
   &:hover {
-    border: 1px solid ${props => props.theme.blue700};
+    border: 1px solid ${props => props.theme.colors.blue['700']};
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 4px ${props => props.theme.blue100};
+    box-shadow: 0 0 0 4px ${props => props.theme.colors.blue['100']};
   }
 `;
 

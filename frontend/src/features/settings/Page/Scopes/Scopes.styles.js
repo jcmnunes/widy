@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const ScopesPageWrapper = styled.div`
   margin-top: 32px;

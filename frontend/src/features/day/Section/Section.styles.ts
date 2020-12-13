@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { Heading2 } from '../../../components/Typography';
 
 export const StyledSection = styled.div`
@@ -19,7 +19,7 @@ export const SectionHeader = styled.div<{ isPlan: boolean; hasTasks: boolean }>`
   align-items: center;
   height: 48px;
   border-bottom: ${({ theme, isPlan, hasTasks }) =>
-    isPlan && hasTasks && `1px solid ${theme.neutral075}`};
+    isPlan && hasTasks && `1px solid ${theme.colors.neutral['100']}`};
 
   ${Heading2} {
     margin-bottom: 0;

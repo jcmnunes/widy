@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dialog, DialogAction } from '@binarycapsule/ui-capsules';
+import { Dialog } from '@binarycapsule/ui-capsules';
+import { DialogAction } from '@binarycapsule/ui-capsules/dist/Dialog/Dialog';
 import { useDeleteTask } from '../api/useDeleteTask';
 
 interface Props {
@@ -24,7 +25,7 @@ export const DeleteTaskDialog: React.FC<Props> = ({ dayId, sectionId, taskId, on
   const actions: DialogAction[] = [
     {
       name: 'Cancel',
-      appearance: 'secondary',
+      appearance: 'neutral',
       action: onRequestClose,
     },
     {
@@ -38,7 +39,7 @@ export const DeleteTaskDialog: React.FC<Props> = ({ dayId, sectionId, taskId, on
     <Dialog
       isOpen
       onRequestClose={onRequestClose}
-      contentLabel="Example dialog"
+      contentLabel="Delete task dialog"
       actions={actions}
       title="Delete task?"
       message="Are you sure you want to delete this task?"

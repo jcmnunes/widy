@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@binarycapsule/ui-capsules';
+import { IconButton } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
 import { useDay, useSection, useTask } from '../api/useDay';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
@@ -23,19 +23,27 @@ import { NotesEditor } from '../NotesEditor/NotesEditor';
 import { IllustrationTodoList } from '../../../illustrations/IllustrationTodoList';
 import { useSchedule } from '../api/useSchedule';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
+import { DayRouteParams } from '../dayTypes';
 
 interface Props {}
 
 export const SideBar: React.FC<Props> = () => {
-  const { dayId, sectionId, taskId } = useParams();
+  const { dayId, sectionId, taskId } = useParams<DayRouteParams>();
+
   const { data: day } = useDay(dayId);
+
   const { data: schedule } = useSchedule();
+
   const section = useSection(dayId, sectionId);
+
   const dayTask = useTask(dayId, sectionId, taskId);
+
   const scopesOptions = useScopesOptions();
+
   const [updateTask] = useUpdateTask();
 
   const isSidebarOpen = useSelector(isSidebarOpenSelector);
+
   const dispatch = useDispatch();
 
   const scheduleTask =
@@ -105,10 +113,11 @@ export const SideBar: React.FC<Props> = () => {
       </SidebarSection>
 
       <SidebarCloseButton>
-        <Button
+        <IconButton
+          variant="ghost"
+          variantColor="neutral"
+          icon="x"
           onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
-          appearance="minimal"
-          iconBefore="x"
         />
       </SidebarCloseButton>
     </StyledSidebar>

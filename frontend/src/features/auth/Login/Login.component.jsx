@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Message, Input } from '@binarycapsule/ui-capsules';
+import { Alert, Button, Input } from '@binarycapsule/ui-capsules';
 import Link from '../../../components/Link/Link';
 import { Footer, FormContainer, InputField, StyledForm, Title } from './Login.styles';
 
@@ -81,11 +81,7 @@ class LoginComponent extends Component {
       <FormContainer>
         <StyledForm onSubmit={this.handleSubmit}>
           <Title>Login to your account</Title>
-          {loginError.length > 0 && (
-            <Message appearance="error" style={{ marginBottom: 24 }}>
-              {loginError}
-            </Message>
-          )}
+          {loginError.length > 0 && <Alert variant="error" mb="24" message={loginError} />}
           <InputField>
             Email:
             <Input

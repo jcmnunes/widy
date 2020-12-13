@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 import { IllustrationNoDays } from '../../illustrations/IllustrationNoDays';
 
 const StyledNoDays = styled.div`
@@ -21,7 +21,7 @@ const Title = styled.h1`
 `;
 
 const SubTitle = styled.h2`
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 12px;
 `;
 

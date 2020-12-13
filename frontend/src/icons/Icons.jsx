@@ -14,7 +14,7 @@ export const IconFormatBold = ({ size, primaryColor, ...other }) => (
 
 IconFormatBold.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatBold.propTypes = {
@@ -30,7 +30,7 @@ export const IconFormatItalic = ({ size, primaryColor, ...other }) => (
 
 IconFormatItalic.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatItalic.propTypes = {
@@ -46,7 +46,7 @@ export const IconFormatUnderline = ({ size, primaryColor, ...other }) => (
 
 IconFormatUnderline.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatUnderline.propTypes = {
@@ -65,7 +65,7 @@ export const IconFormatCode = ({ size, primaryColor, ...other }) => (
 
 IconFormatCode.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatCode.propTypes = {
@@ -84,7 +84,7 @@ export const IconFormatHeading1 = ({ size, primaryColor, ...other }) => (
 
 IconFormatHeading1.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatHeading1.propTypes = {
@@ -103,7 +103,7 @@ export const IconFormatHeading2 = ({ size, primaryColor, ...other }) => (
 
 IconFormatHeading2.defaultProps = {
   size: 20,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatHeading2.propTypes = {
@@ -122,7 +122,7 @@ export const IconFormatQuote = ({ size, primaryColor, ...other }) => (
 
 IconFormatQuote.defaultProps = {
   size: 16,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatQuote.propTypes = {
@@ -142,7 +142,7 @@ export const IconFormatListNumber = ({ size, primaryColor, ...other }) => (
 
 IconFormatListNumber.defaultProps = {
   size: 24,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatListNumber.propTypes = {
@@ -162,7 +162,7 @@ export const IconFormatListBullet = ({ size, primaryColor, ...other }) => (
 
 IconFormatListBullet.defaultProps = {
   size: 24,
-  primaryColor: theme.neutral400,
+  primaryColor: theme.colors.neutral['400'],
 };
 
 IconFormatListBullet.propTypes = {
@@ -179,6 +179,7 @@ export const IconRightThickArrow = ({
 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" {...other}>
     {withCircle && <circle fill={secondaryColor} cx="12" cy="12" r="10" />}
+
     <path
       fill={primaryColor}
       d="M12 14H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h5V8a1 1 0 0 1 1.7-.7l4 4a1 1 0 0 1 0 1.4l-4 4A1 1 0 0 1 12 16v-2z"
@@ -189,8 +190,8 @@ export const IconRightThickArrow = ({
 IconRightThickArrow.defaultProps = {
   size: 24,
   withCircle: false,
-  primaryColor: theme.neutral700,
-  secondaryColor: theme.neutral300,
+  primaryColor: theme.colors.neutral['700'],
+  secondaryColor: theme.colors.neutral['300'],
 };
 
 IconRightThickArrow.propTypes = {

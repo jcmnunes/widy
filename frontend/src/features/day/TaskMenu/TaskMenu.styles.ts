@@ -1,12 +1,8 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledTaskMenu = styled.div`
   height: 24px;
   cursor: pointer;
-
-  svg {
-    color: #9dacbe;
-  }
 `;
 
 export const StyledTrigger = styled.div`
@@ -17,6 +13,6 @@ export const StyledTrigger = styled.div`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.neutral100};
+    background-color: ${({ theme }) => theme.colors.neutral['200']};
   }
 `;

@@ -1,11 +1,11 @@
-import styled from 'styled-components/macro';
+import styled from '@emotion/styled/macro';
 
 export const StyledReportPage = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: 32px 16px;
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${props => props.theme.breakpointsLegacy.mobile}) {
     padding: 48px 32px;
   }
 `;
@@ -17,8 +17,8 @@ export const ReportTitle = styled.h2`
 
 export const ReportDescription = styled.p`
   font-size: 16px;
-  font-weight: 400;
-  color: ${props => props.theme.neutral300};
+  font-weight: 500;
+  color: ${props => props.theme.colors.neutral['500']};
 `;
 
 export const StatsContainer = styled.div`
@@ -53,8 +53,8 @@ export const StatValue = styled.div`
 `;
 
 export const StatLabel = styled.div`
-  font-size: 16px;
-  color: ${props => props.theme.neutral300};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['300']};
 `;
 
 export const ActionsTop = styled.div`
@@ -80,8 +80,8 @@ export const EmptyStateContainer = styled.div`
 `;
 
 export const EmptyStateText = styled.div`
-  font-size: 16px;
-  color: ${props => props.theme.neutral300};
+  font-size: 14px;
+  color: ${props => props.theme.colors.neutral['300']};
 `;
 
 export const LoadingReport = styled.div`
@@ -95,7 +95,7 @@ export const LoadingReport = styled.div`
 export const SpinnerText = styled.div`
   font-size: 18px;
   font-weight: 700;
-  color: ${props => props.theme.neutral400};
+  color: ${props => props.theme.colors.neutral['400']};
   margin-bottom: 12px;
 `;
 
@@ -109,7 +109,7 @@ export const ReportLoader = styled.div`
 
 export const ReportLoaderText = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.neutral300};
+  color: ${({ theme }) => theme.colors.neutral['300']};
   margin-left: 6px;
 `;
 

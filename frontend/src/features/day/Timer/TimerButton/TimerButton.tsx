@@ -2,15 +2,13 @@ import React from 'react';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { IconButton, theme } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon } from '@binarycapsule/ui-capsules';
+import { useTheme } from '@emotion/react';
 import { useActiveTask } from '../../api/useActiveTask';
 import { TaskDto } from '../../api/useDay';
 import { sidebarSliceActions } from '../../SideBar/SidebarSlice';
 import { useUpdateTask } from '../../api/useUpdateTask';
-
-export const colors = {
-  active: [theme.yellow400, theme.yellow900, theme.yellow500, theme.yellow900],
-};
+import { DayRouteParams } from '../../dayTypes';
 
 interface Props {
   task: TaskDto;
@@ -19,10 +17,16 @@ interface Props {
 }
 
 export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
-  const { dayId } = useParams();
+  const theme = useTheme();
+
+  const { dayId } = useParams<DayRouteParams>();
+
   const { status, data: activeTaskData } = useActiveTask();
+
   const [updateTask, { isLoading }] = useUpdateTask();
+
   const history = useHistory();
+
   const dispatch = useDispatch();
 
   if (status === 'loading' || !dayId) {
@@ -36,8 +40,7 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
   const isActive = task.id === activeTaskData.taskId;
 
   return (
-    <IconButton
-      colors={isActive ? colors.active : undefined}
+    <IllustratedIcon
       icon={isActive ? 'stop' : 'play'}
       onClick={() => {
         // Debounce to prevent simultaneous requests
@@ -69,6 +72,10 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
         }
       }}
       size={size}
+      primaryColor={isActive ? theme.colors.yellow['400'] : theme.colors.neutral['200']}
+      primaryColorHover={isActive ? theme.colors.yellow['500'] : theme.colors.neutral['300']}
+      secondaryColor={isActive ? theme.colors.yellow['900'] : theme.colors.neutral['500']}
+      secondaryColorHover={isActive ? theme.colors.yellow['900'] : theme.colors.neutral['600']}
     />
   );
 };
