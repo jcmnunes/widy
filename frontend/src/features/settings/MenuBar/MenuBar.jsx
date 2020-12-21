@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, theme } from '@binarycapsule/ui-capsules';
+import { IconButton, theme } from '@binarycapsule/ui-capsules';
 import { useParams } from 'react-router';
 import Heading1 from '../../../components/Typography/Heading1';
 import { IconWidy, IconWidyText } from '../../../icons/widy';
@@ -46,7 +46,7 @@ const MenuBar = () => {
       </Links>
 
       <MenuBarCloseButton>
-        <Button onClick={closeMenu} appearance="minimal" iconBefore="x" />
+        <IconButton onClick={closeMenu} variant="ghost" icon="x" variantColor="neutral" />
       </MenuBarCloseButton>
     </StyledMenuBar>
   );

@@ -68,14 +68,14 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
       contentLabel="Modal - Add a new task"
       shouldCloseOnEsc={false}
     >
-      <ModalHeader>What will you be working on?</ModalHeader>
+      <ModalHeader>Add Task</ModalHeader>
 
       <ModalCloseButton onClick={onRequestClose} />
 
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
           <Text variant="label" mb="4">
-            Task name
+            What will you be working on?
           </Text>
 
           <Input
@@ -85,6 +85,7 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
             onChange={formik.handleChange}
             size="large"
             autoFocus
+            placeholder="Task summary"
             error={formik.errors.title}
           />
 

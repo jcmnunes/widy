@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
-import { Button } from '@binarycapsule/ui-capsules';
+import { Button, IconButton } from '@binarycapsule/ui-capsules';
 import Account from './Account/Account';
 import ChangePassword from './ChangePassword/ChangePassword';
 import Scopes from './Scopes/Scopes';
@@ -44,7 +44,7 @@ const Page = () => {
       </Switch>
 
       <MenuButton>
-        <Button appearance="minimal" iconBefore="menu" onClick={openMenu} />
+        <IconButton icon="menu" variant="ghost" variantColor="neutral" onClick={openMenu} />
       </MenuButton>
     </StyledPage>
   );
