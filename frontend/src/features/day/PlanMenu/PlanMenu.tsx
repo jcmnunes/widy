@@ -19,7 +19,7 @@ export const PlanMenu: React.FC<Props> = ({ planId }) => {
 
   return (
     <>
-      <Menu trigger={Trigger} placement="right">
+      <Menu trigger={Trigger} placement="bottom-end">
         <MenuItem
           leftIcon="calendar"
           onClick={() => {

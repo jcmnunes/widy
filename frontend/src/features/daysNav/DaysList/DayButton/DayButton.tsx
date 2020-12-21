@@ -17,7 +17,7 @@ export const DayButton: React.FC<Props> = ({ isSelected, isToday, onClick, child
         <span>{children}</span>
       </Content>
 
-      <Icon icon="chev_right" size="16px" />
+      <Icon icon="chev_right" size={16} />
     </StyledDayButton>
   );
 };

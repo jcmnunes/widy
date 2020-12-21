@@ -177,7 +177,7 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
                   Add all to Plan
                 </Button>
               )}
-              <Tooltip tooltip="Hide Schedule" delayShow={1000}>
+              <Tooltip content="Hide Schedule" delay={1000}>
                 <IconButton
                   variant="ghost"
                   variantColor="neutral"

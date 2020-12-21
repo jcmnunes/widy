@@ -9,7 +9,7 @@ import { useTheme } from '@emotion/react';
 interface Props {
   sectionId: string;
   task: TaskDto;
-  size?: string;
+  size?: number;
   taskIndex: number;
   isButton?: boolean;
 }
@@ -25,7 +25,7 @@ export const Launcher: React.FC<Props> = ({ size, sectionId, task, taskIndex, is
 
   return (
     <>
-      <Tooltip tooltip="Start working on this task" delayShow={1000}>
+      <Tooltip content="Start working on this task" delay={1000} placement="bottom">
         {isButton ? (
           <Button
             leftIcon="rocket"

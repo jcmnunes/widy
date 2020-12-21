@@ -47,7 +47,7 @@ export const AddToPlan: React.FC<Props> = ({ isButton, task }) => {
   };
 
   return (
-    <Tooltip tooltip="Add task to Plan" delayShow={1000}>
+    <Tooltip content="Add task to Plan" delay={1000}>
       {isButton ? (
         <Button variant="ghost" variantColor="neutral" leftIcon="plus_c" onClick={moveToPlan}>
           Add to Plan

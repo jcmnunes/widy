@@ -34,7 +34,7 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
   return (
     <>
       <StyledTaskMenu>
-        <Menu trigger={Trigger} placement="right">
+        <Menu trigger={Trigger} placement="bottom-end">
           {canRegisterTime ? (
             <MenuItem
               text="Register Time"
@@ -52,7 +52,7 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
           ) : null}
           <MenuItem
             text="Delete"
-            leftAddon={<Icon icon="trash" color="error.500" size="18px" />}
+            leftAddon={<Icon icon="trash" color="error.500" size={18} />}
             onClick={() => setShowDeleteTaskDialog(true)}
           />
         </Menu>

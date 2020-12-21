@@ -62,30 +62,34 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
   });
 
   return (
-    <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Add a new task">
+    <Modal
+      isOpen
+      onRequestClose={onRequestClose}
+      contentLabel="Modal - Add a new task"
+      shouldCloseOnEsc={false}
+    >
       <ModalHeader>What will you be working on?</ModalHeader>
 
       <ModalCloseButton onClick={onRequestClose} />
 
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <Text color="neutral.700" fontWeight={600} fontSize="body" mb="4">
-            What will you be working on?
+          <Text variant="label" mb="4">
+            Task name
           </Text>
 
           <Input
             name="title"
             type="text"
             value={formik.values.title}
-            placeholder="Task name"
             onChange={formik.handleChange}
             size="large"
             autoFocus
             error={formik.errors.title}
           />
 
-          <Text color="neutral.700" fontWeight={600} fontSize="body" mt="24" mb="4">
-            Task scope
+          <Text variant="label" mt="24" mb="4">
+            Scope
           </Text>
           <ScopeSelect
             value={formik.values.scope}
