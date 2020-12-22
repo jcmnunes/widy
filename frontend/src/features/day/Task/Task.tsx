@@ -61,7 +61,7 @@ export const Task: React.FC<Props> = ({
         />
       )}
       <TaskTitle isTemp={isTemp} isCompleted={isCompleted}>
-        {title}
+        {title!}
       </TaskTitle>
       {scope && <ScopeCode scopeCode={scope.shortCode} />}
       {children && !isTemp && !isCompleted && (

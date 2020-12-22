@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  Table,
   Icon,
-  TableHead,
-  TableHeaderCell,
+  Table,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeaderCell,
 } from '@binarycapsule/ui-capsules';
 import useMedia from 'react-use/lib/useMedia';
 import { formatTotalTime } from '../../../../helpers/timeHelpers';
-import { ScopeRow, TaskRow, IconTableCell } from './TasksTable.styles';
+import { IconTableCell, ScopeRow, TaskRow } from './TasksTable.styles';
 import { ReportTask } from '../../api/useReport';
 
 interface Props {
@@ -46,7 +46,7 @@ export const TasksTable: React.FC<Props> = ({ data }) => {
                     <TableCell>{title}</TableCell>
                     {isWide && (
                       <IconTableCell textAlign="center">
-                        {completed ? <Icon icon="check" size="18px" /> : ''}
+                        {completed ? <Icon icon="check" size={18} /> : ''}
                       </IconTableCell>
                     )}
                     <TableCell noWrap>{formatTotalTime(time)}</TableCell>

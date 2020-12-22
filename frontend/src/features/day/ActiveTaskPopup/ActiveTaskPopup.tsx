@@ -66,7 +66,7 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
           history.push(`/day/${activeTask.dayId}/${activeTask.sectionId}/${activeTask.taskId}`);
         }}
       >
-        <Tooltip placement="top" tooltip="Stop the task">
+        <Tooltip placement="top" content="Stop the task">
           <IllustratedIcon
             icon="stop"
             onClick={e => {

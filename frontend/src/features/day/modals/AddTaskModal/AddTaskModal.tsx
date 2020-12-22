@@ -27,7 +27,7 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required('You need to enter the task name.'),
+  title: Yup.string().required('You need to enter the task summary.'),
 });
 
 const initialValues: FormValues = {
@@ -62,14 +62,19 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
   });
 
   return (
-    <Modal isOpen onRequestClose={onRequestClose} contentLabel="Modal - Add a new task">
-      <ModalHeader>What will you be working on?</ModalHeader>
+    <Modal
+      isOpen
+      onRequestClose={onRequestClose}
+      contentLabel="Modal - Add a new task"
+      shouldCloseOnEsc={false}
+    >
+      <ModalHeader>Add Task</ModalHeader>
 
       <ModalCloseButton onClick={onRequestClose} />
 
       <form onSubmit={formik.handleSubmit}>
         <ModalBody>
-          <Text color="neutral.700" fontWeight={600} fontSize="body" mb="4">
+          <Text variant="label" mb="4">
             What will you be working on?
           </Text>
 
@@ -77,15 +82,15 @@ export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose
             name="title"
             type="text"
             value={formik.values.title}
-            placeholder="Task name"
             onChange={formik.handleChange}
             size="large"
             autoFocus
+            placeholder="Task summary"
             error={formik.errors.title}
           />
 
-          <Text color="neutral.700" fontWeight={600} fontSize="body" mt="24" mb="4">
-            Task scope
+          <Text variant="label" mt="24" mb="4">
+            Scope
           </Text>
           <ScopeSelect
             value={formik.values.scope}
