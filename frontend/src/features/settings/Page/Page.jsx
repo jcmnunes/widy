@@ -28,7 +28,7 @@ const Page = () => {
           iconVariant="outline"
           onClick={() => history.push(`/day${dayId ? `/${dayId}` : ''}`)}
         >
-          Exit Settings
+          Exit
         </Button>
       </ActionsTop>
       <Switch>

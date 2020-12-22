@@ -98,7 +98,6 @@ export const LaunchTaskModal: React.FC<Props> = ({
                 value={value}
                 onChange={handleOnChange}
                 checked={value === checkedId}
-                size="large"
               >
                 {label}
               </Radio>
