@@ -27,7 +27,7 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required('You need to enter the task name.'),
+  title: Yup.string().required('You need to enter the task summary.'),
 });
 
 const initialValues: FormValues = {

@@ -1,7 +1,5 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { queryCache } from 'react-query';
-import { produce } from 'immer';
 import {
   Alert,
   Button,
@@ -44,14 +42,6 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
         { name, shortCode, id: scope?.id },
         {
           onSuccess(newScope) {
-            queryCache.setQueryData<ScopeDto[] | undefined>('scopes', scopes => {
-              if (!scopes) return scopes;
-
-              return produce(scopes, draftState => {
-                draftState.unshift(newScope);
-              });
-            });
-
             onUpsertScope &&
               onUpsertScope({
                 value: newScope.id,
@@ -126,7 +116,7 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
           <Button variant="ghost" variantColor="neutral" size="large" onClick={closeModal}>
             Cancel
           </Button>
-          <Button type="submit" size="large">
+          <Button type="submit" size="large" isLoading={status === 'loading'}>
             {scope ? 'Save Changes' : 'Create Scope'}
           </Button>
         </ModalFooter>
