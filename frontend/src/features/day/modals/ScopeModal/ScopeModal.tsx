@@ -2,6 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import {
   Alert,
+  Box,
   Button,
   Input,
   Modal,
@@ -9,16 +10,17 @@ import {
   ModalCloseButton,
   ModalFooter,
   ModalHeader,
+  Text,
 } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import { ScopeDto, ScopeOption } from '../../api/useScopes';
 import { useUpsertScope } from '../../api/useUpsertScope';
-import { InputField, ShortCodeHelper, ShortCodeLabel, ShortCodeWrapper } from './ScopeModal.styles';
+import { InputField, ShortCodeWrapper } from './ScopeModal.styles';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Please enter the scope's name"),
-  shortCode: Yup.string().required('Please enter a code'),
+  name: Yup.string().required("Enter the scope's name"),
+  shortCode: Yup.string().required('Enter a code'),
 });
 
 interface Props {
@@ -71,8 +73,8 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
             />
           )}
 
-          <InputField>
-            Name
+          <Box mb="12">
+            <Text variant="label">Name</Text>
             <Input
               placeholder="Scope name"
               id="name"
@@ -82,11 +84,13 @@ export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }
               value={formik.values.name}
               error={formik.errors.name && formik.touched.name ? formik.errors.name : ''}
             />
-          </InputField>
+          </Box>
 
           <InputField>
-            <ShortCodeLabel>Short Code</ShortCodeLabel>
-            <ShortCodeHelper>Choose a short code to identify this scope.</ShortCodeHelper>
+            <Text variant="label">Short Code</Text>
+            <Text variant="helper" mb="4">
+              Choose a short code to identify this scope.
+            </Text>
             <ShortCodeWrapper>
               <Input
                 placeholder="Scope code"

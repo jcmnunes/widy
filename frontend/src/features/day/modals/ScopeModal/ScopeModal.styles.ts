@@ -6,17 +6,6 @@ export const InputField = styled.label`
   font-size: 14px;
 `;
 
-export const ShortCodeLabel = styled.div`
-  line-height: 18px;
-`;
-
-export const ShortCodeHelper = styled.div`
-  color: ${props => props.theme.colors.neutral['300']};
-  font-size: 12px;
-  line-height: 14px;
-  margin-bottom: 4px;
-`;
-
 export const ShortCodeWrapper = styled.div`
   width: 128px;
 `;

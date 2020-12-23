@@ -122,6 +122,7 @@ export const TaskTitle = styled(TruncatedText)<{ isTemp: boolean; isCompleted?: 
   width: 0;
   margin-right: 16px;
   text-align: left;
+  font-weight: 500;
   color: ${({ theme, isTemp, isCompleted }) =>
     isTemp || isCompleted ? theme.colors.neutral['300'] : theme.colors.neutral['700']};
 `;

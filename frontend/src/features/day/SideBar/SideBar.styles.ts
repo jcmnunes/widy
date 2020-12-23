@@ -2,7 +2,7 @@ import styled from '@emotion/styled/macro';
 
 export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
   flex: 0.75;
-  padding: 48px 32px;
+  padding: 32px;
   width: 320px;
   height: 100vh;
   overflow-y: auto;
@@ -27,14 +27,14 @@ export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpointsLegacy.xxl}) {
     flex: 1;
-    padding: 48px;
+    padding: 40px 48px;
   }
 `;
 
 export const SidebarCloseButton = styled.div`
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 6px;
+  top: 6px;
   display: block;
 
   @media (min-width: ${props => props.theme.breakpointsLegacy.xl}) {
