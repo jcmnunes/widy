@@ -119,6 +119,7 @@ export const SideBar: React.FC<Props> = () => {
           variantColor="neutral"
           icon="x"
           onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
+          size="small"
         />
       </SidebarCloseButton>
     </StyledSidebar>
