@@ -1,8 +1,9 @@
 import styled from '@emotion/styled/macro';
+import { css } from '@emotion/react';
 import { Theme } from '@binarycapsule/ui-capsules/dist/types';
+import { TruncatedText } from '@binarycapsule/ui-capsules';
 import { IconRightThickArrow } from '../../../icons/Icons';
 import { StyledScopeCode } from './ScopeCode/ScopeCode.styles';
-import { css } from '@emotion/react';
 
 const getColors = (props: StyledTaskProps & { theme: Theme }) => {
   const colors = {
@@ -116,14 +117,12 @@ export const StyledTask = styled.div<StyledTaskProps>`
   }
 `;
 
-export const TaskTitle = styled.span<{ isTemp: boolean; isCompleted?: boolean }>`
+export const TaskTitle = styled(TruncatedText)<{ isTemp: boolean; isCompleted?: boolean }>`
   flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 0;
   margin-right: 16px;
   text-align: left;
+  font-weight: 500;
   color: ${({ theme, isTemp, isCompleted }) =>
     isTemp || isCompleted ? theme.colors.neutral['300'] : theme.colors.neutral['700']};
 `;

@@ -23,18 +23,19 @@ export const StyledSidebar = styled.div<{ isOpen?: boolean }>`
     position: relative;
     transform: translateX(0);
     box-shadow: none;
+    padding: 40px 32px;
   }
 
   @media (min-width: ${props => props.theme.breakpointsLegacy.xxl}) {
     flex: 1;
-    padding: 48px;
+    padding: 40px 48px;
   }
 `;
 
 export const SidebarCloseButton = styled.div`
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 16px;
+  top: 16px;
   display: block;
 
   @media (min-width: ${props => props.theme.breakpointsLegacy.xl}) {

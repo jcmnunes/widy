@@ -20,7 +20,7 @@ export const UserMenu = () => {
 
   return (
     <Menu
-      placement="right"
+      placement="bottom-end"
       trigger={
         <Button
           leftIcon="user_circle"

@@ -1,12 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconButton } from '@binarycapsule/ui-capsules';
+import { IconButton, Text } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
-import { useDay, useSection, useTask } from '../api/useDay';
+import { useSection, useTask } from '../api/useDay';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
-import { Heading2 } from '../../../components/Typography';
 import {
   SidebarCloseButton,
   SideBarEmptyState,
@@ -29,8 +27,6 @@ interface Props {}
 
 export const SideBar: React.FC<Props> = () => {
   const { dayId, sectionId, taskId } = useParams<DayRouteParams>();
-
-  const { data: day } = useDay(dayId);
 
   const { data: schedule } = useSchedule();
 
@@ -67,9 +63,6 @@ export const SideBar: React.FC<Props> = () => {
   return (
     <StyledSidebar isOpen={isSidebarOpen}>
       <SidebarSection>
-        <div>{day ? moment(day.day).format('ddd DD MMM YYYY') : ''}</div>
-      </SidebarSection>
-      <SidebarSection>
         <EditableTaskTitle
           key={taskId} // Use a key to prevent WDY-250
           dayId={dayId!}
@@ -79,7 +72,9 @@ export const SideBar: React.FC<Props> = () => {
         />
       </SidebarSection>
       <SidebarSection>
-        <Heading2>Scope</Heading2>
+        <Text variant="label" mb="8">
+          Scope
+        </Text>
         <ScopeSelect
           value={scopesOptions.find(scopeOpt => scopeOpt.value === task?.scope?.id) || null}
           options={scopesOptions}
@@ -99,16 +94,22 @@ export const SideBar: React.FC<Props> = () => {
           }}
         />
       </SidebarSection>
+
       <SidebarSection>
-        <Heading2>Timer</Heading2>
+        <Text variant="label" mb="8">
+          Timer
+        </Text>
         {isSchedule ? (
           <AddToPlan task={task} isButton />
         ) : (
           !!section && <Timer section={section} task={task} />
         )}
       </SidebarSection>
+
       <SidebarSection>
-        <Heading2>Notes</Heading2>
+        <Text variant="label" mb="8">
+          Notes
+        </Text>
         {dayId && sectionId && <NotesEditor dayId={dayId} sectionId={sectionId} task={task} />}
       </SidebarSection>
 
@@ -118,6 +119,7 @@ export const SideBar: React.FC<Props> = () => {
           variantColor="neutral"
           icon="x"
           onClick={() => dispatch(sidebarSliceActions.closeSidebar())}
+          size="small"
         />
       </SidebarCloseButton>
     </StyledSidebar>

@@ -65,7 +65,7 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
             iconVariant="outline"
             onClick={() => history.push(`/day/${dayId}`)}
           >
-            Exit Report
+            Exit
           </Button>
 
           <UserDropdown />

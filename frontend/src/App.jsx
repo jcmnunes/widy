@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Splash, theme } from '@binarycapsule/ui-capsules';
-import NoInternet from './components/NoInternet/NoInternet';
+import { NoInternet } from './components/NoInternet/NoInternet';
 import Routes from './router/routes';
 import { version } from '../package.json';
 import { IconWidyText } from './icons/widy';

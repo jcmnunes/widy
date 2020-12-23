@@ -38,7 +38,7 @@ export const Timer: React.FC<Props> = ({ task, section }) => {
           <Launcher task={task} sectionId={section.id} taskIndex={taskIndex} isButton />
         ) : (
           <>
-            {!task.completed && <TimerButton task={task} sectionId={section.id} size="48px" />}
+            {!task.completed && <TimerButton task={task} sectionId={section.id} size={48} />}
 
             <Time
               time={

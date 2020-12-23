@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@binarycapsule/editor": "^1.1.1",
-    "@binarycapsule/ui-capsules": "^4.0.1",
+    "@binarycapsule/ui-capsules": "^4.1.4",
     "@emotion/react": "^11.1.2",
     "@emotion/styled": "^11.0.0",
     "@nivo/core": "^0.67.0",
@@ -76,6 +76,7 @@
     "@types/react": "^17.0.0",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-modal": "^3.10.6",
     "@types/react-redux": "^7.1.12",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-select": "^3.0.28",

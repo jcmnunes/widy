@@ -13,7 +13,7 @@ import { DayRouteParams } from '../../dayTypes';
 interface Props {
   task: TaskDto;
   sectionId: string;
-  size?: string;
+  size?: number;
 }
 
 export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {

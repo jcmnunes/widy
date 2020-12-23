@@ -1,10 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import { IllustratedIcon, Tooltip } from '@binarycapsule/ui-capsules';
+import { IllustratedIcon, Text, Tooltip } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ActiveTaskPopupHeader, StyledActiveTaskPopup } from './ActiveTaskPopup.styles';
-import { Heading2 } from '../../../components/Typography';
 import { useActiveTask } from '../api/useActiveTask';
 import { Task } from '../Task/Task';
 import { useUpdateTask } from '../api/useUpdateTask';
@@ -38,7 +37,9 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
   return shouldRender && activeTask ? (
     <StyledActiveTaskPopup>
       <ActiveTaskPopupHeader>
-        <Heading2>Working on:</Heading2>
+        <Text variant="label" mb="8">
+          Working on:
+        </Text>
         <Time time={activeTask.time + moment().diff(activeTask.start!, 'seconds')} size="sm" />
       </ActiveTaskPopupHeader>
       <Task
@@ -66,7 +67,7 @@ export const ActiveTaskPopup: React.FC<Props> = () => {
           history.push(`/day/${activeTask.dayId}/${activeTask.sectionId}/${activeTask.taskId}`);
         }}
       >
-        <Tooltip placement="top" tooltip="Stop the task">
+        <Tooltip placement="top" content="Stop the task">
           <IllustratedIcon
             icon="stop"
             onClick={e => {

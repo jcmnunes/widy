@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditableInput } from '@binarycapsule/ui-capsules';
+import { Box, EditableInput } from '@binarycapsule/ui-capsules';
 import { useUpdateTask } from '../api/useUpdateTask';
 
 interface Props {
@@ -24,8 +24,8 @@ export const EditableTaskTitle: React.FC<Props> = ({ taskId, sectionId, dayId, t
   };
 
   return (
-    <div style={{ marginLeft: -14 }}>
+    <Box ml={-14}>
       <EditableInput size="large" value={taskTitle} action={handleInputChange} />
-    </div>
+    </Box>
   );
 };

@@ -26,7 +26,7 @@ const SideBar: React.FC<Props> = () => {
     <StyledSideBar>
       <IllustratedIcon
         icon="pie"
-        size="128px"
+        size={128}
         primaryColor={theme.colors.yellow['100']}
         secondaryColor={theme.colors.yellow['100']}
       />
