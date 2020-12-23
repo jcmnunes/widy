@@ -1,48 +1,31 @@
 import React from 'react';
-import styled from '@emotion/styled/macro';
-import { IllustratedIcon, Modal, ModalBody, theme } from '@binarycapsule/ui-capsules';
 import { Offline } from 'react-detect-offline';
+import { Flex, IllustratedIcon, Modal, Text } from '@binarycapsule/ui-capsules';
+import { useTheme } from '@emotion/react';
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 28px;
-`;
+export const NoInternet = () => {
+  const theme = useTheme();
 
-const Title = styled.h1`
-  font-size: 24px;
-  color: ${props => props.theme.colors.neutral['600']};
-  text-align: center;
-`;
-
-const SubTitle = styled.h2`
-  font-size: 14px;
-  color: ${props => props.theme.colors.neutral['400']};
-  text-align: center;
-  margin-top: 12px;
-  line-height: 20px;
-`;
-
-const NoInternet = () => (
-  <Offline>
-    <Modal contentLabel="Offline-modal" isOpen width="340px">
-      <ModalBody>
-        <Content>
+  return (
+    <Offline>
+      <Modal contentLabel="Offline-modal" isOpen size="small">
+        <Flex flexDirection="column" alignItems="center" p="24" pt="12">
           <IllustratedIcon
             icon="wifi_off"
             primaryColor={theme.colors.neutral['300']}
-            secondaryColor={theme.colors.red['500']}
+            secondaryColor={theme.colors.error['500']}
             size="138px"
           />
-          <Title>No internet connection</Title>
-          <SubTitle>
-            Please, make sure you have an internet connection to continue using Widy
-          </SubTitle>
-        </Content>
-      </ModalBody>
-    </Modal>
-  </Offline>
-);
 
-export default NoInternet;
+          <Text fontWeight={500} fontSize="h5">
+            No internet connection!
+          </Text>
+
+          <Text variant="helper" textAlign="center" mt="8" px="32">
+            Please, make sure you have an internet connection to continue using Widy
+          </Text>
+        </Flex>
+      </Modal>
+    </Offline>
+  );
+};
