@@ -11,10 +11,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{js,jsx}' --fix --max-warnings=0",
     "format": "pretty-quick --staged",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
-    "docz:serve": "docz build && docz serve"
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "browserslist": [
     ">0.2%",
@@ -23,8 +20,8 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@binarycapsule/editor": "^1.1.1",
-    "@binarycapsule/ui-capsules": "^4.1.4",
+    "@binarycapsule/editor": "^2.0.4",
+    "@binarycapsule/ui-capsules": "^4.1.5",
     "@emotion/react": "^11.1.2",
     "@emotion/styled": "^11.0.0",
     "@nivo/core": "^0.67.0",
@@ -62,8 +59,6 @@
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "slate": "0.47.8",
-    "slate-react": "0.22.9",
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5",
     "yup": "^0.32.8"
@@ -84,7 +79,6 @@
     "@types/styled-system": "^5.1.10",
     "@types/yup": "^0.29.10",
     "babel-plugin-macros": "^3.0.0",
-    "docz": "^2.3.1",
     "eslint-plugin-prettier": "^3.2.0",
     "husky": "^4.3.5",
     "lint-staged": "^10.5.3",

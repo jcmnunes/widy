@@ -51,7 +51,7 @@ export const Day: React.FC<Props> = () => {
     }
     // If there is an active task ➜ start ticking
     if (activeTaskId) {
-      timer = setInterval(() => dispatch(activeTaskActions.activeTaskTick()), 1000);
+      timer = window.setInterval(() => dispatch(activeTaskActions.activeTaskTick()), 1000);
     }
     return () => clearInterval(timer);
   }, [activeTaskId, dispatch]);

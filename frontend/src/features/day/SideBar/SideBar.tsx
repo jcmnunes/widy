@@ -110,7 +110,8 @@ export const SideBar: React.FC<Props> = () => {
         <Text variant="label" mb="8">
           Notes
         </Text>
-        {dayId && sectionId && <NotesEditor dayId={dayId} sectionId={sectionId} task={task} />}
+
+        <NotesEditor notes={task.notes} mb="32" />
       </SidebarSection>
 
       <SidebarCloseButton>
