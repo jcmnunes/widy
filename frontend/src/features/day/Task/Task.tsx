@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, theme } from '@binarycapsule/ui-capsules';
 import { ScopeCode } from './ScopeCode/ScopeCode';
-import { TaskDto } from '../api/useDay';
+import { TaskDto } from '../api/useDayQuery';
 import { ActionsContainer, StyledIconRightThickArrow, StyledTask, TaskTitle } from './Task.syles';
 
 interface Props {

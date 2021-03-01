@@ -11,8 +11,8 @@ import {
 } from '@binarycapsule/ui-capsules';
 import { Error, Radios } from './LaunchTaskModal.styles';
 import { SelectOption } from '../../../../typings/types';
-import { TaskDto, useDay } from '../../api/useDay';
-import { useMoveTask } from '../../api/useMoveTask';
+import { TaskDto, useDayQuery } from '../../api/useDayQuery';
+import { useMoveTaskMutation } from '../../api/useMoveTaskMutation';
 import { sectionTitleMap } from '../../Section/Section.constants';
 
 interface Props {
@@ -33,9 +33,9 @@ export const LaunchTaskModal: React.FC<Props> = ({
   const [checkedId, setCheckedId] = useState('');
   const [error, setError] = useState('');
 
-  const { data: day } = useDay(dayId);
+  const { data: day } = useDayQuery(dayId);
 
-  const [moveTask] = useMoveTask();
+  const { mutate: moveTask } = useMoveTaskMutation();
 
   const sectionOptions = useMemo(() => {
     if (!day) return [];

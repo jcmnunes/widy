@@ -10,16 +10,29 @@ import { DaysNavLoading } from './DaysNav.loading';
 import { DaysNavError } from './DaysNav.error';
 import { isDaysNavOpenSelector } from './DaysNav.selectors';
 import { daysNavSliceActions } from './DaysNavSlice';
-import { useDays } from './api/useDays';
+import { useDays } from './hooks/useDays';
+import { useDaysQuery } from './api/useDaysQuery';
 
 interface Props {}
 
 export const DaysNav: React.FC<Props> = () => {
-  const { status, days, canFetchMore, fetchMore, isFetchingMore } = useDays();
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useDaysQuery();
+
+  const { data: days } = useDays();
+
   const today = moment().format('YYYY-MM-DD');
-  const isTodayCreated = !!(days && days.find(({ day }) => day === today));
+
+  const isTodayCreated = !!(days && days[0].day === today);
 
   const isDaysNavOpen = useSelector(isDaysNavOpenSelector);
+
   const dispatch = useDispatch();
 
   const closeDaysNav = useCallback(() => {
@@ -43,16 +56,16 @@ export const DaysNav: React.FC<Props> = () => {
 
       <DaysNavHeader isTodayCreated={isTodayCreated} />
 
-      {status === 'loading' && <DaysNavLoading />}
+      {isLoading && <DaysNavLoading />}
 
-      {status === 'error' && <DaysNavError />}
+      {isError && <DaysNavError />}
 
-      {status === 'success' && !!days && (
+      {isSuccess && days && (
         <DaysList
           days={days}
-          canFetchMore={canFetchMore}
-          isFetchingMore={isFetchingMore}
-          fetchMore={fetchMore}
+          canFetchMore={hasNextPage}
+          isFetchingMore={isFetchingNextPage}
+          fetchMore={fetchNextPage}
         />
       )}
     </StyledDaysNav>

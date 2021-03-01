@@ -3,7 +3,7 @@ import useMedia from 'react-use/lib/useMedia';
 import { Button, IconButton } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { UserMenu } from '../../../userMenu/UserMenu';
-import { useDays } from '../../../daysNav/api/useDays';
+import { useDays } from '../../../daysNav/hooks/useDays';
 import { StyledBoardTopActions } from './BoardTopActions.styles';
 import { DayRouteParams } from '../../dayTypes';
 
@@ -14,7 +14,7 @@ export const BoardTopActions: React.FC<Props> = () => {
 
   const { dayId } = useParams<DayRouteParams>();
 
-  const { days, status: getDaysStatus } = useDays();
+  const { data: days, isSuccess } = useDays();
 
   const isWide = useMedia('(min-width: 450px)');
 
@@ -24,7 +24,8 @@ export const BoardTopActions: React.FC<Props> = () => {
 
   return (
     <StyledBoardTopActions>
-      {getDaysStatus === 'success' &&
+      {isSuccess &&
+        days &&
         days.length > 0 &&
         (isWide ? (
           <Button

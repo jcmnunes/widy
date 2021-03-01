@@ -6,8 +6,8 @@ import { useParams } from 'react-router';
 import { TimerButton } from './TimerButton/TimerButton';
 import { Time } from './Time/Time';
 import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
-import { useActiveTask } from '../api/useActiveTask';
-import { SectionDto, TaskDto } from '../api/useDay';
+import { useActiveTaskQuery } from '../api/useActiveTaskQuery';
+import { SectionDto, TaskDto } from '../api/useDayQuery';
 import { StyledTimer } from './Timer.styles';
 import { RegisterTimeModal } from '../modals/RegisterTimeModal/RegisterTimeModal';
 import { Launcher } from '../Launcher/Launcher';
@@ -23,7 +23,7 @@ export const Timer: React.FC<Props> = ({ task, section }) => {
 
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
-  const { data: activeTaskData } = useActiveTask();
+  const { data: activeTaskData } = useActiveTaskQuery();
 
   useSelector(activeTaskTickSelector);
 

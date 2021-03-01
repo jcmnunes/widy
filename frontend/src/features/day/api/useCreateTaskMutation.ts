@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { DayDto, TaskDto } from './useDay';
-import { ScopeDto } from './useScopes';
-import { ScheduleDto } from './useSchedule';
+import { DayDto, TaskDto } from './useDayQuery';
+import { ScopeDto } from './useScopesQuery';
+import { ScheduleDto } from './useScheduleQuery';
 
 interface CreateTaskDto {
   title: string;
@@ -50,21 +50,27 @@ const createTask = async ({ dayId, sectionId, title, scope }: CreateTaskVariable
   return data;
 };
 
-export const useCreateTask = () => {
-  return useMutation(createTask, {
-    onMutate: ({ dayId, sectionId, title, scope }) => {
-      queryCache.cancelQueries(['day', dayId]);
-      queryCache.cancelQueries('activeTask');
-      queryCache.cancelQueries('schedule');
+export const useCreateTaskMutation = () => {
+  const queryClient = useQueryClient();
 
-      const previousDay = queryCache.getQueryData(['day', dayId]);
-      const previousActiveTask = queryCache.getQueryData('activeTask');
-      const previousSchedule = queryCache.getQueryData('schedule');
+  return useMutation(createTask, {
+    onMutate: async ({ dayId, sectionId, title, scope }) => {
+      await queryClient.cancelQueries(['day', dayId]);
+      await queryClient.cancelQueries('activeTask');
+      await queryClient.cancelQueries('schedule');
+
+      const previousDay = queryClient.getQueryData(['day', dayId]);
+      const previousActiveTask = queryClient.getQueryData('activeTask');
+      const previousSchedule = queryClient.getQueryData('schedule');
+
+      if (!previousDay || !previousActiveTask || !previousSchedule) {
+        return;
+      }
 
       const isSchedule = sectionId === 'schedule';
 
       if (isSchedule) {
-        queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+        queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
           if (currentSchedule) {
             return produce(currentSchedule, draftState => {
               draftState.tasks.push({
@@ -77,7 +83,7 @@ export const useCreateTask = () => {
           return currentSchedule;
         });
       } else {
-        queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+        queryClient.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
           if (currentDay) {
             const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
 
@@ -96,15 +102,10 @@ export const useCreateTask = () => {
       }
 
       return () => {
-        queryCache.setQueryData(['day', dayId], previousDay);
-        queryCache.setQueryData('activeTask', previousActiveTask);
-        queryCache.setQueryData('schedule', previousSchedule);
+        queryClient.setQueryData(['day', dayId], previousDay);
+        queryClient.setQueryData('activeTask', previousActiveTask);
+        queryClient.setQueryData('schedule', previousSchedule);
       };
-    },
-
-    onSuccess: ({ day, schedule }, { dayId }) => {
-      queryCache.setQueryData(['day', dayId], day);
-      queryCache.setQueryData('schedule', schedule);
     },
 
     onError: (err, newTodo, rollback) => {
@@ -116,6 +117,12 @@ export const useCreateTask = () => {
         title: 'Oops, something went wrong',
         message: 'Task was not created',
       });
+    },
+
+    onSettled: (result, err, { dayId }) => {
+      queryClient.invalidateQueries(['day', dayId]);
+      queryClient.invalidateQueries('activeTask');
+      queryClient.invalidateQueries('schedule');
     },
   });
 };

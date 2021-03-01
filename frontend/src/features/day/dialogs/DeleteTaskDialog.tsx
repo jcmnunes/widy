@@ -1,6 +1,6 @@
 import React from 'react';
 import { Action, Dialog } from '@binarycapsule/ui-capsules';
-import { useDeleteTask } from '../api/useDeleteTask';
+import { useDeleteTaskMutation } from '../api/useDeleteTaskMutation';
 
 interface Props {
   dayId: string;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const DeleteTaskDialog: React.FC<Props> = ({ dayId, sectionId, taskId, onRequestClose }) => {
-  const [deleteTask] = useDeleteTask();
+  const { mutate: deleteTask } = useDeleteTaskMutation();
 
   const deleteAction = () => {
     deleteTask({

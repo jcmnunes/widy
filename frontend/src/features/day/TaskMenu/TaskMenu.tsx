@@ -4,7 +4,7 @@ import { StyledTaskMenu, StyledTrigger } from './TaskMenu.styles';
 import { DeleteTaskDialog } from '../dialogs/DeleteTaskDialog';
 import { ScheduleTaskDialog } from '../dialogs/ScheduleTaskDialog';
 import { RenameTaskModal } from '../modals/RenameTaskModal/RenameTaskModal';
-import { TaskDto } from '../api/useDay';
+import { TaskDto } from '../api/useDayQuery';
 import { RegisterTimeModal } from '../modals/RegisterTimeModal/RegisterTimeModal';
 
 const Trigger = (

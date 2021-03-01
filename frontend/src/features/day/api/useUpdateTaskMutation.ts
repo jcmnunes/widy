@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { DayDto, TaskDto } from './useDay';
-import { ScopeDto } from './useScopes';
-import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
-import { ScheduleDto } from './useSchedule';
+import { DayDto, TaskDto } from './useDayQuery';
+import { ScopeDto } from './useScopesQuery';
+import { ActiveTaskDto, emptyActiveTask } from './useActiveTaskQuery';
+import { ScheduleDto } from './useScheduleQuery';
 
 interface UpdateTaskPayload {
   title: string;
@@ -32,23 +32,29 @@ const updateTask = async ({ taskId, body }: UpdateTaskVariables) => {
   return data;
 };
 
-export const useUpdateTask = () => {
+export const useUpdateTaskMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(updateTask, {
-    onMutate: ({ taskId, body: { dayId, sectionId, payload } }) => {
-      queryCache.cancelQueries(['day', dayId]);
-      queryCache.cancelQueries('activeTask');
-      queryCache.cancelQueries('schedule');
+    onMutate: async ({ taskId, body: { dayId, sectionId, payload } }) => {
+      await queryClient.cancelQueries(['day', dayId]);
+      await queryClient.cancelQueries('activeTask');
+      await queryClient.cancelQueries('schedule');
 
-      const previousDay = queryCache.getQueryData(['day', dayId]) as DayDto;
-      const previousActiveTask = queryCache.getQueryData('activeTask') as ActiveTaskDto;
-      const previousSchedule = queryCache.getQueryData('schedule') as ScheduleDto;
+      const previousDay = queryClient.getQueryData(['day', dayId]) as DayDto;
+      const previousActiveTask = queryClient.getQueryData('activeTask') as ActiveTaskDto;
+      const previousSchedule = queryClient.getQueryData('schedule') as ScheduleDto;
 
-      const scopes = queryCache.getQueryData('scopes') as ScopeDto[];
+      if (!previousDay || !previousActiveTask || !previousSchedule) {
+        return;
+      }
+
+      const scopes = queryClient.getQueryData('scopes') as ScopeDto[];
 
       const isSchedule = sectionId === 'schedule';
 
       if (isSchedule) {
-        queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+        queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
           if (currentSchedule) {
             const taskIndex = currentSchedule.tasks.findIndex(({ id }) => id === taskId);
 
@@ -76,7 +82,7 @@ export const useUpdateTask = () => {
           return currentSchedule;
         });
       } else {
-        queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+        queryClient.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
           if (currentDay) {
             const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
             const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -88,7 +94,7 @@ export const useUpdateTask = () => {
 
               // We are starting a task
               if (payload.start) {
-                queryCache.setQueryData('activeTask', {
+                queryClient.setQueryData('activeTask', {
                   time: task.time,
                   title: task.title,
                   taskId: task.id,
@@ -102,12 +108,12 @@ export const useUpdateTask = () => {
               if (payload.time) {
                 // We are stopping the active task
                 if (previousActiveTask.taskId === taskId) {
-                  queryCache.setQueryData('activeTask', emptyActiveTask);
+                  queryClient.setQueryData('activeTask', emptyActiveTask);
                 }
               }
 
               if (payload.title) {
-                queryCache.setQueryData('activeTask', {
+                queryClient.setQueryData('activeTask', {
                   ...previousActiveTask,
                   title: payload.title,
                 });
@@ -136,9 +142,9 @@ export const useUpdateTask = () => {
       }
 
       return () => {
-        queryCache.setQueryData(['day', dayId], previousDay);
-        queryCache.setQueryData('activeTask', previousActiveTask);
-        queryCache.setQueryData('schedule', previousSchedule);
+        queryClient.setQueryData(['day', dayId], previousDay);
+        queryClient.setQueryData('activeTask', previousActiveTask);
+        queryClient.setQueryData('schedule', previousSchedule);
       };
     },
 
@@ -154,9 +160,9 @@ export const useUpdateTask = () => {
     },
 
     onSettled: (result, err, { body: { dayId } }) => {
-      queryCache.invalidateQueries(['day', dayId]);
-      queryCache.invalidateQueries('activeTask');
-      queryCache.invalidateQueries('schedule');
+      queryClient.invalidateQueries(['day', dayId]);
+      queryClient.invalidateQueries('activeTask');
+      queryClient.invalidateQueries('schedule');
     },
   });
 };

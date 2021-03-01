@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { IllustratedIcon } from '@binarycapsule/ui-capsules';
 import { useTheme } from '@emotion/react';
-import { useActiveTask } from '../../api/useActiveTask';
-import { TaskDto } from '../../api/useDay';
+import { useActiveTaskQuery } from '../../api/useActiveTaskQuery';
+import { TaskDto } from '../../api/useDayQuery';
 import { sidebarSliceActions } from '../../SideBar/SidebarSlice';
-import { useUpdateTask } from '../../api/useUpdateTask';
+import { useUpdateTaskMutation } from '../../api/useUpdateTaskMutation';
 import { DayRouteParams } from '../../dayTypes';
 
 interface Props {
@@ -21,9 +21,9 @@ export const TimerButton: React.FC<Props> = ({ size, task, sectionId }) => {
 
   const { dayId } = useParams<DayRouteParams>();
 
-  const { status, data: activeTaskData } = useActiveTask();
+  const { status, data: activeTaskData } = useActiveTaskQuery();
 
-  const [updateTask, { isLoading }] = useUpdateTask();
+  const { mutate: updateTask, isLoading } = useUpdateTaskMutation();
 
   const history = useHistory();
 

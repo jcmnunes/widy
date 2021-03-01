@@ -1,26 +1,29 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { ScopeDto } from './useScopes';
+import { ScopeDto } from './useScopesQuery';
 
 const archiveScope = async (scopeId: string) => {
   const { data } = await axios.put<ScopeDto>(`/api/scopes/${scopeId}/archive`);
+
   return data;
 };
 
-export const useArchiveScope = () => {
+export const useArchiveScopeMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(archiveScope, {
     onSuccess: data => {
-      queryCache.setQueryData<ScopeDto[] | undefined>('scopes', scopes => {
+      queryClient.setQueryData<ScopeDto[] | undefined>('scopes', scopes => {
         if (!scopes) return scopes;
 
         return scopes.filter(({ id }) => id !== data.id);
       });
 
-      const archivedScopesQuery = queryCache.getQuery(['archivedScopes', true]);
+      const archivedScopesQuery = queryClient.getQueryCache().find(['archivedScopes', true]);
 
       if (archivedScopesQuery) {
-        queryCache.setQueryData<ScopeDto[] | undefined>(['archivedScopes', true], scopes => {
+        queryClient.setQueryData<ScopeDto[] | undefined>(['archivedScopes', true], scopes => {
           if (!scopes) return scopes;
 
           return [...scopes, data];
@@ -28,11 +31,7 @@ export const useArchiveScope = () => {
       }
     },
 
-    onError: (err, newTodo, rollback) => {
-      if (typeof rollback === 'function') {
-        rollback();
-      }
-
+    onError: () => {
       Toaster.error({
         title: 'Oops, something went wrong',
       });

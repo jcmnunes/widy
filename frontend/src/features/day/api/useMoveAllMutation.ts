@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { DayDto } from './useDay';
-import { ScheduleDto } from './useSchedule';
+import { DayDto } from './useDayQuery';
+import { ScheduleDto } from './useScheduleQuery';
 
 interface MoveAllBody {
   dayId: string;
@@ -19,18 +19,27 @@ const moveAll = async ({ to, body }: MoveAllVariables) => {
   return data;
 };
 
-export const useMoveAll = () => {
-  return useMutation(moveAll, {
-    onMutate: ({ to, body: { dayId } }) => {
-      const previousDay = queryCache.getQueryData<DayDto>(['day', dayId]);
-      const previousSchedule = queryCache.getQueryData<ScheduleDto>('schedule');
+export const useMoveAllMutation = () => {
+  const queryClient = useQueryClient();
 
-      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+  return useMutation(moveAll, {
+    onMutate: async ({ to, body: { dayId } }) => {
+      await queryClient.cancelQueries(['day', dayId]);
+      await queryClient.cancelQueries('schedule');
+
+      const previousDay = queryClient.getQueryData<DayDto>(['day', dayId]);
+      const previousSchedule = queryClient.getQueryData<ScheduleDto>('schedule');
+
+      if (!previousDay || !previousSchedule) {
+        return;
+      }
+
+      queryClient.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay && previousSchedule) {
           const plan = currentDay.sections[0];
 
           if (to === 'plan') {
-            queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+            queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
               if (currentSchedule) {
                 return produce(currentSchedule, draftState => {
                   draftState.tasks = [];
@@ -46,7 +55,7 @@ export const useMoveAll = () => {
           }
 
           if (to === 'schedule') {
-            queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+            queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
               if (currentSchedule) {
                 return produce(currentSchedule, draftState => {
                   draftState.tasks = [...previousSchedule.tasks, ...plan.tasks];
@@ -66,8 +75,8 @@ export const useMoveAll = () => {
       });
 
       return () => {
-        queryCache.setQueryData(['day', dayId], previousDay);
-        queryCache.setQueryData('schedule', previousSchedule);
+        queryClient.setQueryData(['day', dayId], previousDay);
+        queryClient.setQueryData('schedule', previousSchedule);
       };
     },
 
@@ -82,9 +91,9 @@ export const useMoveAll = () => {
       });
     },
 
-    // onSettled: (result, err, { body: { dayId } }) => {
-    //   queryCache.invalidateQueries(['day', dayId]);
-    //   queryCache.invalidateQueries('schedule');
-    // },
+    onSettled: (_, __, { body: { dayId } }) => {
+      queryClient.invalidateQueries(['day', dayId]);
+      queryClient.invalidateQueries('schedule');
+    },
   });
 };

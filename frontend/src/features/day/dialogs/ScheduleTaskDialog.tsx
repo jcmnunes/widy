@@ -1,7 +1,7 @@
 import React from 'react';
 import { Action, Dialog } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
-import { ScheduleTaskVariables, useScheduleTask } from '../api/useScheduleTask';
+import { ScheduleTaskVariables, useScheduleTaskMutation } from '../api/useScheduleTaskMutation';
 import { DayRouteParams } from '../dayTypes';
 
 interface Props {
@@ -21,7 +21,7 @@ export const ScheduleTaskDialog: React.FC<Props> = ({
 
   const history = useHistory();
 
-  const [scheduleTask] = useScheduleTask();
+  const { mutate: scheduleTask } = useScheduleTaskMutation();
 
   const scheduleTaskAction = () => {
     const scheduleTaskVariables: ScheduleTaskVariables = {

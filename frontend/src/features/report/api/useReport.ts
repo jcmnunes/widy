@@ -23,13 +23,15 @@ export interface ReportDto {
   tasks: ReportTask[];
 }
 
-const fetchReport = async (_: string, dayId: string) => {
+const fetchReport = async (dayId?: string) => {
   const { data } = await axios.get<ReportDto>(`/api/report/${dayId}`);
+
   return data;
 };
 
 export const useReport = (dayId?: string) => {
-  return useQuery(dayId ? ['report', dayId] : null, fetchReport, {
+  return useQuery(['report', dayId], () => fetchReport(dayId), {
+    enabled: !!dayId,
     staleTime: 0,
   });
 };

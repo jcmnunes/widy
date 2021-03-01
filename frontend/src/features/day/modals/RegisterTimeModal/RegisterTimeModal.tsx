@@ -18,7 +18,7 @@ import {
   StyledModal,
   StyledModalFooter,
 } from './RegisterTimeModal.styles';
-import { useUpdateTask } from '../../api/useUpdateTask';
+import { useUpdateTaskMutation } from '../../api/useUpdateTaskMutation';
 
 const validationSchema = Yup.object().shape({
   hours: Yup.number().min(0).max(24),
@@ -35,7 +35,7 @@ interface Props {
 export const RegisterTimeModal: React.FC<Props> = ({ taskId, sectionId, dayId, closeModal }) => {
   const [suggestion, setSuggestion] = useState<SuggestionOption | null>(null);
 
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   const formik = useFormik({
     initialValues: {
