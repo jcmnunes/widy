@@ -64,7 +64,9 @@ export const Task: React.FC<Props> = ({
         {title!}
       </TaskTitle>
       {scope && <ScopeCode scopeCode={scope.shortCode} />}
-      {children && !isTemp && !isCompleted && <ActionsContainer>{children}</ActionsContainer>}
+      {children && !isTemp && !isCompleted && (
+        <ActionsContainer onClick={e => e.stopPropagation()}>{children}</ActionsContainer>
+      )}
     </StyledTask>
   );
 };

@@ -34,7 +34,7 @@ export const TaskMenu: React.FC<Props> = ({ dayId, sectionId, task, isPlan }) =>
   return (
     <>
       <StyledTaskMenu>
-        <Menu trigger={Trigger} placement="bottom-end">
+        <Menu trigger={Trigger} placement="left">
           {canRegisterTime ? (
             <MenuItem
               text="Register Time"

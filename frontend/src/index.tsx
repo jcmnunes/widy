@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { setAppElement, theme, ThemeProvider, ToastProvider } from '@binarycapsule/ui-capsules';
+import { setAppElement, theme, ThemeProvider, ToastContainer } from '@binarycapsule/ui-capsules';
 import App from './App';
 import store, { runSaga } from './store/store';
 import { INIT_REQUEST } from './features/auth/Init/Init.types';
@@ -25,10 +25,10 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-          <ToastProvider>
-            <App />
-          </ToastProvider>
+          <App />
         </Router>
+
+        <ToastContainer />
       </ThemeProvider>
     </Provider>
 

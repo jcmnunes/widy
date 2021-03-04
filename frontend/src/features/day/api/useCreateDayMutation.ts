@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { produce } from 'immer';
@@ -28,10 +28,10 @@ export const useCreateDayMutation = () => {
   return useMutation(createDay, {
     onSuccess: data => {
       if (data && data.day) {
-        queryClient.setQueryData<GetDaysDto[] | undefined>('days', currentDaysCache => {
+        queryClient.setQueryData<InfiniteData<GetDaysDto> | undefined>('days', currentDaysCache => {
           if (currentDaysCache) {
             return produce(currentDaysCache, draftState => {
-              draftState[0].days.unshift(data);
+              draftState.pages[0].days.unshift(data);
             });
           }
 
