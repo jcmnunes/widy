@@ -10,7 +10,7 @@ import {
   ScopesSearch,
   ShowArchiveScopesToggle,
 } from './Scopes.styles';
-import { ScopeDto, useArchivedScopes, useScopes } from '../../../day/api/useScopes';
+import { ScopeDto, useArchivedScopes, useScopesQuery } from '../../../day/api/useScopesQuery';
 import { ScopeModal } from '../../../day/modals/ScopeModal/ScopeModal';
 import { PageWrapper } from '../../Settings.styles';
 
@@ -19,7 +19,7 @@ const Scopes = () => {
   const [showArchivedScopes, setShowArchivedScopes] = useState(false);
   const [filter, setFilter] = useState('');
 
-  const { data: scopes, status: scopesStatus } = useScopes();
+  const { data: scopes, status: scopesStatus } = useScopesQuery();
   const { data: archivedScopes, status: archivedScopesStatus } = useArchivedScopes(
     showArchivedScopes,
   );

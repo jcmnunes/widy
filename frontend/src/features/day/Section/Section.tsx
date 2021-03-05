@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { Task } from '../Task/Task';
 import { SectionEmpty } from './Section.empty';
-import { SectionDto } from '../api/useDay';
+import { SectionDto } from '../api/useDayQuery';
 import { AddTaskModal } from '../modals/AddTaskModal/AddTaskModal';
 import { TimerButton } from '../Timer/TimerButton/TimerButton';
 import {
@@ -24,9 +24,9 @@ import {
 import { Heading2 } from '../../../components/Typography';
 import { TaskMenu } from '../TaskMenu/TaskMenu';
 import { Launcher } from '../Launcher/Launcher';
-import { useActiveTask } from '../api/useActiveTask';
-import { useUpdateTask } from '../api/useUpdateTask';
-import { useMoveAll } from '../api/useMoveAll';
+import { useActiveTaskQuery } from '../api/useActiveTaskQuery';
+import { useUpdateTaskMutation } from '../api/useUpdateTaskMutation';
+import { useMoveAllMutation } from '../api/useMoveAllMutation';
 import { sidebarSliceActions } from '../SideBar/SidebarSlice';
 import { dayStateActions } from '../dayState/dayStateSlice';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
@@ -44,15 +44,15 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
 
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
-  const { data: activeTask } = useActiveTask();
+  const { data: activeTask } = useActiveTaskQuery();
 
   const { taskId: selectedTaskId, sectionId: selectedSectionId } = useParams<DayRouteParams>();
 
   const history = useHistory();
 
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
-  const [moveAll] = useMoveAll();
+  const { mutate: moveAll } = useMoveAllMutation();
 
   const dispatch = useDispatch();
 
@@ -192,6 +192,7 @@ export const Section: React.FC<Props> = ({ dayId, data: section }) => {
             <SectionHeaderActions>{hasTasks && <PlanMenu planId={id} />}</SectionHeaderActions>
           )}
         </SectionHeader>
+
         <Droppable droppableId={id}>{hasTasks ? renderSection : renderEmptySection}</Droppable>
 
         <Button

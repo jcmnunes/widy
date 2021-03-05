@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, IllustratedIcon, Tooltip } from '@binarycapsule/ui-capsules';
 import { useParams } from 'react-router';
 import { LaunchTaskModal } from '../modals/LaunchTaskModal/LaunchTaskModal';
-import { TaskDto } from '../api/useDay';
+import { TaskDto } from '../api/useDayQuery';
 import { DayRouteParams } from '../dayTypes';
 import { useTheme } from '@emotion/react';
 

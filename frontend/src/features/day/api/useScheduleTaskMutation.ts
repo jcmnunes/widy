@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { DayDto, TaskDto } from './useDay';
-import { ScheduleDto } from './useSchedule';
+import { DayDto, TaskDto } from './useDayQuery';
+import { ScheduleDto } from './useScheduleQuery';
 
 interface ScheduleTaskBody {
   dayId: string;
@@ -20,13 +20,19 @@ const scheduleTask = async ({ taskId, body }: ScheduleTaskVariables) => {
   return data;
 };
 
-export const useScheduleTask = () => {
+export const useScheduleTaskMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(scheduleTask, {
     onMutate: ({ taskId, body: { dayId, sectionId } }) => {
-      const previousDay = queryCache.getQueryData(['day', dayId]);
-      const previousSchedule = queryCache.getQueryData('schedule');
+      const previousDay = queryClient.getQueryData(['day', dayId]);
+      const previousSchedule = queryClient.getQueryData('schedule');
 
-      queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+      if (!previousDay || !previousSchedule) {
+        return;
+      }
+
+      queryClient.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
         if (currentDay) {
           const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
           const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -36,7 +42,7 @@ export const useScheduleTask = () => {
           if (sectionIndex > -1 && taskIndex > -1) {
             const task = currentDay.sections[sectionIndex].tasks[taskIndex];
 
-            queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+            queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
               if (currentSchedule) {
                 return produce(currentSchedule, draftState => {
                   draftState.tasks.push(task);
@@ -56,8 +62,8 @@ export const useScheduleTask = () => {
       });
 
       return () => {
-        queryCache.setQueryData(['day', dayId], previousDay);
-        queryCache.setQueryData('schedule', previousSchedule);
+        queryClient.setQueryData(['day', dayId], previousDay);
+        queryClient.setQueryData('schedule', previousSchedule);
       };
     },
 
@@ -72,9 +78,9 @@ export const useScheduleTask = () => {
       });
     },
 
-    // onSettled: (result, err, { body: { dayId } }) => {
-    //   queryCache.invalidateQueries(['day', dayId]);
-    //   queryCache.invalidateQueries('schedule');
-    // },
+    onSettled: (result, err, { body: { dayId } }) => {
+      queryClient.invalidateQueries(['day', dayId]);
+      queryClient.invalidateQueries('schedule');
+    },
   });
 };

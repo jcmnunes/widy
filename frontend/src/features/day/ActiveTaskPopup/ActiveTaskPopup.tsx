@@ -4,9 +4,9 @@ import { IllustratedIcon, Text, Tooltip } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ActiveTaskPopupHeader, StyledActiveTaskPopup } from './ActiveTaskPopup.styles';
-import { useActiveTask } from '../api/useActiveTask';
+import { useActiveTaskQuery } from '../api/useActiveTaskQuery';
 import { Task } from '../Task/Task';
-import { useUpdateTask } from '../api/useUpdateTask';
+import { useUpdateTaskMutation } from '../api/useUpdateTaskMutation';
 import { Time } from '../Timer/Time/Time';
 import { activeTaskTickSelector } from '../activeTask/activeTaskSelectors';
 import { DayRouteParams } from '../dayTypes';
@@ -17,13 +17,13 @@ interface Props {}
 export const ActiveTaskPopup: React.FC<Props> = () => {
   const theme = useTheme();
 
-  const { data: activeTask, status } = useActiveTask();
+  const { data: activeTask, status } = useActiveTaskQuery();
 
   const { dayId } = useParams<DayRouteParams>();
 
   const history = useHistory();
 
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   useSelector(activeTaskTickSelector);
 

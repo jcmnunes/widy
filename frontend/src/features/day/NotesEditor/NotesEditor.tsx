@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Editor, EditorRef } from '@binarycapsule/editor';
 import { Wrapper, WrapperProps } from '@binarycapsule/ui-capsules';
-import debounce from 'lodash/debounce';
 import { useParams } from 'react-router-dom';
 import { EditorWrapper } from './NotesEditor.styles';
 import MarkdownInstructions from './MarkdownInstructions/MarkdownInstructions';
-import { useUpdateTask } from '../api/useUpdateTask';
+import { useUpdateTaskMutation } from '../api/useUpdateTaskMutation';
 import { DayRouteParams } from '../dayTypes';
+import useDebounce from 'react-use/lib/useDebounce';
 
 interface NotesEditorProps extends WrapperProps {
   notes: string;
@@ -17,9 +17,11 @@ export const NotesEditor: React.FC<NotesEditorProps> = ({ notes, ...rest }) => {
 
   const editorRef = React.useRef<EditorRef>(null);
 
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   const [editorKey, setEditorKey] = useState(Date.now());
+
+  const [value, setValue] = useState(notes);
 
   const updateEditor = useCallback(() => {
     setEditorKey(Date.now());
@@ -30,35 +32,35 @@ export const NotesEditor: React.FC<NotesEditorProps> = ({ notes, ...rest }) => {
     updateEditor();
   }, [taskId, updateEditor]);
 
-  const saveToDb = useCallback(() => {
-    if (!sectionId || !taskId) {
-      return;
-    }
+  useDebounce(
+    () => {
+      if (!sectionId || !taskId) {
+        return;
+      }
 
-    const notes = editorRef.current?.value;
+      const notes = editorRef.current?.value;
 
-    updateTask(
-      {
-        taskId,
-        body: {
-          dayId,
-          sectionId,
-          payload: {
-            notes: notes || '',
+      updateTask(
+        {
+          taskId,
+          body: {
+            dayId,
+            sectionId,
+            payload: {
+              notes: notes || '',
+            },
           },
         },
-      },
-      {
-        onError() {
-          updateEditor();
+        {
+          onError() {
+            updateEditor();
+          },
         },
-      },
-    );
-  }, [dayId, sectionId, taskId, updateEditor, updateTask]);
-
-  const handleChange = debounce(() => {
-    saveToDb();
-  }, 250);
+      );
+    },
+    500,
+    [value],
+  );
 
   if (!sectionId || !taskId) {
     return null;
@@ -67,7 +69,12 @@ export const NotesEditor: React.FC<NotesEditorProps> = ({ notes, ...rest }) => {
   return (
     <Wrapper {...rest}>
       <EditorWrapper>
-        <Editor key={editorKey} ref={editorRef} defaultValue={notes} onChange={handleChange} />
+        <Editor
+          key={editorKey}
+          ref={editorRef}
+          defaultValue={notes}
+          onChange={val => setValue(val)}
+        />
       </EditorWrapper>
 
       <MarkdownInstructions />

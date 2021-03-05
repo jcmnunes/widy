@@ -3,13 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ReactQueryConfigProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
-import { setAppElement, theme, ThemeProvider, ToastProvider } from '@binarycapsule/ui-capsules';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { setAppElement, theme, ThemeProvider, ToastContainer } from '@binarycapsule/ui-capsules';
 import App from './App';
 import store, { runSaga } from './store/store';
 import { INIT_REQUEST } from './features/auth/Init/Init.types';
-import { queryConfig } from './config/queryConfig';
+import { queryClient } from './config/queryClient';
 
 // Run axios config
 import './config/axios';
@@ -21,20 +21,18 @@ store.dispatch({ type: INIT_REQUEST });
 setAppElement('#root');
 
 ReactDOM.render(
-  <>
-    <ReactQueryConfigProvider config={queryConfig}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Router>
-            <ToastProvider>
-              <App />
-            </ToastProvider>
-          </Router>
-        </ThemeProvider>
-      </Provider>
-    </ReactQueryConfigProvider>
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <App />
+        </Router>
+
+        <ToastContainer />
+      </ThemeProvider>
+    </Provider>
 
     <ReactQueryDevtools initialIsOpen={false} />
-  </>,
+  </QueryClientProvider>,
   document.getElementById('root'),
 );

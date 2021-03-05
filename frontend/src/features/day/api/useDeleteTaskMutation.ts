@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { queryCache, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import produce from 'immer';
 import { Toaster } from '@binarycapsule/ui-capsules';
-import { DayDto, TaskDto } from './useDay';
-import { ActiveTaskDto, emptyActiveTask } from './useActiveTask';
-import { ScheduleDto } from './useSchedule';
+import { DayDto, TaskDto } from './useDayQuery';
+import { ActiveTaskDto, emptyActiveTask } from './useActiveTaskQuery';
+import { ScheduleDto } from './useScheduleQuery';
 
 interface DeleteTaskBody {
   dayId: string;
@@ -18,27 +18,34 @@ export interface DeleteTaskVariables {
 
 const deleteTask = async ({ taskId, body }: DeleteTaskVariables) => {
   const { data } = await axios.delete<TaskDto>(`/api/tasks/${taskId}`, { data: body });
+
   return data;
 };
 
-export const useDeleteTask = () => {
-  return useMutation(deleteTask, {
-    onMutate: ({ taskId, body: { dayId, sectionId } }) => {
-      queryCache.cancelQueries(['day', dayId]);
-      queryCache.cancelQueries('activeTask');
-      queryCache.cancelQueries('schedule');
+export const useDeleteTaskMutation = () => {
+  const queryClient = useQueryClient();
 
-      const previousDay = queryCache.getQueryData(['day', dayId]);
-      const previousActiveTask = queryCache.getQueryData<ActiveTaskDto>('activeTask');
-      const previousSchedule = queryCache.getQueryData('schedule') as ScheduleDto;
+  return useMutation(deleteTask, {
+    onMutate: async ({ taskId, body: { dayId, sectionId } }) => {
+      await queryClient.cancelQueries(['day', dayId]);
+      await queryClient.cancelQueries('activeTask');
+      await queryClient.cancelQueries('schedule');
+
+      const previousDay = queryClient.getQueryData(['day', dayId]);
+      const previousActiveTask = queryClient.getQueryData<ActiveTaskDto>('activeTask');
+      const previousSchedule = queryClient.getQueryData('schedule') as ScheduleDto;
+
+      if (!previousDay || !previousActiveTask || !previousSchedule) {
+        return;
+      }
 
       // If the task is active ➜ stop it
-      if (previousActiveTask && taskId === previousActiveTask.taskId) {
-        queryCache.setQueryData('activeTask', emptyActiveTask);
+      if (taskId === previousActiveTask.taskId) {
+        queryClient.setQueryData('activeTask', emptyActiveTask);
       }
 
       if (sectionId === 'schedule') {
-        queryCache.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
+        queryClient.setQueryData<ScheduleDto | undefined>('schedule', currentSchedule => {
           if (currentSchedule) {
             const taskIndex = currentSchedule.tasks.findIndex(({ id }) => id === taskId);
 
@@ -52,7 +59,7 @@ export const useDeleteTask = () => {
           return currentSchedule;
         });
       } else {
-        queryCache.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
+        queryClient.setQueryData<DayDto | undefined>(['day', dayId], currentDay => {
           if (currentDay) {
             const sectionIndex = currentDay.sections.findIndex(({ id }) => id === sectionId);
             const taskIndex = currentDay.sections[sectionIndex]?.tasks.findIndex(
@@ -71,9 +78,9 @@ export const useDeleteTask = () => {
       }
 
       return () => {
-        queryCache.setQueryData(['day', dayId], previousDay);
-        queryCache.setQueryData('activeTask', previousActiveTask);
-        queryCache.setQueryData('schedule', previousSchedule);
+        queryClient.setQueryData(['day', dayId], previousDay);
+        queryClient.setQueryData('activeTask', previousActiveTask);
+        queryClient.setQueryData('schedule', previousSchedule);
       };
     },
 
@@ -88,10 +95,10 @@ export const useDeleteTask = () => {
       });
     },
 
-    // onSettled: (result, err, { body: { dayId } }) => {
-    //   queryCache.invalidateQueries(['day', dayId]);
-    //   queryCache.invalidateQueries('activeTask');
-    //   queryCache.invalidateQueries('schedule');
-    // },
+    onSettled: (result, err, { body: { dayId } }) => {
+      queryClient.invalidateQueries(['day', dayId]);
+      queryClient.invalidateQueries('activeTask');
+      queryClient.invalidateQueries('schedule');
+    },
   });
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@binarycapsule/ui-capsules';
 import { Heading1 } from '../../../components/Typography';
 import { StyledDaysNavHeader } from './DaysNavHeader.styles';
-import { useCreateDay } from '../../day/api/useCreateDay';
+import { useCreateDayMutation } from '../../day/api/useCreateDayMutation';
 
 interface Props {
   isTodayCreated: boolean;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const DaysNavHeader: React.FC<Props> = ({ isTodayCreated, showAddDayButton = true }) => {
-  const [createDay, { status }] = useCreateDay();
+  const { mutate: createDay, isLoading } = useCreateDayMutation();
 
   return (
     <StyledDaysNavHeader>
@@ -19,8 +19,8 @@ export const DaysNavHeader: React.FC<Props> = ({ isTodayCreated, showAddDayButto
       {showAddDayButton && (
         <Button
           leftIcon="plus"
-          isLoading={status === 'loading'}
-          disabled={status === 'loading' || isTodayCreated}
+          isLoading={isLoading}
+          disabled={isLoading || isTodayCreated}
           onClick={() => createDay()}
         >
           Add Day

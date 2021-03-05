@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { Button, IllustratedIcon, Tooltip } from '@binarycapsule/ui-capsules';
-import { TaskDto, useDay } from '../api/useDay';
-import { useMoveTask } from '../api/useMoveTask';
-import { useSchedule } from '../api/useSchedule';
+import { TaskDto, useDayQuery } from '../api/useDayQuery';
+import { useMoveTaskMutation } from '../api/useMoveTaskMutation';
+import { useScheduleQuery } from '../api/useScheduleQuery';
 import { DayRouteParams } from '../dayTypes';
 import { useTheme } from '@emotion/react';
 
@@ -17,11 +17,11 @@ export const AddToPlan: React.FC<Props> = ({ isButton, task }) => {
 
   const { dayId } = useParams<DayRouteParams>();
 
-  const { data: day } = useDay(dayId);
+  const { data: day } = useDayQuery(dayId);
 
-  const [moveTask] = useMoveTask();
+  const { mutate: moveTask } = useMoveTaskMutation();
 
-  const { data: schedule } = useSchedule();
+  const { data: schedule } = useScheduleQuery();
 
   if (!schedule) return null;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, EditableInput } from '@binarycapsule/ui-capsules';
-import { useUpdateTask } from '../api/useUpdateTask';
+import { useUpdateTaskMutation } from '../api/useUpdateTaskMutation';
 
 interface Props {
   taskId: string;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const EditableTaskTitle: React.FC<Props> = ({ taskId, sectionId, dayId, taskTitle }) => {
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   const handleInputChange = (title: string) => {
     updateTask({

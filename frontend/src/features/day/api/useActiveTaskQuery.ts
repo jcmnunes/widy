@@ -21,9 +21,10 @@ export const emptyActiveTask: ActiveTaskDto = {
 
 const getActiveTask = async () => {
   const { data } = await axios.get<ActiveTaskDto>('/api/tasks/active');
+
   return data;
 };
 
-export const useActiveTask = () => {
+export const useActiveTaskQuery = () => {
   return useQuery('activeTask', getActiveTask);
 };

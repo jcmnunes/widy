@@ -11,8 +11,8 @@ import {
   ModalHeader,
   Text,
 } from '@binarycapsule/ui-capsules';
-import { useCreateTask } from '../../api/useCreateTask';
-import { useScopesOptions } from '../../api/useScopes';
+import { useCreateTaskMutation } from '../../api/useCreateTaskMutation';
+import { useScopesOptions } from '../../api/useScopesQuery';
 import { ScopeSelect } from '../../ScopeSelect/ScopeSelect';
 
 interface ScopeOption {
@@ -44,7 +44,7 @@ interface Props {
 export const AddTaskModal: React.FC<Props> = ({ dayId, sectionId, onRequestClose }) => {
   const scopesOptions = useScopesOptions();
 
-  const [createTask] = useCreateTask();
+  const { mutate: createTask } = useCreateTaskMutation();
 
   const formik = useFormik({
     initialValues,
