@@ -10,8 +10,8 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@binarycapsule/ui-capsules';
-import { TaskDto } from '../../api/useDay';
-import { useUpdateTask } from '../../api/useUpdateTask';
+import { TaskDto } from '../../api/useDayQuery';
+import { useUpdateTaskMutation } from '../../api/useUpdateTaskMutation';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('You need to enter the new task name.'),
@@ -32,7 +32,7 @@ export const RenameTaskModal: React.FC<Props> = ({ dayId, sectionId, task, onReq
   const initialValues: FormValues = {
     title: task.title,
   };
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   const formik = useFormik({
     initialValues,

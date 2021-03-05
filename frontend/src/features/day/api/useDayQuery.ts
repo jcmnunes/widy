@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useMemo } from 'react';
-import { ScopeDto } from './useScopes';
+import { ScopeDto } from './useScopesQuery';
 
 export interface TaskDto {
   id: string;
@@ -26,17 +26,17 @@ export interface DayDto {
   sections: SectionDto[];
 }
 
-const getDayById = async (_: string, dayId?: string) => {
+const getDayById = async (dayId?: string) => {
   const { data } = await axios.get<DayDto>(`/api/days/${dayId}`);
   return data;
 };
 
-export const useDay = (dayId?: string) => {
-  return useQuery(['day', dayId], getDayById, { enabled: dayId });
+export const useDayQuery = (dayId?: string) => {
+  return useQuery(['day', dayId], () => getDayById(dayId), { enabled: !!dayId });
 };
 
 export const useSection = (dayId?: string, sectionId?: string): SectionDto | null => {
-  const { data: day } = useDay(dayId);
+  const { data: day } = useDayQuery(dayId);
 
   return useMemo(() => {
     if (!day || !dayId || !sectionId) return null;
@@ -46,7 +46,7 @@ export const useSection = (dayId?: string, sectionId?: string): SectionDto | nul
 };
 
 export const useTask = (dayId?: string, sectionId?: string, taskId?: string): TaskDto | null => {
-  const { data: day } = useDay(dayId);
+  const { data: day } = useDayQuery(dayId);
   const section = useSection(dayId, sectionId);
 
   return useMemo(() => {

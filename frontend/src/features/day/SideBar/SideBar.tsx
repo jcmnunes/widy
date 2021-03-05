@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Text } from '@binarycapsule/ui-capsules';
 import { Timer } from '../Timer/Timer';
-import { useSection, useTask } from '../api/useDay';
+import { useSection, useTask } from '../api/useDayQuery';
 import { EditableTaskTitle } from '../EditableTaskTitle/EditableTaskTitle';
 import {
   SidebarCloseButton,
@@ -13,13 +13,13 @@ import {
   StyledSidebar,
 } from './SideBar.styles';
 import { ScopeSelect } from '../ScopeSelect/ScopeSelect';
-import { useScopesOptions } from '../api/useScopes';
-import { useUpdateTask } from '../api/useUpdateTask';
+import { useScopesOptions } from '../api/useScopesQuery';
+import { useUpdateTaskMutation } from '../api/useUpdateTaskMutation';
 import { sidebarSliceActions } from './SidebarSlice';
 import { isSidebarOpenSelector } from './SideBar.selectors';
 import { NotesEditor } from '../NotesEditor/NotesEditor';
 import { IllustrationTodoList } from '../../../illustrations/IllustrationTodoList';
-import { useSchedule } from '../api/useSchedule';
+import { useScheduleQuery } from '../api/useScheduleQuery';
 import { AddToPlan } from '../AddToPlan/AddToPlan';
 import { DayRouteParams } from '../dayTypes';
 
@@ -28,7 +28,7 @@ interface Props {}
 export const SideBar: React.FC<Props> = () => {
   const { dayId, sectionId, taskId } = useParams<DayRouteParams>();
 
-  const { data: schedule } = useSchedule();
+  const { data: schedule } = useScheduleQuery();
 
   const section = useSection(dayId, sectionId);
 
@@ -36,7 +36,7 @@ export const SideBar: React.FC<Props> = () => {
 
   const scopesOptions = useScopesOptions();
 
-  const [updateTask] = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTaskMutation();
 
   const isSidebarOpen = useSelector(isSidebarOpenSelector);
 
@@ -110,7 +110,8 @@ export const SideBar: React.FC<Props> = () => {
         <Text variant="label" mb="8">
           Notes
         </Text>
-        {dayId && sectionId && <NotesEditor dayId={dayId} sectionId={sectionId} task={task} />}
+
+        <NotesEditor notes={task.notes} mb="32" />
       </SidebarSection>
 
       <SidebarCloseButton>

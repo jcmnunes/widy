@@ -13,7 +13,7 @@ import {
   LargeText,
   StyledBoardHeader,
 } from './BoardHeader.styles';
-import { DayDto } from '../../api/useDay';
+import { DayDto } from '../../api/useDayQuery';
 import { Brand } from '../../../daysNav/Brand/Brand';
 import { daysNavSliceActions } from '../../../daysNav/DaysNavSlice';
 

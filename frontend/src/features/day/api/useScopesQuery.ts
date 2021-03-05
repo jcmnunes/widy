@@ -14,21 +14,23 @@ export interface ScopeOption {
   shortCode: string;
 }
 
-const getScopes = async (_: string, isArchived?: boolean) => {
+const getScopes = async (isArchived?: boolean) => {
   const { data } = await axios.get<ScopeDto[]>(`/api/scopes${isArchived ? `?isArchived=1` : ''}`);
   return data;
 };
 
-export const useScopes = () => {
-  return useQuery('scopes', getScopes);
+export const useScopesQuery = () => {
+  return useQuery('scopes', () => getScopes());
 };
 
 export const useArchivedScopes = (isArchived: boolean) => {
-  return useQuery(isArchived ? ['archivedScopes', isArchived] : null, getScopes);
+  return useQuery(['archivedScopes', isArchived], () => getScopes(isArchived), {
+    enabled: isArchived,
+  });
 };
 
 export const useScopesOptions = (): ScopeOption[] => {
-  const { data: scopes } = useScopes();
+  const { data: scopes } = useScopesQuery();
 
   return useMemo(() => {
     if (!scopes) return [];

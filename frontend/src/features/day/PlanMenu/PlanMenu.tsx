@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton, Menu, MenuItem } from '@binarycapsule/ui-capsules';
 import { useHistory, useParams } from 'react-router';
-import { useMoveAll } from '../api/useMoveAll';
+import { useMoveAllMutation } from '../api/useMoveAllMutation';
 import { DayRouteParams } from '../dayTypes';
 
 const Trigger = (
@@ -14,12 +14,12 @@ interface Props {
 
 export const PlanMenu: React.FC<Props> = ({ planId }) => {
   const { dayId: selectedDayId, sectionId: selectedSectionId } = useParams<DayRouteParams>();
-  const [moveAll] = useMoveAll();
+  const { mutate: moveAll } = useMoveAllMutation();
   const history = useHistory();
 
   return (
     <>
-      <Menu trigger={Trigger} placement="bottom-end">
+      <Menu trigger={Trigger} placement="left">
         <MenuItem
           leftIcon="calendar"
           onClick={() => {

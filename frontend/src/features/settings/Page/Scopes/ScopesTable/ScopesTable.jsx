@@ -5,15 +5,16 @@ import ScopeCode from '../../../../../components/ScopeCode/ScopeCode';
 import DotsMenu from '../../../../../components/DotsMenu/DotsMenu';
 import EmptyScopesTable from '../EmptyScopesTable/EmptyScopesTable';
 import { Row, ScopeName, StyledScopesTable } from './ScopesTable.styles';
-import { useArchiveScope } from '../../../../day/api/useArchiveScope';
-import { useUnarchiveScope } from '../../../../day/api/useUnarchiveScope';
+import { useArchiveScopeMutation } from '../../../../day/api/useArchiveScopeMutation';
+import { useUnarchiveScopeMutation } from '../../../../day/api/useUnarchiveScopeMutation';
 import { ScopeModal } from '../../../../day/modals/ScopeModal/ScopeModal';
 
 const ScopesTable = ({ isArchived, scopes }) => {
   const [selectedScope, setSelectedScope] = useState(null);
 
-  const [archiveScope, { isLoading: archiveScopeLoading }] = useArchiveScope();
-  const [unarchiveScope, { isLoading: unarchiveScopeLoading }] = useUnarchiveScope();
+  const { mutate: archiveScope, isLoading: archiveScopeLoading } = useArchiveScopeMutation();
+
+  const { mutate: unarchiveScope, isLoading: unarchiveScopeLoading } = useUnarchiveScopeMutation();
 
   if (scopes.length === 0) {
     return (

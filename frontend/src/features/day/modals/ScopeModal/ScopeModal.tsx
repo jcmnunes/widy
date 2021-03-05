@@ -14,8 +14,8 @@ import {
 } from '@binarycapsule/ui-capsules';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
-import { ScopeDto, ScopeOption } from '../../api/useScopes';
-import { useUpsertScope } from '../../api/useUpsertScope';
+import { ScopeDto, ScopeOption } from '../../api/useScopesQuery';
+import { useUpsertScopeMutation } from '../../api/useUpsertScopeMutation';
 import { InputField, ShortCodeWrapper } from './ScopeModal.styles';
 
 const validationSchema = Yup.object().shape({
@@ -30,7 +30,7 @@ interface Props {
 }
 
 export const ScopeModal: React.FC<Props> = ({ scope, closeModal, onUpsertScope }) => {
-  const [upsertScope, { status, error }] = useUpsertScope();
+  const { mutate: upsertScope, status, error } = useUpsertScopeMutation();
   const upsertScopeError = error as AxiosError | undefined;
 
   const formik = useFormik({

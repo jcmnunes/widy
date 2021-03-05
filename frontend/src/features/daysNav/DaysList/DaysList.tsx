@@ -6,7 +6,7 @@ import { Button } from '@binarycapsule/ui-capsules';
 import { StyledDaysList } from './DaysList.styles';
 import { DayButton } from './DayButton/DayButton';
 import { isToday } from '../../../helpers/dates';
-import { DayDto } from '../api/useDays';
+import { DayDto } from '../api/useDaysQuery';
 import { daysNavSliceActions } from '../DaysNavSlice';
 import { LoadMoreDays } from '../DaysNav.styles';
 import { DayRouteParams } from '../../day/dayTypes';
@@ -14,7 +14,7 @@ import { DayRouteParams } from '../../day/dayTypes';
 interface Props {
   days: DayDto[];
   canFetchMore?: boolean;
-  isFetchingMore?: false | 'previous' | 'next';
+  isFetchingMore?: boolean;
   fetchMore(): void;
 }
 
@@ -44,6 +44,7 @@ export const DaysList: React.FC<Props> = ({ days, canFetchMore, isFetchingMore, 
           {moment(day).format('ddd DD MMM YYYY')}
         </DayButton>
       ))}
+
       {canFetchMore && (
         <LoadMoreDays>
           <Button
