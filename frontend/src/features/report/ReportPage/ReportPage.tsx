@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Spinner } from '@binarycapsule/ui-capsules';
-import TaskPerSectionChart from './TaskPerSectionChart/TaskPerSectionChart';
 import UserDropdown from '../../../components/UserDropdown/UserDropdown';
 import { formatTotalTime } from '../../../helpers/timeHelpers';
 import { formatDay } from '../../../helpers/dates';
@@ -9,7 +8,6 @@ import { TasksTable } from './TasksTable/TasksTable';
 import {
   ActionsContainer,
   ActionsTop,
-  ChartsContainer,
   EmptyStateContainer,
   EmptyStateText,
   LoadingReport,
@@ -25,12 +23,9 @@ import {
   StatValue,
   StyledReportPage,
 } from './ReportPage.styles';
-import {
-  selectTasksTableData,
-  selectTimePerSectionPieChartData,
-  useReport,
-} from '../api/useReport';
+import { selectTasksTableData, useReport } from '../api/useReport';
 import { IllustrationBoss } from '../../../illustrations/IllustrationBoss';
+import { SectionChart } from '../components/SectionChart/SectionChart';
 
 interface Props {
   dayId: string;
@@ -40,11 +35,6 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
   const { data: report, status, isFetching } = useReport(dayId);
 
   const history = useHistory();
-
-  const timePerSectionPieChartData = useMemo(
-    () => (report ? selectTimePerSectionPieChartData(report) : null),
-    [report],
-  );
 
   const tasksTableData = useMemo(() => (report ? selectTasksTableData(report) : null), [report]);
 
@@ -103,11 +93,8 @@ export const ReportPage: React.FC<Props> = ({ dayId }) => {
               </EmptyStateContainer>
             ) : (
               <>
-                {timePerSectionPieChartData && (
-                  <ChartsContainer>
-                    <TaskPerSectionChart data={timePerSectionPieChartData} />
-                  </ChartsContainer>
-                )}
+                <SectionChart my="32" />
+
                 {report.totalTasks > 0 && tasksTableData && <TasksTable data={tasksTableData} />}
               </>
             )}
