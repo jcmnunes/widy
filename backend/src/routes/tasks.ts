@@ -10,7 +10,7 @@ import {
   stopTask,
   updateTask,
 } from '../controllers/tasks';
-import requireLogin from '../middlewares/requireLogin';
+import { requireLogin } from '../middlewares/requireLogin';
 
 const router = require('express').Router();
 
