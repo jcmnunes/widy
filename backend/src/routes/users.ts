@@ -1,6 +1,6 @@
 import { catchErrors } from '../middlewares/catchErrors';
-import requireLogin from '../middlewares/requireLogin';
-import { registerUser, getMe, updateMe } from '../controllers/users';
+import { requireLogin } from '../middlewares/requireLogin';
+import { getMe, updateMe } from '../controllers/users';
 
 const router = require('express').Router();
 

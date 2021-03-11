@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { AuthRequest } from '../types';
 import { DayModel } from '../../models/Day';
 
+const ObjectId = require('mongoose').Types.ObjectId;
+
 type Params = { id: string };
 
 const validate = (params: Params) => {
@@ -30,6 +32,10 @@ export const getDay = async (req: Request, res: Response) => {
     params: { id },
     userId,
   } = req;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'Day not found' });
+  }
 
   const day = await DayModel.findOne({ _id: id, belongsTo: userId }).populate(
     'sections.tasks.scope',

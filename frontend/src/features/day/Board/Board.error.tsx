@@ -20,7 +20,7 @@ const StyledBoardError = styled.div`
 
 const ErrorText = styled.div`
   color: ${({ theme }) => theme.colors.error['700']};
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -51,7 +51,7 @@ export const BoardError: React.FC<Props> = ({ error }) => {
       </Header>
       <IllustrationOldPC />
       <ErrorText>
-        <Icon icon="exclamation_c" />{' '}
+        <Icon icon="exclamation_c" mr="4" />
         {status === 404 ? 'Day not found' : 'Oops, something went wrong...'}
       </ErrorText>
 
