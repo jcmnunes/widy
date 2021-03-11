@@ -30,13 +30,13 @@ const fetchReport = async (dayId?: string) => {
 };
 
 export const useReport = (dayId?: string) => {
-  return useQuery(['report', dayId], () => fetchReport(dayId), {
+  return useQuery<ReportDto, Error>(['report', dayId], () => fetchReport(dayId), {
     enabled: !!dayId,
     staleTime: 0,
   });
 };
 
-export const timePerSection = ({ tasks }: ReportDto) => {
+export const timePerSection = (tasks: ReportTask[]) => {
   return tasks.reduce((acc, { section, time }) => {
     if (section.isPlan) {
       return acc;
@@ -45,19 +45,21 @@ export const timePerSection = ({ tasks }: ReportDto) => {
     if (acc[section.id]) {
       // eslint-disable-next-line no-param-reassign
       acc[section.id].time += time;
+      acc[section.id].taskCount += 1;
     } else {
       // eslint-disable-next-line no-param-reassign
       acc[section.id] = {
         title: section.title,
         time,
+        taskCount: 1,
       };
     }
     return acc;
-  }, {} as Record<string, { title: string; time: number }>);
+  }, {} as Record<string, { title: string; time: number; taskCount: number }>);
 };
 
 export const selectTimePerSectionPieChartData = (report: ReportDto) =>
-  Object.entries(timePerSection(report)).map(([sectionId, section]) => ({
+  Object.entries(timePerSection(report.tasks)).map(([sectionId, section]) => ({
     id: sectionId,
     label: section.title,
     value: section.time,
