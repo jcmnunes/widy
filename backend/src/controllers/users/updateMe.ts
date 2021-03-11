@@ -13,14 +13,8 @@ interface Body {
 const validate = (body: Body) => {
   const schema = {
     accountSettings: Joi.object().keys({
-      firstName: Joi.string()
-        .min(1)
-        .max(255)
-        .required(),
-      lastName: Joi.string()
-        .min(1)
-        .max(255)
-        .required(),
+      firstName: Joi.string().min(1).max(255).required(),
+      lastName: Joi.string().min(1).max(255).required(),
     }),
   };
 

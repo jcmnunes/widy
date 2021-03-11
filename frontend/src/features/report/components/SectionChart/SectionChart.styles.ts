@@ -22,4 +22,5 @@ export const Cell = styled.td`
   padding: 0 18px;
   text-align: left;
   white-space: initial;
+  font-weight: 500;
 `;

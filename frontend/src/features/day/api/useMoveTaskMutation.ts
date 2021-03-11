@@ -190,7 +190,7 @@ export const useMoveTaskMutation = () => {
       }
 
       // Move to the Plan (not from schedule)
-      if (isToThePlan && !isFromTheSchedule) {
+      if (isToThePlan && !isFromThePlan && !isFromTheSchedule) {
         // If the draggable is the active task ➜ stop it
         if (previousActiveTask?.taskId === taskId) {
           queryClient.setQueryData('activeTask', emptyActiveTask);

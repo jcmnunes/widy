@@ -1,6 +1,6 @@
 import { createDay, getDay, getDays } from '../controllers/days';
 import { catchErrors } from '../middlewares/catchErrors';
-import requireLogin from '../middlewares/requireLogin';
+import { requireLogin } from '../middlewares/requireLogin';
 
 const router = require('express').Router();
 
