@@ -2,9 +2,7 @@
 
 # Widy - What I did yesterday
 
-<div>
-    <a href="https://codeship.com"><img src="https://img.shields.io/codeship/eb1cea60-28ba-0138-b527-1ec6b7df87c1?style=flat-square" alt="build-badge" /></a>
-</div>
+[![Node.js CI](https://github.com/jcmnunes/widy/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/jcmnunes/widy/actions/workflows/node.js.yml)
 
 This is the main repo of the Widy app. It is a React SPA on the frontend with a Node/Express/MongoDB backend.
 
