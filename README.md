@@ -8,7 +8,7 @@
 
 This is the main repo of the Widy app. It is a React SPA on the frontend with a Node/Express/MongoDB backend.
 
-> 🚨 Note: This app is actually my personal **breakable toy** 🧫🧪
+> 🚨 Note: This app is actually my personal **breakable toy** 🧫🧪 Also, the app is hosted on a free Heroku dyno and therefore may go to sleep during periods of inactivity
 
 <img src="https://user-images.githubusercontent.com/13286745/73654974-e2a03900-4684-11ea-8145-2fb84212c4cf.jpg" width="100%">
 
