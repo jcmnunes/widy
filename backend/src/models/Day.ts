@@ -45,7 +45,7 @@ daySchema.statics.getActiveTask = function (userId: string) {
   ]);
 };
 
-daySchema.statics.getReportTasks = function (id: string, userId: string) {
+daySchema.statics.getReportTasks = function (id: string, userId: string): ReportTask[] {
   return this.aggregate([
     { $match: { belongsTo: Types.ObjectId(userId), _id: Types.ObjectId(id) } },
     { $unwind: '$sections' },

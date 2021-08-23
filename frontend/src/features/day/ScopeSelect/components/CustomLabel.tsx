@@ -4,7 +4,7 @@ import styled from '@emotion/styled/macro';
 const StyledLabel = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
   width: 100%;
 `;
 
