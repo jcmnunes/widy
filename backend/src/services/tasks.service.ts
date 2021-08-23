@@ -28,7 +28,11 @@ export const stopActiveTask = async ({ userId }: StopActiveTaskParams) => {
 
     if (!day) return;
 
-    const task = day.sections.id(sectionId).tasks.id(taskId);
+    const section = day.sections.id(sectionId);
+
+    if (!section) return;
+
+    const task = section.tasks.id(taskId);
 
     if (!task) return;
 

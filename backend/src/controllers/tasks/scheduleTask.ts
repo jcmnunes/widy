@@ -61,7 +61,11 @@ export const scheduleTask = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Task is in progress' });
   }
 
-  section.tasks.id(taskId).remove();
+  const taskToRemove = section.tasks.id(taskId);
+
+  if (taskToRemove) {
+    taskToRemove.remove();
+  }
 
   const schedule = await ScheduleModel.findOne({
     owner: userId,
