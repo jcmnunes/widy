@@ -21,4 +21,3 @@ UI components from the [UI-Capsules kit](https://uic.binarycapsule.tech/).
 ## Licensing
 
 Licensed under the [MIT License](./LICENSE).
-  
